@@ -6,9 +6,7 @@ public class CustomerMgr {
     private CustomerBaseClass customerFactory;
     private Map<String, CustomerBaseClass> customerMap;
 
-    public CustomerMgr(CustomerBaseClass customerFactory, Map<String, CustomerBaseClass> customerMap) {
-        this.customerFactory = customerFactory;
-        this.customerMap = customerMap;
+    public CustomerMgr() {
     }
 
     public void addCustomer(){}

@@ -4,8 +4,7 @@ public class CustomerFactory implements ICustomerFactory{
 
     public ISingleton customerFactoryInstance;
 
-    private CustomerFactory(ISingleton customerFactoryInstance) {
-        this.customerFactoryInstance = customerFactoryInstance;
+    private CustomerFactory() {
     }
 
     @Override
