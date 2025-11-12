@@ -1,5 +1,7 @@
 package org.example.customer;
 
+import org.example.vehicle.VehicleGradeT;
+
 import java.util.List;
 
 public class CustomerTierBase {
@@ -7,7 +9,7 @@ public class CustomerTierBase {
     private float loyaltyPointMultiplier;
     private int cancellationTime;
     private int loyaltyPointsToUpdate;
-    private List<Integer> vehicleGradeType;
+    private List<VehicleGradeT> vehicleGradeType;
     private CustomerTierT customerTierType;
 
     public CustomerTierBase() {
@@ -45,11 +47,11 @@ public class CustomerTierBase {
         this.loyaltyPointsToUpdate = loyaltyPointsToUpdate;
     }
 
-    public List<Integer> getVehicleGradeType() {
+    public List<VehicleGradeT> getVehicleGradeType() {
         return vehicleGradeType;
     }
 
-    public void setVehicleGradeType(List<Integer> vehicleGradeType) {
+    public void setVehicleGradeType(List<VehicleGradeT> vehicleGradeType) {
         this.vehicleGradeType = vehicleGradeType;
     }
 
