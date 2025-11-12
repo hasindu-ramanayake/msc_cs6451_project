@@ -10,7 +10,7 @@ public class CustomerMgr implements ISingleton {
     private CustomerBaseClass customerFactory;
     private Map<String, CustomerBaseClass> customerMap;
 
-    public CustomerMgr() {
+    private CustomerMgr() {
     }
 
     public void addCustomer(){}
