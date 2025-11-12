@@ -7,7 +7,7 @@ public class CustomerTierBase {
     private float loyaltyPointMultiplier;
     private int cancellationTime;
     private int loyaltyPointsToUpdate;
-    private List<VehiculeGrade> vehicleGradeType;
+    private List<Integer> vehicleGradeType;
     private CustomerTierT customerTierType;
 
     public CustomerTierBase() {
@@ -45,16 +45,15 @@ public class CustomerTierBase {
         this.loyaltyPointsToUpdate = loyaltyPointsToUpdate;
     }
 
-    public List<VehiculeGrade> getVehicleGradeType() {
+    public List<Integer> getVehicleGradeType() {
         return vehicleGradeType;
     }
 
-    public void setVehicleGradeType(List<VehiculeGrade> vehicleGradeType) {
+    public void setVehicleGradeType(List<Integer> vehicleGradeType) {
         this.vehicleGradeType = vehicleGradeType;
     }
 
     public CustomerTierT getCustomerTierType() {
-        customerTierType = new CustomerTierT();
         return customerTierType;
     }
 
