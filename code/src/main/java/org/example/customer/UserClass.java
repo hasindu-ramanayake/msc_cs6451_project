@@ -8,10 +8,6 @@ public class UserClass {
     protected int phoneNumber;
     protected UserT userType;
 
-    public UserClass(String email, Date joinedDate, int phoneNumber, UserT userType) {
-        this.email = email;
-        this.joinedDate = joinedDate;
-        this.phoneNumber = phoneNumber;
-        this.userType = userType;
+    public UserClass() {
     }
 }

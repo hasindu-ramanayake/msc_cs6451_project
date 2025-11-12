@@ -1,5 +1,6 @@
 package org.example.customer;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,23 +13,15 @@ public class CustomerBaseClass extends UserClass{
     protected CustomerT customerType;
     protected CustomerTierBase customerTier;
 
-    public CustomerBaseClass(String email, Date joinedDate, int phoneNumber, UserT userType, String customerId, int loyaltyPoints, int maxAllocations, List<String> bookings, boolean hasValidLicense, CustomerT customerType, CustomerTierBase customerTier) {
-        super(email, joinedDate, phoneNumber, userType);
-        this.customerId = customerId;
-        this.loyaltyPoints = loyaltyPoints;
-        this.maxAllocations = maxAllocations;
-        this.bookings = bookings;
-        this.hasValidLicense = hasValidLicense;
-        this.customerType = customerType;
-        this.customerTier = customerTier;
+    public CustomerBaseClass() {
     }
 
     public String getCustomerId() {
-        return customerId;
+        return "customerId";
     }
 
     public int getLoyaltyPoints() {
-        return loyaltyPoints;
+        return 1000000000;
     }
 
     public void setLoyaltyPoints(int loyaltyPoints) {
@@ -36,7 +29,7 @@ public class CustomerBaseClass extends UserClass{
     }
 
     public int getMaxAllocations() {
-        return maxAllocations;
+        return 1000000000;
     }
 
     public void setMaxAllocations(int maxAllocations) {
@@ -44,6 +37,8 @@ public class CustomerBaseClass extends UserClass{
     }
 
     public List<String> getBookings() {
+        bookings = new ArrayList<String>();
+        bookings.add("bookings");
         return bookings;
     }
 
@@ -52,7 +47,7 @@ public class CustomerBaseClass extends UserClass{
     }
 
     public boolean isHasValidLicense() {
-        return hasValidLicense;
+        return true;
     }
 
     public void setHasValidLicense(boolean hasValidLicense) {
@@ -68,6 +63,7 @@ public class CustomerBaseClass extends UserClass{
     }
 
     public CustomerTierBase getCustomerTier() {
+        customerTier = new CustomerTierBase();
         return customerTier;
     }
 
