@@ -17,13 +17,9 @@ public class SessionClass implements ISessionClass{
         System.out.println("DEBUG: Session created for user: " + this.user);
     }
 
-    public String getUser() {return this.user; } //   this need to be changed to UserClass
-    public void setUser() {} //   this need to be changed to UserClass
+    public String getUser() {return this.user; }
     public String getSessionId() { return this.sessionId;}
-    public void setSessionId() {}
-    public boolean validateSession() {
-        return ChronoUnit.MINUTES.between(timeStamp, LocalDateTime.now()) <= 5;
-    }
+    public LocalDateTime getLastTimeStamp( ) { return this.timeStamp;}
     public void updateTimeStamp() {
         this.timeStamp = LocalDateTime.now();
     }

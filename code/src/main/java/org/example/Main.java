@@ -4,7 +4,8 @@ import org.example.cmds.Command;
 import org.example.core.CmdParser;
 import org.example.core.ISingleton;
 import org.example.core.JCRMain;
-import org.example.session.ISessionClass;
+
+import org.example.session.SessionWrapper;
 
 import java.util.Scanner;
 
@@ -20,7 +21,7 @@ public class Main {
         System.out.println("Use Command login/signin or signout/exit \n\n");
 
         // set session for the user
-        ISessionClass userSession = null;
+        SessionWrapper userSession = new SessionWrapper();
 
         while (true) {
             System.out.print("[JCR] > ");
@@ -33,6 +34,9 @@ public class Main {
             // call the cmd parser and execute the cmd
             Command cmd = CmdParser.parse(input);
             cmd.execute(userSession);
+            if ( userSession.session == null ) {
+                System.out.println("DEBUG: session is null Main.java");
+            }
         }
         cmdReader.close();
 

@@ -1,24 +1,22 @@
 package org.example.cmds;
 
 import org.example.core.ISingleton;
-import org.example.core.JCRMain;
-import org.example.core.MgrT;
+
 import org.example.session.ISessionClass;
-import org.example.session.SessionClass;
 import org.example.session.SessionMgr;
+import org.example.session.SessionWrapper;
 
 public class LogIn implements Command {
-    private String userId;
+    private final String userId;
 
     public LogIn(String userId){
         this.userId = userId;
     }
-    @Override public void execute(ISessionClass userSession) {
+
+    @Override public void execute(SessionWrapper userSession) {
         System.out.println("LogIn");
-        ISingleton jcrMain = JCRMain.getInstance();
-        ISingleton sessionMgr = ((JCRMain)jcrMain).getMgrInstance(MgrT.SESSION_MGR);
-        userSession = ((SessionMgr)sessionMgr).createSessionFromFactory(userId);
-
-
+        ISingleton sessionMgr = SessionMgr.getInstance();
+        userSession.session = ((SessionMgr)sessionMgr).createSessionFromFactory(userId);
+        assert (userSession.session == null) : "Session is null";
     }
 }
