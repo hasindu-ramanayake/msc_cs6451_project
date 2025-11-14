@@ -26,8 +26,8 @@ public class SessionMgr implements ISingleton {
     // Other Functions:
     public boolean validateSession(String id) {return true;}
     public void deleteSession(String id) {}
-    public ISessionClass createSessionFromFactory() {
-        return ((SessionFactory)sessionFactory).createSession();
+    public ISessionClass createSessionFromFactory(String userId) {
+        return ((SessionFactory)sessionFactory).createSession(userId);
     }
     private void addSessionToSessionMap(ISessionClass session) {}
     private void requestCustomerDetails() {}

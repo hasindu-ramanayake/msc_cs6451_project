@@ -1,8 +1,9 @@
 package org.example.cmds;
 
+import org.example.session.ISessionClass;
 import org.example.session.SessionClass;
 
 public class NoCmd implements Command{
     public NoCmd(){}
-    @Override public void execute(SessionClass userSession){}
+    @Override public void execute(ISessionClass userSession){}
 }

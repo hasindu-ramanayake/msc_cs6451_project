@@ -4,10 +4,8 @@ import org.example.cmds.Command;
 import org.example.core.CmdParser;
 import org.example.core.ISingleton;
 import org.example.core.JCRMain;
-import org.example.session.SessionClass;
-import org.example.session.SessionMgr;
+import org.example.session.ISessionClass;
 
-import javax.lang.model.type.NullType;
 import java.util.Scanner;
 
 public class Main {
@@ -22,7 +20,7 @@ public class Main {
         System.out.println("Use Command login/signin or signout/exit \n\n");
 
         // set session for the user
-        SessionClass userSession = null;
+        ISessionClass userSession = null;
 
         while (true) {
             System.out.print("[JCR] > ");
