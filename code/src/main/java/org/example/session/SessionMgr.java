@@ -28,7 +28,7 @@ public class SessionMgr implements ISingleton {
 
     // Other Functions:
     public boolean isValidSession(SessionWrapper userSession) {
-        if ( ChronoUnit.MINUTES.between(userSession.session.getLastTimeStamp(), LocalDateTime.now()) <= 5 ) {
+        if ( userSession.session != null && ChronoUnit.MINUTES.between(userSession.session.getLastTimeStamp(), LocalDateTime.now()) <= 5 ) {
             return true;
         }
         this.deleteSession(userSession);

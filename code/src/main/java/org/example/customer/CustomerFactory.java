@@ -5,14 +5,17 @@ import org.example.session.SessionFactory;
 
 public class CustomerFactory extends AbCustomerFactory implements ISingleton {
 
-    public ISingleton customerFactoryInstance;
+    private static ISingleton customerFactoryInstance;
 
     private CustomerFactory() {
     }
 
     @Override
-    public CustomerBaseClass createCustomer(String email, int phoneNumber, CustomerT type, boolean hasValidLicense, String customerID, boolean adminPrivilege) {
-        return new CustomerBaseClass(email, phoneNumber, type, hasValidLicense, customerID, adminPrivilege);
+    public CustomerBaseClass createCustomer(String email, int phoneNumber, CustomerT type, boolean hasValidLicense, String customerID) {
+        if (type == CustomerT.PERSONAL_CUSTOMER) {
+            return new PersonalCustomerClass(email, phoneNumber, type, hasValidLicense, customerID, "", "");
+        }
+        return new CustomerBaseClass();
     }
 
     @Override
@@ -20,7 +23,7 @@ public class CustomerFactory extends AbCustomerFactory implements ISingleton {
         System.out.println("DEBUG: CREATE CUSTOMER FACTORY OBJECT: ");
     }
 
-    public ISingleton getCustomerFactoryInstance() {
+    public static ISingleton getCustomerFactoryInstance() {
         if ( customerFactoryInstance == null) {
             customerFactoryInstance = new CustomerFactory();
         }
