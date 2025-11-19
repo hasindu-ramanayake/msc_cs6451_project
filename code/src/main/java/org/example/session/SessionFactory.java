@@ -12,8 +12,9 @@ public class SessionFactory extends AbSessionFactory implements ISingleton {
         return factoryInstance;
     }
 
-    public ISessionClass createSession() {
-        return new SessionClass();
+    public ISessionClass createSession(String userId) {
+        String sessionId = this.generateUniqueId();
+        return new SessionClass(userId, sessionId);
     }
 
     private SessionFactory() {
