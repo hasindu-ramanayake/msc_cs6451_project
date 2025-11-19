@@ -8,18 +8,17 @@ public class Staff extends UserClass{
     protected boolean adminPrivilege;
     protected StaffT staffType;
 
-    public Staff(String email, Date joinedDate, int phoneNumber, UserT userType, String staffId, String fullName, boolean adminPrivilege, StaffT staffType) {
-        super(email, joinedDate, phoneNumber, userType);
+    public Staff(String email, int phoneNumber, String fullName, StaffT staffType, String staffId, boolean adminPrivilege) {
+        super(email, phoneNumber, UserT.STAFF, adminPrivilege);
         this.staffId = staffId;
         this.fullName = fullName;
-        this.adminPrivilege = adminPrivilege;
         this.staffType = staffType;
     }
 
     public void reportCarState(){}
 
     public String getStaffId() {
-        return staffId;
+        return "staffId";
     }
 
     public void setStaffId(String staffId) {
@@ -27,7 +26,7 @@ public class Staff extends UserClass{
     }
 
     public boolean isAdminPrivilege() {
-        return adminPrivilege;
+        return true;
     }
 
     public void setAdminPrivilege(boolean adminPrivilege) {
@@ -35,7 +34,7 @@ public class Staff extends UserClass{
     }
 
     public StaffT getStaffType() {
-        return staffType;
+        return StaffT.STAFF;
     }
 
     public void setStaffType(StaffT staffType) {
@@ -43,6 +42,6 @@ public class Staff extends UserClass{
     }
 
     public String getFullName() {
-        return fullName;
+        return "fullName";
     }
 }

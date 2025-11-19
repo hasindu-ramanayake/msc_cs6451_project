@@ -2,6 +2,9 @@ package org.example.session;
 
 import org.example.core.ISingleton;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 
 public class SessionMgr implements ISingleton {
     private static ISingleton sessionInst;
@@ -24,13 +27,22 @@ public class SessionMgr implements ISingleton {
     }
 
     // Other Functions:
-    public boolean validateSession(String id) {return true;}
-    public void deleteSession(String id) {}
-    public ISessionClass createSessionFromFactory() {
-        return ((SessionFactory)sessionFactory).createSession();
+    public boolean isValidSession(SessionWrapper userSession) {
+        if ( ChronoUnit.MINUTES.between(userSession.session.getLastTimeStamp(), LocalDateTime.now()) <= 5 ) {
+            return true;
+        }
+        this.deleteSession(userSession);
+        return false;
     }
-    private void addSessionToSessionMap(ISessionClass session) {}
-    private void requestCustomerDetails() {}
-    private void requestVehicleDetails() {}
+
+    public void deleteSession(SessionWrapper userSession) {
+        userSession.session = null;
+    }
+    public ISessionClass createSessionFromFactory(String userId) {
+        return ((SessionFactory)sessionFactory).createSession(userId);
+    }
+//    private void addSessionToSessionMap(ISessionClass session) {}
+//    private void requestCustomerDetails() {}
+//    private void requestVehicleDetails() {}
 
 }

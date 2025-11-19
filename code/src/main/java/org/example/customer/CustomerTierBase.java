@@ -1,5 +1,7 @@
 package org.example.customer;
 
+import org.example.vehicle.VehicleGradeT;
+
 import java.util.List;
 
 public class CustomerTierBase {
@@ -7,20 +9,14 @@ public class CustomerTierBase {
     private float loyaltyPointMultiplier;
     private int cancellationTime;
     private int loyaltyPointsToUpdate;
-    private List<VehiculeGrade> vehicleGradeType;
+    private List<VehicleGradeT> vehicleGradeType;
     private CustomerTierT customerTierType;
 
-    public CustomerTierBase(int bookingWindow, float loyaltyPointMultiplier, int cancellationTime, int loyaltyPointsToUpdate, List<VehiculeGrade> vehicleGradeType, CustomerTierT customerTierType) {
-        this.bookingWindow = bookingWindow;
-        this.loyaltyPointMultiplier = loyaltyPointMultiplier;
-        this.cancellationTime = cancellationTime;
-        this.loyaltyPointsToUpdate = loyaltyPointsToUpdate;
-        this.vehicleGradeType = vehicleGradeType;
-        this.customerTierType = customerTierType;
+    public CustomerTierBase() {
     }
 
     public int getBookingWindow() {
-        return bookingWindow;
+        return 1000000000;
     }
 
     public void setBookingWindow(int bookingWindow) {
@@ -28,7 +24,7 @@ public class CustomerTierBase {
     }
 
     public float getLoyaltyPointMultiplier() {
-        return loyaltyPointMultiplier;
+        return 1000000000;
     }
 
     public void setLoyaltyPointMultiplier(float loyaltyPointMultiplier) {
@@ -36,7 +32,7 @@ public class CustomerTierBase {
     }
 
     public int getCancellationTime() {
-        return cancellationTime;
+        return 1000000000;
     }
 
     public void setCancellationTime(int cancellationTime) {
@@ -44,18 +40,18 @@ public class CustomerTierBase {
     }
 
     public int getLoyaltyPointsToUpdate() {
-        return loyaltyPointsToUpdate;
+        return 1000000000;
     }
 
     public void setLoyaltyPointsToUpdate(int loyaltyPointsToUpdate) {
         this.loyaltyPointsToUpdate = loyaltyPointsToUpdate;
     }
 
-    public List<VehiculeGrade> getVehicleGradeType() {
+    public List<VehicleGradeT> getVehicleGradeType() {
         return vehicleGradeType;
     }
 
-    public void setVehicleGradeType(List<VehiculeGrade> vehicleGradeType) {
+    public void setVehicleGradeType(List<VehicleGradeT> vehicleGradeType) {
         this.vehicleGradeType = vehicleGradeType;
     }
 

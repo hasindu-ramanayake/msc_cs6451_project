@@ -1,7 +1,10 @@
 package org.example.core;
 
+import org.example.customer.CustomerMgr;
+import org.example.rental.RentalMgr;
 import org.example.session.SessionMgr;
 import org.example.core.MgrT;
+import org.example.vehicle.VehicleMgr;
 
 import java.util.HashMap;
 
@@ -22,7 +25,10 @@ public class JCRMain implements ISingleton{
     }
 
     private void initMgrClasses() {
+        this.mgrMap.put(MgrT.VEHICLE_MGR, VehicleMgr.getInstance());
         this.mgrMap.put(MgrT.SESSION_MGR, SessionMgr.getInstance());
+        this.mgrMap.put(MgrT.CUSTOMER_MGR, CustomerMgr.getInstance());
+        this.mgrMap.put(MgrT.RENTAL_MGR, RentalMgr.getInstance());
     }
 
     @Override
@@ -35,7 +41,5 @@ public class JCRMain implements ISingleton{
         return mgrMap.get(type);
     }
 
-    //        ISingleton sessionMgr = SessionMgr.getInstance();
-    //        sessionMgr.showMgrName();
 
 }

@@ -8,14 +8,11 @@ public class PersonalCustomerClass extends CustomerBaseClass{
     private String lastName;
     private String firstName;
 
-    public PersonalCustomerClass(String email, Date joinedDate, int phoneNumber, UserT userType, String customerId, int loyaltyPoints, int maxAllocations, List<String> bookings, boolean hasValidLicense, CustomerT customerType, CustomerTierBase customerTier, String lastName, String firstName) {
-        super(email, joinedDate, phoneNumber, userType, customerId, loyaltyPoints, maxAllocations, bookings, hasValidLicense, customerType, customerTier);
-        this.lastName = lastName;
-        this.firstName = firstName;
+    public PersonalCustomerClass() {
     }
 
     public String getLastName() {
-        return lastName;
+        return "lastName";
     }
 
     public void setLastName(String lastName) {
@@ -23,7 +20,7 @@ public class PersonalCustomerClass extends CustomerBaseClass{
     }
 
     public String getFirstName() {
-        return firstName;
+        return "firstName";
     }
 
     public void setFirstName(String firstName) {
