@@ -5,14 +5,20 @@ import org.example.vehicle.VehicleGradeT;
 import java.util.List;
 
 public class CustomerTierBase {
-    private int bookingWindow;
-    private float loyaltyPointMultiplier;
-    private int cancellationTime;
-    private int loyaltyPointsToUpdate;
-    private List<VehicleGradeT> vehicleGradeType;
-    private CustomerTierT customerTierType;
+    protected int bookingWindow;
+    protected double loyaltyPointMultiplier;
+    protected int cancellationTime;
+    protected int loyaltyPointsToUpdate;
+    protected List<VehicleGradeT> vehicleGradeType;
+    protected CustomerTierT customerTierType;
 
     public CustomerTierBase() {
+        this.bookingWindow = 1000000000;
+        this.loyaltyPointMultiplier = 1.0;
+        this.cancellationTime = 1000000000;
+        this.loyaltyPointsToUpdate = 1000000000;
+        this.vehicleGradeType = List.of(VehicleGradeT.ECONOMY);
+        this.customerTierType = CustomerTierT.BASE_TIER;
     }
 
     public int getBookingWindow() {
