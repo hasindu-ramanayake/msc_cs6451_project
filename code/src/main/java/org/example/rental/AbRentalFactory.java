@@ -1,0 +1,13 @@
+package org.example.rental;
+
+import java.time.LocalDateTime;
+
+//Created an Abstract Rental Factory
+public abstract class AbRentalFactory {
+    //Abstract methods of creating a rental object and generating a unique id
+    public abstract IRentalOrder createRentalObject(String customerId, String vehicleId, LocalDateTime rentalDate);
+
+    private String generateUniqueId(){
+        return "newId";
+    }
+}
