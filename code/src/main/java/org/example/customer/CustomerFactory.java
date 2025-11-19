@@ -11,8 +11,8 @@ public class CustomerFactory extends AbCustomerFactory implements ISingleton {
     }
 
     @Override
-    public CustomerBaseClass createCustomer() {
-        return null;
+    public CustomerBaseClass createCustomer(String email, int phoneNumber, CustomerT type, boolean hasValidLicense, String customerID, boolean adminPrivilege) {
+        return new CustomerBaseClass(email, phoneNumber, type, hasValidLicense, customerID, adminPrivilege);
     }
 
     @Override

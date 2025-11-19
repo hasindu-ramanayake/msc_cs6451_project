@@ -13,7 +13,15 @@ public class CustomerBaseClass extends UserClass{
     protected CustomerT customerType;
     protected CustomerTierBase customerTier;
 
-    public CustomerBaseClass() {
+    public CustomerBaseClass(){}
+
+    public CustomerBaseClass(String email, int phoneNumber, CustomerT customerType, boolean hasValidLicense, String customerId, boolean adminPrivilege) {
+        super(email, phoneNumber, UserT.CUSTOMER, adminPrivilege);
+        this.customerId = customerId;
+        this.customerType = customerType;
+        this.hasValidLicense = hasValidLicense;
+        this.loyaltyPoints = 0;
+        this.maxAllocations = 1;
     }
 
     public String getCustomerId() {
