@@ -1,9 +1,6 @@
 package org.example.interpreter;
 
-import org.example.cmds.Command;
-import org.example.cmds.CustomerDowngradeTier;
-import org.example.cmds.CustomerUpgradeTier;
-import org.example.cmds.NoCmd;
+import org.example.cmds.*;
 
 import java.util.StringTokenizer;
 
@@ -45,16 +42,20 @@ public class CustomerExpr implements Expression {
         };
     }
 
-    public Command parseSearch(StringTokenizer tokenizer) {
+    public Command parseSearch(StringTokenizer inputTokens) {
         return new NoCmd();
     }
-    public Command parseReceipt(StringTokenizer tokenizer) {
+    public Command parseReceipt(StringTokenizer inputTokens) {
         return new NoCmd();
     }
-    public Command parseRent(StringTokenizer tokenizer) {
-        return new NoCmd();
+    public Command parseRent(StringTokenizer inputTokens) {
+        String toUpdate = inputTokens.nextToken();
+        return switch (toUpdate) {
+            case "viewall" -> new CustomerRentViewAll();
+            default -> new NoCmd();
+        };
     }
-    public Command parseEvent(StringTokenizer tokenizer) {
+    public Command parseEvent(StringTokenizer inputTokens) {
         return new NoCmd();
     }
 
