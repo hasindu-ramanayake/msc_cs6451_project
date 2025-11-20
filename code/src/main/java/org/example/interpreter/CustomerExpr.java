@@ -2,6 +2,10 @@ package org.example.interpreter;
 
 import org.example.cmds.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 public class CustomerExpr implements Expression {
@@ -49,12 +53,24 @@ public class CustomerExpr implements Expression {
         return new NoCmd();
     }
     public Command parseRent(StringTokenizer inputTokens) {
-        String toUpdate = inputTokens.nextToken();
-        return switch (toUpdate) {
+        String next = inputTokens.nextToken();
+        return switch (next) {
             case "viewall" -> new CustomerRentViewAll();
+            case "order" -> {
+                if (inputTokens.countTokens() == 3 && "vehicle".equalsIgnoreCase(inputTokens.nextToken())) {
+                    String vehicleId = inputTokens.nextToken();
+                    String dateToken = inputTokens.nextToken();
+                    if ("date".equalsIgnoreCase(dateToken) && inputTokens.hasMoreTokens()) {
+                        String dateStr = inputTokens.nextToken();
+                        yield new CustomerRentOrder(vehicleId, dateStr);
+                    }
+                }
+                yield new NoCmd();
+            }
             default -> new NoCmd();
         };
     }
+
     public Command parseEvent(StringTokenizer inputTokens) {
         return new NoCmd();
     }

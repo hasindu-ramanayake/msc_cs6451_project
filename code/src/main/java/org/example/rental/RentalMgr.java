@@ -3,6 +3,7 @@ package org.example.rental;
 import org.example.core.ISingleton;
 import org.example.payment.IPaymentGateway;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class RentalMgr implements ISingleton{
@@ -32,7 +33,7 @@ public class RentalMgr implements ISingleton{
     //Other Functions
     public void initialiseRentalOrder(){}
     public void requestPayment(){}
-    private String getRentalOrder(String orderId){
+    private String getRentalOrderID(String orderId){
         return "rentalOrder";
     }
 
@@ -63,4 +64,13 @@ public class RentalMgr implements ISingleton{
         }
     }
 
+    public String getRentalOrderID(HashMap<String, IRentalOrder> rentalMap, String vehicleID, LocalDateTime date) {
+        for (var entry : rentalMap.entrySet()) {
+            IRentalOrder order = entry.getValue();
+            if (order.getVehicleId().equals(vehicleID) && order.getRentalDate().equals(date)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
 }
