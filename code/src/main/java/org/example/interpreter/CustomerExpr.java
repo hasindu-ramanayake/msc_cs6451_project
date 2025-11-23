@@ -1,8 +1,8 @@
 package org.example.interpreter;
 
 import org.example.cmds.Command;
-import org.example.cmds.CustomerSearchAll;
-import org.example.cmds.CustomerSearchMake;
+import org.example.cmds.CustomerDowngradeTier;
+import org.example.cmds.CustomerUpgradeTier;
 import org.example.cmds.NoCmd;
 
 import java.util.StringTokenizer;
@@ -20,7 +20,8 @@ public class CustomerExpr implements Expression {
         String action = inputTokens.nextToken();
 
         return switch (action) {
-            case "update" -> parseUpdate(inputTokens);
+            case "upgrade" -> parseUpgrade(inputTokens);
+            case "downgrade" -> parseDowngrade(inputTokens);
             case "search" -> parseSearch(inputTokens);
             case "receipt" -> parseReceipt(inputTokens);
             case "rent" -> parseRent(inputTokens);
@@ -29,8 +30,20 @@ public class CustomerExpr implements Expression {
         };
     }
 
-    public Command parseUpdate(StringTokenizer tokenizer) {
-        return new NoCmd();
+    public Command parseUpgrade(StringTokenizer inputTokens) {
+        String toUpdate = inputTokens.nextToken();
+        return switch (toUpdate) {
+            case "tier" -> new CustomerUpgradeTier();
+            default -> new NoCmd();
+        };
+    }
+
+    public Command parseDowngrade(StringTokenizer inputTokens) {
+        String toUpdate = inputTokens.nextToken();
+        return switch (toUpdate) {
+            case "tier" -> new CustomerDowngradeTier();
+            default -> new NoCmd();
+        };
     }
 
     public Command parseSearch(StringTokenizer tokenizer) {

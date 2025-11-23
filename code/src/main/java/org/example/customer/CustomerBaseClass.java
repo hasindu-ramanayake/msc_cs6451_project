@@ -15,13 +15,14 @@ public class CustomerBaseClass extends UserClass{
 
     public CustomerBaseClass(){}
 
-    public CustomerBaseClass(String email, int phoneNumber, CustomerT customerType, boolean hasValidLicense, String customerId, boolean adminPrivilege) {
-        super(email, phoneNumber, UserT.CUSTOMER, adminPrivilege);
+    public CustomerBaseClass(String email, int phoneNumber, CustomerT customerType, boolean hasValidLicense, String customerId) {
+        super(email, phoneNumber, UserT.CUSTOMER);
         this.customerId = customerId;
         this.customerType = customerType;
         this.hasValidLicense = hasValidLicense;
         this.loyaltyPoints = 0;
         this.maxAllocations = 1;
+        this.customerTier = new CustomerTierBase();
     }
 
     public String getCustomerId() {
@@ -75,7 +76,44 @@ public class CustomerBaseClass extends UserClass{
         return customerTier;
     }
 
+    public CustomerTierT getCustomerTierType() {
+        return customerTier.customerTierType;
+    }
+
     public void setCustomerTier(CustomerTierBase customerTier) {
         this.customerTier = customerTier;
+    }
+
+    public void upgradeCustomerTier(){
+        switch (customerTier.getCustomerTierType()) {
+            case CustomerTierT.BASE_TIER -> {
+                customerTier = new CustomerTierBronze();
+            }
+            case CustomerTierT.BRONZE_TIER -> {
+                customerTier = new CustomerTierSilver();
+            }
+            case CustomerTierT.SILVER_TIER -> {
+                customerTier = new CustomerTierGold();
+            } case CustomerTierT.GOLD_TIER -> System.out.println("DEBUG: Already GOLD TIER");
+        }
+
+    }
+
+    public void downgradeCustomerTier(){
+        switch (customerTier.getCustomerTierType()) {
+            case CustomerTierT.BASE_TIER -> {
+                System.out.println("DEBUG: Already BASE TIER");
+            }
+            case CustomerTierT.BRONZE_TIER -> {
+                customerTier = new CustomerTierBase();
+            }
+            case CustomerTierT.SILVER_TIER -> {
+                customerTier = new CustomerTierBronze();
+            }
+            case CustomerTierT.GOLD_TIER -> {
+                customerTier = new CustomerTierSilver();
+            }
+        }
+
     }
 }

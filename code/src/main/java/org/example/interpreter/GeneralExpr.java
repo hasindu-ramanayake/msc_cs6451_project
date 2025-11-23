@@ -21,9 +21,17 @@ public class GeneralExpr implements Expression {
                 String userId = inputTokens.nextToken();
                 cmd = new LogIn(userId);
             }
-            case "signin" -> {
-                System.out.println("signin");
-                cmd = new SignUp();
+            case "signup" -> {
+                System.out.println("signup [customerID] [email] [phone number] [License ID]");
+                if ( !inputTokens.hasMoreTokens() ) { return cmd;}
+                String customerId = inputTokens.nextToken();
+                if ( !inputTokens.hasMoreTokens() ) { return cmd;}
+                String email = inputTokens.nextToken();
+                if ( !inputTokens.hasMoreTokens() ) { return cmd;}
+                int phoneNumber = Integer.parseInt(inputTokens.nextToken());
+                if ( !inputTokens.hasMoreTokens() ) { return cmd;}
+                String hasValidLicense = inputTokens.nextToken();
+                cmd = new SignUp(email, phoneNumber, hasValidLicense, customerId);
             }
             case "signout" -> {
                 System.out.println("signout");

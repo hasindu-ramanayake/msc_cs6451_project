@@ -11,12 +11,11 @@ public class UserClass {
 
     public UserClass() {}
 
-    public UserClass(String email, int phoneNumber, UserT userType, boolean adminPrivilege) {
+    public UserClass(String email, int phoneNumber, UserT userType) {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.userType = userType;
         this.joinedDate = new Date();
-        this.adminPrivilege = adminPrivilege;
     }
 
     public String getEmail() { return email; }

@@ -9,10 +9,11 @@ public class Staff extends UserClass{
     protected StaffT staffType;
 
     public Staff(String email, int phoneNumber, String fullName, StaffT staffType, String staffId, boolean adminPrivilege) {
-        super(email, phoneNumber, UserT.STAFF, adminPrivilege);
+        super(email, phoneNumber, UserT.STAFF);
         this.staffId = staffId;
         this.fullName = fullName;
         this.staffType = staffType;
+        this.adminPrivilege = adminPrivilege;
     }
 
     public void reportCarState(){}
