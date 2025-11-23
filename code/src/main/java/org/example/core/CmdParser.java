@@ -21,7 +21,12 @@ public class CmdParser {
             expr = new CustomerExpr();
         } else if (inputToken.startsWith("staff")) {
             expr = new StaffExpr();
-        } else {
+        //Added Admin
+        }else if(inputToken.startsWith("admin")){
+            expr = new AdminExp();
+        }
+
+        else {
             expr = new EmptyExpr();
         }
 
