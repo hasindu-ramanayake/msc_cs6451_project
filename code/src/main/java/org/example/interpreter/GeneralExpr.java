@@ -23,7 +23,7 @@ public class GeneralExpr implements Expression {
             }
             case "signin" -> {
                 System.out.println("signin");
-                cmd = new SignIn();
+                cmd = new SignUp();
             }
             case "signout" -> {
                 System.out.println("signout");

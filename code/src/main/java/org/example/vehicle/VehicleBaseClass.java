@@ -1,7 +1,7 @@
 package org.example.vehicle;
 
 public class VehicleBaseClass {
-    private String vehicleID;
+    protected String vehicleID;
     private IVehicleGrade vehicleGrade;
     private VehicleStateT vehicleState;
     private int passengerCount;
@@ -10,14 +10,33 @@ public class VehicleBaseClass {
     private VehicleColorT color;
     private AbRentalRateBaseClass rentalRate;
 
-    public VehicleBaseClass() {
+    public VehicleBaseClass(){
+
     }
 
-    public IVehicleGrade getVehicleGrade() {
+    public VehicleBaseClass(String vehicleID, IVehicleGrade vehicleGrade, VehicleStateT vehicleState, int passengerCount, MakeT make, ModelT model, VehicleColorT color, AbRentalRateBaseClass rentalRate) {
+        this.vehicleID = vehicleID;
+        this.vehicleGrade = vehicleGrade;
+        this.vehicleState = vehicleState;
+        this.passengerCount = passengerCount;
+        this.make = make;
+        this.model = model;
+        this.color = color;
+        this.rentalRate = rentalRate;
+    }
+
+    public String getVehicleID()
+    {
+        return vehicleID;
+    }
+
+    public IVehicleGrade getVehicleGrade()
+    {
         return vehicleGrade;
     }
 
-    public void setVehicleGrade(IVehicleGrade vehicleGrade) {
+    public void setVehicleGrade(IVehicleGrade vehicleGrade)
+    {
         this.vehicleGrade = vehicleGrade;
     }
 
@@ -69,7 +88,5 @@ public class VehicleBaseClass {
         this.passengerCount = passengerCount;
     }
 
-    public String getVehicleID() {
-        return vehicleID;
-    }
+
 }
