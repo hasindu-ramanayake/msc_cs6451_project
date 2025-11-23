@@ -12,6 +12,7 @@ public class CustomerExpr implements Expression {
     @Override
     public Command interpret(String input) {
         StringTokenizer inputTokens = new StringTokenizer(input);
+
         if ( !inputTokens.hasMoreTokens() ) return new NoCmd();
         inputTokens.nextToken(); // skip customer token
         if ( !inputTokens.hasMoreTokens() ) return new NoCmd();
@@ -46,10 +47,32 @@ public class CustomerExpr implements Expression {
         };
     }
 
-    public Command parseSearch(StringTokenizer inputTokens) {
-        return new NoCmd();
+    public Command parseSearch(StringTokenizer tokenizer) {
+        Command cmd = new NoCmd();
+        if(!tokenizer.hasMoreTokens()){
+            return new NoCmd();
+        }
+        String searchFor = tokenizer.nextToken();
+
+        switch(searchFor){
+            case "all" ->{
+                cmd = new CustomerSearchAll();
+            }
+            case "make" ->{
+                if(!tokenizer.hasMoreTokens()){
+                    return new NoCmd();
+                }
+                String make = tokenizer.nextToken();
+
+            }
+
+        };
+        return cmd;
+
+
     }
-    public Command parseReceipt(StringTokenizer inputTokens) {
+
+    public Command parseReceipt(StringTokenizer tokenizer) {
         return new NoCmd();
     }
     public Command parseRent(StringTokenizer inputTokens) {
