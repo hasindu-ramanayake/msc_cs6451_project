@@ -6,5 +6,6 @@ import org.example.session.SessionWrapper;
 
 public class NoCmd implements Command{
     public NoCmd(){}
-    @Override public void execute(SessionWrapper userSession){}
+    @Override public void execute(SessionWrapper userSession){
+    }
 }

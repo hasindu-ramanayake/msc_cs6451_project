@@ -1,16 +1,18 @@
 package org.example.interpreter;
 
-import org.example.cmds.Command;
-import org.example.cmds.CustomerDowngradeTier;
-import org.example.cmds.CustomerUpgradeTier;
-import org.example.cmds.NoCmd;
+import org.example.cmds.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 public class CustomerExpr implements Expression {
     @Override
     public Command interpret(String input) {
         StringTokenizer inputTokens = new StringTokenizer(input);
+
         if ( !inputTokens.hasMoreTokens() ) return new NoCmd();
         inputTokens.nextToken(); // skip customer token
         if ( !inputTokens.hasMoreTokens() ) return new NoCmd();
@@ -46,15 +48,53 @@ public class CustomerExpr implements Expression {
     }
 
     public Command parseSearch(StringTokenizer tokenizer) {
-        return new NoCmd();
+        Command cmd = new NoCmd();
+        if(!tokenizer.hasMoreTokens()){
+            return new NoCmd();
+        }
+        String searchFor = tokenizer.nextToken();
+
+        switch(searchFor){
+            case "all" ->{
+                cmd = new CustomerSearchAll();
+            }
+            case "make" ->{
+                if(!tokenizer.hasMoreTokens()){
+                    return new NoCmd();
+                }
+                String make = tokenizer.nextToken();
+
+            }
+
+        };
+        return cmd;
+
+
     }
+
     public Command parseReceipt(StringTokenizer tokenizer) {
         return new NoCmd();
     }
-    public Command parseRent(StringTokenizer tokenizer) {
-        return new NoCmd();
+    public Command parseRent(StringTokenizer inputTokens) {
+        String next = inputTokens.nextToken();
+        return switch (next) {
+            case "viewall" -> new CustomerRentViewAll();
+            case "order" -> {
+                if (inputTokens.countTokens() == 3 && "vehicle".equalsIgnoreCase(inputTokens.nextToken())) {
+                    String vehicleId = inputTokens.nextToken();
+                    String dateToken = inputTokens.nextToken();
+                    if ("date".equalsIgnoreCase(dateToken) && inputTokens.hasMoreTokens()) {
+                        String dateStr = inputTokens.nextToken();
+                        yield new CustomerRentOrder(vehicleId, dateStr);
+                    }
+                }
+                yield new NoCmd();
+            }
+            default -> new NoCmd();
+        };
     }
-    public Command parseEvent(StringTokenizer tokenizer) {
+
+    public Command parseEvent(StringTokenizer inputTokens) {
         return new NoCmd();
     }
 
