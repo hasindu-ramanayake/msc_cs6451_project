@@ -8,8 +8,8 @@ import java.util.Date;
 
 class RentalOrder implements IRentalOrder {
     private String orderId;
-    private CustomerBaseClass customerId;
-    private VehicleBaseClass vehicleId;
+    private String customerId;
+    private String vehicleId;
     private Date rentalDate;
     private float fee;
     private boolean isPaid;
@@ -18,7 +18,7 @@ class RentalOrder implements IRentalOrder {
 
     }
 
-    public RentalOrder(CustomerBaseClass customerId, VehicleBaseClass vehicleId, Date rentalDate, float fee, boolean isPaid) {
+    public RentalOrder(String customerId, String vehicleId, Date rentalDate, float fee, boolean isPaid) {
         this.customerId = customerId;
         this.vehicleId = vehicleId;
         this.rentalDate = rentalDate;
@@ -33,7 +33,7 @@ class RentalOrder implements IRentalOrder {
 
     @Override
     public String getCustomerId() {
-        return "";
+        return this.customerId;
     }
 
     @Override

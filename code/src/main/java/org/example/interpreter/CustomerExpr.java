@@ -1,10 +1,11 @@
 package org.example.interpreter;
 
-import org.example.cmds.Command;
-import org.example.cmds.CustomerDowngradeTier;
-import org.example.cmds.CustomerUpgradeTier;
-import org.example.cmds.NoCmd;
+import org.example.cmds.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 public class CustomerExpr implements Expression {
@@ -74,10 +75,26 @@ public class CustomerExpr implements Expression {
     public Command parseReceipt(StringTokenizer tokenizer) {
         return new NoCmd();
     }
-    public Command parseRent(StringTokenizer tokenizer) {
-        return new NoCmd();
+    public Command parseRent(StringTokenizer inputTokens) {
+        String next = inputTokens.nextToken();
+        return switch (next) {
+            case "viewall" -> new CustomerRentViewAll();
+            case "order" -> {
+                if (inputTokens.countTokens() == 3 && "vehicle".equalsIgnoreCase(inputTokens.nextToken())) {
+                    String vehicleId = inputTokens.nextToken();
+                    String dateToken = inputTokens.nextToken();
+                    if ("date".equalsIgnoreCase(dateToken) && inputTokens.hasMoreTokens()) {
+                        String dateStr = inputTokens.nextToken();
+                        yield new CustomerRentOrder(vehicleId, dateStr);
+                    }
+                }
+                yield new NoCmd();
+            }
+            default -> new NoCmd();
+        };
     }
-    public Command parseEvent(StringTokenizer tokenizer) {
+
+    public Command parseEvent(StringTokenizer inputTokens) {
         return new NoCmd();
     }
 
