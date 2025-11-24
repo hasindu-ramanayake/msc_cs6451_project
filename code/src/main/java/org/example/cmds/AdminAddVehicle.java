@@ -8,14 +8,11 @@ import org.example.vehicle.VehicleMgr;
 
 public class AdminAddVehicle implements Command {
 
-
-
-
     @Override
     public void execute(SessionWrapper userWrapper){
         ISingleton sessionMgr = SessionMgr.getInstance();
 
-        if(((SessionMgr) sessionMgr).isValidSession(userWrapper)){
+        if (((SessionMgr) sessionMgr).isValidSession(userWrapper)) {
             ISingleton vehicleMgr = VehicleMgr.getInstance();
 
         }

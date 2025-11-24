@@ -3,9 +3,7 @@ package org.example.vehicle;
 import org.example.core.ISingleton;
 import org.example.customer.CustomerMgr;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class VehicleMgr implements ISingleton {
 
@@ -24,8 +22,7 @@ public class VehicleMgr implements ISingleton {
         //Initialise 20 dummy vehicles
         vehicleMap = new HashMap<>();
         for(int i = 0; i<20; i++){
-            VehicleBaseClass vehicle = new VehicleBaseClass(Integer.toString(i), new GradeStandard(), VehicleStateT.READY,5, MakeT.SEAT, ModelT.IBIZA , VehicleColorT.SILVER, new RentalRateStandard());
-
+            VehicleBaseClass vehicle = new VehicleBaseClass(Integer.toString(i), new GradeStandard(), VehicleStateT.READY,5, MakeT.SEAT, ModelT.IBIZA , VehicleColorT.SILVER, new RentalRateStandard() );
             vehicleMap.put(vehicle.getVehicleID(), vehicle );
         }
     }
@@ -39,10 +36,10 @@ public class VehicleMgr implements ISingleton {
 
     public void removeVehicleFromMap(String vehicleID){
         //Check if the vehicle exists
-        if(vehicleID == null){
+        if ( vehicleID == null || vehicleID.isEmpty() ){
             System.out.println("This vehicle does not exist");
-        }
-        else{
+
+        } else {
             vehicleMap.remove(vehicleID);
             System.out.println("Vehicle removed successfully");
         }
@@ -88,14 +85,14 @@ public class VehicleMgr implements ISingleton {
     }
 
 
-    public VehicleBaseClass searchVehicleByMake(MakeT make){
-        for(Map.Entry<String, VehicleBaseClass> entry: vehicleMap.entrySet()){
-            VehicleBaseClass vehicle = entry.getValue();
-            if(make.equals(vehicle.getMake())){
-                return vehicle;
+    public List<VehicleBaseClass> searchVehicleByMake(MakeT make){
+        ArrayList<VehicleBaseClass> vehicleList = new ArrayList<>();
+        for( Map.Entry<String, VehicleBaseClass> entry: vehicleMap.entrySet()){
+            if (make.equals(entry.getValue().getMake()) ){
+                vehicleList.add(entry.getValue());
             }
         }
-        return null;
+        return vehicleList;
     }
 
     public VehicleBaseClass searchVehicleByModel(ModelT model){
@@ -115,7 +112,7 @@ public class VehicleMgr implements ISingleton {
     }
 
     public VehicleBaseClass getAllVehicleByGrade(IVehicleGrade grade){
-        for(Map.Entry<String, VehicleBaseClass> entry: vehicleMap.entrySet()){
+        for( Map.Entry<String, VehicleBaseClass> entry: vehicleMap.entrySet() ){
             VehicleBaseClass vehicle = entry.getValue();
             if(grade.equals(vehicle.getVehicleGrade())){
                 return vehicle;

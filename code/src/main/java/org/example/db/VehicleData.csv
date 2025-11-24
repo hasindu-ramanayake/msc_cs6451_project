@@ -1,0 +1,11 @@
+vehicleID,vehicleGrade,vehicleState,passengerCount,make,model,color,rentalRate
+V001,PREMIUM,AV,4,Toyota,Camry,Black,75.00
+V002,STANDARD,AV,5,Honda,Civic,White,60.00
+V003,LUXURY,MT,4,BMW,5 Series,Blue,120.00
+V004,ECONOMY,RT,4,Nissan,Sentra,Gray,45.00
+V005,PREMIUM,AV,7,Toyota,Highlander,Silver,85.00
+V006,LUXURY,AV,2,Seat,C-Class,Red,130.00
+V007,STANDARD,RT,4,Kia,Optima,Black,55.00
+V008,ECONOMY,AV,4,Hyundai,Elantra,White,40.00
+V009,PREMIUM,MT,5,Audi,A4,Blue,95.00
+V010,LUXURY,AV,4,Lexus,ES,Gray,125.00
