@@ -1,7 +1,7 @@
 package org.example.vehicle;
 
 public enum VehicleColorT {
-    SILVER, UNKNOWN;
+    BLACK, WHITE, GRAY, RED, BLUE, SILVER, UNKNOWN;
 
     public static VehicleColorT getType(String t){
         if ( t==null || t.isEmpty() ) return UNKNOWN;

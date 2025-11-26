@@ -18,15 +18,6 @@ public class FileReaderService {
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
                 dataList.add(data);
-                // Display each column
-                System.out.println("VehicleID: " + data[0] +
-                        ", Grade: " + data[1] +
-                        ", State: " + data[2] +
-                        ", PassengerCount: " + data[3] +
-                        ", Make: " + data[4] +
-                        ", Model: " + data[5] +
-                        ", Color: " + data[6] +
-                        ", RentalRate: " + data[7]);
             }
         } catch (IOException e) {
             e.printStackTrace();

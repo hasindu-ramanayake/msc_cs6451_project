@@ -1,10 +1,15 @@
 package org.example.db;
 
 import org.example.customer.CustomerBaseClass;
+import org.example.customer.CustomerT;
+import org.example.customer.CustomerTierT;
 import org.example.rental.IRentalOrder;
+import org.example.rental.RentalOrder;
 import org.example.vehicle.*;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,15 +32,15 @@ public class FileDbAdapter implements IDbAdapter {
     }
     @Override
     public void readCustomerData(String source) {
-        fileReader.loadFromFile(source);
+        this.processCustomerData(fileReader.loadFromFile(source));
     }
 
     @Override
     public void readRentalData(String source) {
-        fileReader.loadFromFile(source);
+        this.processRentalData(fileReader.loadFromFile(source));
     }
 
-    public void processVehicleData(List<String[]> data){
+    private void processVehicleData(List<String[]> data){
         for( var d: data ) {
             IVehicleGrade vG = new GradeEconomy();
             AbRentalRateBaseClass rr = new RentalRateEconomy();
@@ -47,8 +52,7 @@ public class FileDbAdapter implements IDbAdapter {
                 case VehicleGradeT.UNKNOWN -> { vG = new GradeEconomy(); rr = new RentalRateEconomy(); } // need new CLass for unknown
             }
 
-            VehicleBaseClass ve = new VehicleBaseClass(
-                    d[0] //vehicleId
+            VehicleBaseClass ve = new VehicleBaseClass( d[0] //vehicleId
                     ,vG//grade
                     ,VehicleStateT.getType(d[2]) //state
                     ,Integer.parseInt(d[3]) //Pcount
@@ -56,10 +60,45 @@ public class FileDbAdapter implements IDbAdapter {
                     ,ModelT.getType(d[5]) //Model
                     ,VehicleColorT.getType(d[6]) //color
                     ,rr ); //rental rate
-
             this.vehicleMap.put(d[0], ve);
         }
 
+    }
+
+    private void processRentalData( List<String[]> data ) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        for( var d: data ) {
+            Date orderDate = new Date();
+            try {
+                orderDate = formatter.parse(d[3]);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            IRentalOrder rO = new RentalOrder( d[0] // orderID
+                    ,d[1] // customerID
+                    ,d[2] // vehicleID,
+                    ,orderDate // date
+                    ,Float.parseFloat(d[4]) // fee
+                    ,Boolean.parseBoolean(d[5]) // isPaid
+            );
+            this.RentalMap.put(d[0],rO);
+        }
+
+    }
+
+    private void processCustomerData(List<String[]> data) {
+        for (var d: data ) {
+            CustomerBaseClass cu = new CustomerBaseClass(d[0] // email
+                    ,Integer.parseInt(d[1]) // phone number
+                    ,CustomerT.getType(d[2]) // customerT
+                    ,Boolean.parseBoolean(d[3]) //isValidDrivingLic
+                    ,d[4] //customer id
+                    ,Integer.parseInt(d[5]) //loyalty points
+            );
+            cu.setCustomerTier(CustomerTierT.getType(d[6]));
+            this.customerMap.put(d[4], cu);
+        }
     }
 
 }

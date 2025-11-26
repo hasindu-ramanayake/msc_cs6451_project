@@ -22,7 +22,7 @@ public class VehicleMgr implements ISingleton {
         //Initialise 20 dummy vehicles
         vehicleMap = new HashMap<>();
         for(int i = 0; i<20; i++){
-            VehicleBaseClass vehicle = new VehicleBaseClass(Integer.toString(i), new GradeStandard(), VehicleStateT.READY,5, MakeT.SEAT, ModelT.IBIZA , VehicleColorT.SILVER, new RentalRateStandard() );
+            VehicleBaseClass vehicle = new VehicleBaseClass(Integer.toString(i), new GradeStandard(), VehicleStateT.READY,5, MakeT.SEAT, ModelT.CLASS_A , VehicleColorT.SILVER, new RentalRateStandard() );
             vehicleMap.put(vehicle.getVehicleID(), vehicle );
         }
     }

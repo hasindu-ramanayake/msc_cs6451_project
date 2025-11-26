@@ -1,7 +1,7 @@
 package org.example.vehicle;
 
 public enum MakeT {
-    SEAT, BMW, TOYOTA, UNKNOWN;
+    SEAT, BMW, TOYOTA, HONDA, KIA,NISSAN, AUDI, LEXUS, UNKNOWN;
 
     public static MakeT getType(String t){
         if ( t==null || t.isEmpty() ) return UNKNOWN;

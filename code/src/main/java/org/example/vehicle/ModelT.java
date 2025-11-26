@@ -1,7 +1,7 @@
 package org.example.vehicle;
 
 public enum ModelT {
-    IBIZA, UNKNOWN;
+    CLASS_A, CLASS_B,CLASS_C, UNKNOWN;
 
     public static ModelT getType(String t){
         if ( t==null || t.isEmpty() ) return UNKNOWN;
