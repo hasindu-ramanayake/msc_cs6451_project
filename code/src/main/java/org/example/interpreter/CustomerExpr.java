@@ -55,26 +55,22 @@ public class CustomerExpr implements Expression {
         String searchFor = tokenizer.nextToken();
 
         switch(searchFor){
-            case "all" ->{
+            case "all" -> {
                 cmd = new CustomerSearchAll();
-            }
-            case "make" ->{
-                if(!tokenizer.hasMoreTokens()){
-                    return new NoCmd();
-                }
+            } case "make" -> {
+                if ( !tokenizer.hasMoreTokens() ) return new NoCmd();
                 String make = tokenizer.nextToken();
-
+                cmd = new CustomerSearchMake(make);
             }
-
         };
         return cmd;
-
 
     }
 
     public Command parseReceipt(StringTokenizer tokenizer) {
         return new NoCmd();
     }
+
     public Command parseRent(StringTokenizer inputTokens) {
         String next = inputTokens.nextToken();
         return switch (next) {

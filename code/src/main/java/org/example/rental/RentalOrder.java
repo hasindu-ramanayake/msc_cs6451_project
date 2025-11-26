@@ -1,29 +1,41 @@
 package org.example.rental;
 
-import org.example.customer.CustomerBaseClass;
-import org.example.vehicle.VehicleBaseClass;
-
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Random;
 
-class RentalOrder implements IRentalOrder {
-    private String orderId;
-    private String customerId;
+public class RentalOrder implements IRentalOrder {
+    private final String orderId;
+    private final String customerId;
     private String vehicleId;
     private Date rentalDate;
     private float fee;
     private boolean isPaid;
 
-    public RentalOrder(){
-
-    }
-
-    public RentalOrder(String customerId, String vehicleId, Date rentalDate, float fee, boolean isPaid) {
+    // this function use when reading from db. to populate data
+    public RentalOrder(String orderId, String customerId, String vehicleId, Date rentalDate, float fee, boolean isPaid) {
+        this.orderId = orderId;
         this.customerId = customerId;
         this.vehicleId = vehicleId;
         this.rentalDate = rentalDate;
         this.fee = fee;
         this.isPaid = isPaid;
+    }
+
+    public RentalOrder(String customerId, String vehicleId, Date rentalDate, float fee, boolean isPaid) {
+        super();
+        this.customerId = customerId;
+        this.vehicleId = vehicleId;
+        this.rentalDate = rentalDate;
+        this.fee = fee;
+        this.isPaid = isPaid;
+        this.orderId = this.generateId();
+    }
+
+    @Override
+    public String generateId(){
+        Random rnd = new Random();
+        return "O"+String.valueOf(rnd.nextInt());
     }
 
     @Override
@@ -85,5 +97,6 @@ class RentalOrder implements IRentalOrder {
     public void setFee() {
 
     }
+
 }
 

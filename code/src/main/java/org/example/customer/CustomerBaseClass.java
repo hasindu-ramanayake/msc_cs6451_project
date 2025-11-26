@@ -8,12 +8,22 @@ public class CustomerBaseClass extends UserClass{
     protected String customerId;
     protected int loyaltyPoints;
     protected int maxAllocations;
-    protected List<String> bookings;
+//    protected List<String> bookings;
     protected boolean hasValidLicense;
     protected CustomerT customerType;
     protected CustomerTierBase customerTier;
 
     public CustomerBaseClass(){}
+
+    public CustomerBaseClass( String email, int phoneNumber, CustomerT customerType, boolean hasValidLicense, String customerId, int loyaltyPoints ){
+        super(email, phoneNumber, UserT.CUSTOMER);
+        this.customerId = customerId;
+        this.customerType = customerType;
+        this.hasValidLicense = hasValidLicense;
+        this.loyaltyPoints = loyaltyPoints;
+        this.maxAllocations = 1;
+        this.customerTier = new CustomerTierBase();
+    }
 
     public CustomerBaseClass(String email, int phoneNumber, CustomerT customerType, boolean hasValidLicense, String customerId) {
         super(email, phoneNumber, UserT.CUSTOMER);
@@ -45,15 +55,11 @@ public class CustomerBaseClass extends UserClass{
         this.maxAllocations = maxAllocations;
     }
 
-    public List<String> getBookings() {
-        bookings = new ArrayList<String>();
-        bookings.add("bookings");
-        return bookings;
-    }
-
-    public void setBookings(List<String> bookings) {
-        this.bookings = bookings;
-    }
+//    public List<String> getBookings() {
+//        bookings = new ArrayList<String>();
+//        bookings.add("bookings");
+//        return bookings;
+//    }
 
     public boolean isHasValidLicense() {
         return true;
@@ -80,19 +86,27 @@ public class CustomerBaseClass extends UserClass{
         return customerTier.customerTierType;
     }
 
-    public void setCustomerTier(CustomerTierBase customerTier) {
-        this.customerTier = customerTier;
+    public void setCustomerTier(CustomerTierT type) {
+        switch (type) {
+            case CustomerTierT.BASE_TIER -> {
+                customerTier = new CustomerTierBase();
+            } case CustomerTierT.BRONZE_TIER -> {
+                customerTier = new CustomerTierBronze();
+            } case CustomerTierT.SILVER_TIER -> {
+                customerTier = new CustomerTierSilver();
+            } case CustomerTierT.GOLD_TIER -> {
+                customerTier = new CustomerTierGold();
+            }
+        }
     }
 
     public void upgradeCustomerTier(){
         switch (customerTier.getCustomerTierType()) {
             case CustomerTierT.BASE_TIER -> {
                 customerTier = new CustomerTierBronze();
-            }
-            case CustomerTierT.BRONZE_TIER -> {
+            } case CustomerTierT.BRONZE_TIER -> {
                 customerTier = new CustomerTierSilver();
-            }
-            case CustomerTierT.SILVER_TIER -> {
+            } case CustomerTierT.SILVER_TIER -> {
                 customerTier = new CustomerTierGold();
             } case CustomerTierT.GOLD_TIER -> System.out.println("DEBUG: Already GOLD TIER");
         }

@@ -61,10 +61,6 @@ public class AdminExp implements Expression{
                 String fullname = tokenizer.nextToken();
                 if(!tokenizer.hasMoreTokens()){return cmd;}
                 String staffID = tokenizer.nextToken();
-
-
-
-
             }
         };
 
