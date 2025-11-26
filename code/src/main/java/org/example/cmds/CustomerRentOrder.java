@@ -38,7 +38,7 @@ public class CustomerRentOrder implements Command {
 
     @Override
     public void execute(SessionWrapper userSession) {
-        System.out.println("Get OrderID");
+        System.out.println("Get OrderID...");
         ISingleton sessionMgr = SessionMgr.getInstance();
         if (((SessionMgr) sessionMgr).isValidSession(userSession)) {
             ISingleton rentalMgr = RentalMgr.getInstance();

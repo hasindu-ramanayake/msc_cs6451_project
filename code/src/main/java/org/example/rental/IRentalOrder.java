@@ -1,10 +1,14 @@
 package org.example.rental;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 
 public interface IRentalOrder {
+
     public String getOrderId(String orderId);
     public String getCustomerId();
+
+    public String generateId();
 
     public LocalDateTime getRentalDate();
     public String getVehicleId();
