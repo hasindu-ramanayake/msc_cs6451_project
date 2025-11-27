@@ -8,7 +8,7 @@ public class Staff extends UserClass{
     protected boolean adminPrivilege;
     protected StaffT staffType;
 
-    public Staff(String email, int phoneNumber, String fullName, StaffT staffType, String staffId, boolean adminPrivilege) {
+    public Staff(String email, String phoneNumber, String fullName, StaffT staffType, String staffId, boolean adminPrivilege) {
         super(email, phoneNumber, UserT.STAFF);
         this.staffId = staffId;
         this.fullName = fullName;

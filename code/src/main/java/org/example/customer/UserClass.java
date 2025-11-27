@@ -5,13 +5,13 @@ import java.util.Date;
 public class UserClass {
     protected String email;
     protected Date joinedDate;
-    protected int phoneNumber;
+    protected String phoneNumber;
     protected UserT userType;
     protected boolean adminPrivilege;
 
     public UserClass() {}
 
-    public UserClass(String email, int phoneNumber, UserT userType) {
+    public UserClass(String email, String phoneNumber, UserT userType) {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.userType = userType;
@@ -19,6 +19,6 @@ public class UserClass {
     }
 
     public String getEmail() { return email; }
-    public int getPhoneNumber() { return phoneNumber; }
+    public String getPhoneNumber() { return phoneNumber; }
     public UserT getUserType() { return userType; }
 }

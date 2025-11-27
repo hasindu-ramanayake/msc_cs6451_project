@@ -1,6 +1,8 @@
 package org.example.customer;
 
 import org.example.core.ISingleton;
+import org.example.db.FileDbAdapter;
+import org.example.db.IDbAdapter;
 import org.example.session.SessionFactory;
 
 public class CustomerFactory extends AbCustomerFactory implements ISingleton {
@@ -11,7 +13,7 @@ public class CustomerFactory extends AbCustomerFactory implements ISingleton {
     }
 
     @Override
-    public CustomerBaseClass createCustomer(String email, int phoneNumber, CustomerT type, boolean hasValidLicense, String customerID) {
+    public CustomerBaseClass createCustomer(String email, String phoneNumber, CustomerT type, boolean hasValidLicense, String customerID) {
         if (type == CustomerT.PERSONAL_CUSTOMER) {
             return new PersonalCustomerClass(email, phoneNumber, type, hasValidLicense, customerID, "", "");
         }
