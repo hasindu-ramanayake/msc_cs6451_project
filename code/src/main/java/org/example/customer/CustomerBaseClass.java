@@ -15,7 +15,7 @@ public class CustomerBaseClass extends UserClass{
 
     public CustomerBaseClass(){}
 
-    public CustomerBaseClass( String email, int phoneNumber, CustomerT customerType, boolean hasValidLicense, String customerId, int loyaltyPoints ){
+    public CustomerBaseClass( String email, String phoneNumber, CustomerT customerType, boolean hasValidLicense, String customerId, int loyaltyPoints ){
         super(email, phoneNumber, UserT.CUSTOMER);
         this.customerId = customerId;
         this.customerType = customerType;
@@ -25,7 +25,7 @@ public class CustomerBaseClass extends UserClass{
         this.customerTier = new CustomerTierBase();
     }
 
-    public CustomerBaseClass(String email, int phoneNumber, CustomerT customerType, boolean hasValidLicense, String customerId) {
+    public CustomerBaseClass(String email, String phoneNumber, CustomerT customerType, boolean hasValidLicense, String customerId) {
         super(email, phoneNumber, UserT.CUSTOMER);
         this.customerId = customerId;
         this.customerType = customerType;
@@ -36,7 +36,7 @@ public class CustomerBaseClass extends UserClass{
     }
 
     public String getCustomerId() {
-        return "customerId";
+        return this.customerId;
     }
 
     public int getLoyaltyPoints() {
@@ -129,5 +129,17 @@ public class CustomerBaseClass extends UserClass{
             }
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerBaseClass{" +
+                "customerId='" + customerId + '\'' +
+                ", loyaltyPoints=" + loyaltyPoints +
+                ", maxAllocations=" + maxAllocations +
+                ", hasValidLicense=" + hasValidLicense +
+                ", customerType=" + customerType +
+                ", customerTier=" + customerTier +
+                '}';
     }
 }

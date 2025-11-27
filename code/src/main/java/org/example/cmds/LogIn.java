@@ -14,9 +14,15 @@ public class LogIn implements Command {
     }
 
     @Override public void execute(SessionWrapper userSession) {
-        System.out.println("LogIn");
         ISingleton sessionMgr = SessionMgr.getInstance();
         userSession.session = ((SessionMgr)sessionMgr).createSessionFromFactory(userId);
-        assert (userSession.session == null) : "Session is null";
+        if (userSession.session == null) {
+            System.out.println("Invalid/Wrong User ID: Please try Again...!!");
+            return;
+        } else {
+//            System.out.println(userSession.session.getSessionId());
+            System.out.println("Welcome " + userId);
+        }
+
     }
 }

@@ -38,6 +38,7 @@ public class SessionMgr implements ISingleton {
     public void deleteSession(SessionWrapper userSession) {
         userSession.session = null;
     }
+
     public ISessionClass createSessionFromFactory(String userId) {
         return ((SessionFactory)sessionFactory).createSession(userId);
     }

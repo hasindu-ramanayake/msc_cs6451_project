@@ -28,7 +28,7 @@ public class GeneralExpr implements Expression {
                 if ( !inputTokens.hasMoreTokens() ) { return cmd;}
                 String email = inputTokens.nextToken();
                 if ( !inputTokens.hasMoreTokens() ) { return cmd;}
-                int phoneNumber = Integer.parseInt(inputTokens.nextToken());
+                String phoneNumber = inputTokens.nextToken();
                 if ( !inputTokens.hasMoreTokens() ) { return cmd;}
                 String hasValidLicense = inputTokens.nextToken();
                 cmd = new SignUp(email, phoneNumber, hasValidLicense, customerId);
