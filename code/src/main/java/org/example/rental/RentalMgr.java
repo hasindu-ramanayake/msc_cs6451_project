@@ -5,6 +5,7 @@ import org.example.payment.IPaymentGateway;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Date;
 
 public class RentalMgr implements ISingleton{
     private static ISingleton rentalInstance;
@@ -64,7 +65,8 @@ public class RentalMgr implements ISingleton{
         }
     }
 
-    public String getRentalOrderID(HashMap<String, IRentalOrder> rentalMap, String vehicleID, LocalDateTime date) {
+    public String getRentalOrderIDForCustomer(String customerID, String vehicleID, Date date) {
+        HashMap<String, IRentalOrder> rentalMap = getAllRentalOrdersForCustomer(customerID);
         for (var entry : rentalMap.entrySet()) {
             IRentalOrder order = entry.getValue();
             if (order.getVehicleId().equals(vehicleID) && order.getRentalDate().equals(date)) {
