@@ -78,7 +78,6 @@ public class CustomerBaseClass extends UserClass{
     }
 
     public CustomerTierBase getCustomerTier() {
-        customerTier = new CustomerTierBase();
         return customerTier;
     }
 

@@ -12,12 +12,10 @@ import java.util.Map;
 
 public class CustomerMgr implements ISingleton {
     private static ISingleton managerInst;
-    private ISingleton customerFactory;
-    private Map<String, CustomerBaseClass> customerMap;
-    private IDbAdapter db;
+    private final ISingleton customerFactory;
+    private final IDbAdapter db;
 
     private CustomerMgr() {
-        customerMap = new HashMap<>();
         customerFactory = CustomerFactory.getCustomerFactoryInstance();
         db = FileDbAdapter.getInstance();
     }

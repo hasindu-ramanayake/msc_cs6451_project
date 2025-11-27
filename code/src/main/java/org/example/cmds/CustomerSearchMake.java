@@ -21,7 +21,7 @@ public class CustomerSearchMake implements Command{
         ISingleton sessionMgr = SessionMgr.getInstance();
         if( ((SessionMgr)sessionMgr).isValidSession(userSession) ){
             ISingleton vehicleMgr = VehicleMgr.getInstance();
-            List<VehicleBaseClass> vehicleList = ((VehicleMgr)vehicleMgr).searchVehicleByMake(make);
+            List<VehicleBaseClass> vehicleList = ((VehicleMgr)vehicleMgr).searchVehicleByMake(userSession.session.getUser() ,make);
             if (vehicleList.isEmpty()) {
                 System.out.println("No Vehicle find in this make..");
                 return;

@@ -12,7 +12,7 @@ public class CustomerTierSilver extends CustomerTierBase{
         this.loyaltyPointMultiplier = 1.5;
         this.cancellationTime = 1000000000;
         this.loyaltyPointsToUpdate = 1000000000;
-        this.vehicleGradeType = List.of(VehicleGradeT.ECONOMY, VehicleGradeT.STANDARD);
+        this.vehicleGradeType = List.of(VehicleGradeT.ECONOMY, VehicleGradeT.STANDARD, VehicleGradeT.PREMIUM);
         this.customerTierType = CustomerTierT.SILVER_TIER;
     }
 }

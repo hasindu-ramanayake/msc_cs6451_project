@@ -11,6 +11,7 @@ import org.example.vehicle.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -133,8 +134,36 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
         return cu;
     }
 
+    @Override public ArrayList<VehicleBaseClass> getAccessibleVehicalList(String userId) {
+        // assume this will return valid customer
+        ArrayList<VehicleBaseClass> list = new ArrayList<>();
+        CustomerBaseClass cu = customerMap.get(userId);
+        for (VehicleGradeT ty: cu.getCustomerTier().getVehicleGradeType() ) {
+            for ( var v: vehicleMap.entrySet() ) {
+                if (v.getValue().getVehicleGrade().getGrade() == ty ) {
+                    list.add(v.getValue());
+                }
+            }
+        }
+        return  list;
+    }
+
+    @Override  public ArrayList<VehicleBaseClass> getAccessibleVehicalListByMake(String userId, MakeT make) {
+        // assume this will return valid customer
+        ArrayList<VehicleBaseClass> list = new ArrayList<>();
+        CustomerBaseClass cu = customerMap.get(userId);
+        for (VehicleGradeT ty: cu.getCustomerTier().getVehicleGradeType() ) {
+            for ( var v: vehicleMap.entrySet() ) {
+                if (v.getValue().getVehicleGrade().getGrade() == ty && v.getValue().getMake() == make) {
+                    list.add(v.getValue());
+                }
+            }
+        }
+        return  list;
+    }
+
     private void printMap(){
-        for (var cu: customerMap.entrySet() ) {
+        for (var cu: vehicleMap.entrySet() ) {
             System.out.println(cu.getValue());
         }
     }
