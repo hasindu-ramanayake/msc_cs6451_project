@@ -34,7 +34,7 @@ public class RentalMgr implements ISingleton{
     public void initialiseRentalOrder(){}
     public void requestPayment(){}
     private String getRentalOrderID(String orderId){
-        return "rentalOrder";
+        return orderId;
     }
 
     public HashMap<String, IRentalOrder> getAllRentalOrdersForCustomer(String customerID){

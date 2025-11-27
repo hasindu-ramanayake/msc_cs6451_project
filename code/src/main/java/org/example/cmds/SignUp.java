@@ -24,6 +24,5 @@ public class SignUp implements Command {
         ISingleton sessionMgr = SessionMgr.getInstance();
         ISingleton customerMgr = CustomerMgr.getInstance();
         ((CustomerMgr)customerMgr).createCustomerFromFactory(email, phoneNumber, CustomerT.PERSONAL_CUSTOMER, hasValidLicense, customerId);
-        System.out.println("Signed up as " + customerId + "\n Email address: " + email + "\n Phone number: " + phoneNumber);
     }
 }

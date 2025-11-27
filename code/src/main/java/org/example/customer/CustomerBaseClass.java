@@ -116,4 +116,17 @@ public class CustomerBaseClass extends UserClass{
         }
 
     }
+
+    @Override
+    public String toString() {
+        return "CustomerBaseClass {" +
+                "Customer ID='" + customerId + '\'' +
+                ", Customer Type=" + customerType +
+                ", Has Valid License=" + hasValidLicense +
+                ", Max Allocations=" + maxAllocations +
+                ", Customer Tier=" + customerTier +
+                '}';
+    }
+
+
 }

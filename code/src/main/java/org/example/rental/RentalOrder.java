@@ -1,16 +1,12 @@
 package org.example.rental;
 
-import org.example.customer.CustomerBaseClass;
-import org.example.vehicle.VehicleBaseClass;
-
 import java.time.LocalDateTime;
-import java.util.Date;
 
 class RentalOrder implements IRentalOrder {
     private String orderId;
     private String customerId;
     private String vehicleId;
-    private Date rentalDate;
+    private LocalDateTime rentalDate;
     private float fee;
     private boolean isPaid;
 
@@ -18,7 +14,8 @@ class RentalOrder implements IRentalOrder {
 
     }
 
-    public RentalOrder(String customerId, String vehicleId, Date rentalDate, float fee, boolean isPaid) {
+    public RentalOrder(String orderId, String customerId, String vehicleId, LocalDateTime rentalDate, float fee, boolean isPaid) {
+        this.orderId = orderId;
         this.customerId = customerId;
         this.vehicleId = vehicleId;
         this.rentalDate = rentalDate;
@@ -27,8 +24,8 @@ class RentalOrder implements IRentalOrder {
     }
 
     @Override
-    public String getOrderId(String orderId) {
-        return "";
+    public String getOrderId() {
+        return this.orderId;
     }
 
     @Override
@@ -38,17 +35,17 @@ class RentalOrder implements IRentalOrder {
 
     @Override
     public LocalDateTime getRentalDate() {
-        return null;
+        return rentalDate;
     }
 
     @Override
     public String getVehicleId() {
-        return "";
+        return vehicleId;
     }
 
     @Override
     public double getFee() {
-        return 0;
+        return fee;
     }
 
     @Override
@@ -58,31 +55,37 @@ class RentalOrder implements IRentalOrder {
 
     @Override
     public String printRentalOrder() {
-        return "";
+        return "Order ID: "+orderId +
+                "\nPaid By Customer: "+customerId+
+                "\nPayment Successful: "+isPaid+
+                "\nFee: "+getFee();
     }
 
     @Override
-    public void setCustomerId() {
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    @Override
+    public void setRentalDate(LocalDateTime rentalDate) {
+        this.rentalDate = rentalDate;
+    }
+
+    @Override
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
 
     }
 
     @Override
-    public void setRentalDate() {
+    public void setIsPaid(boolean isPaid) {
+        this.isPaid = isPaid;
 
     }
 
     @Override
-    public void setVehicleId() {
-
-    }
-
-    @Override
-    public void setIsPaid() {
-
-    }
-
-    @Override
-    public void setFee() {
+    public void setFee(double fee) {
+        this.fee = (float) fee;
 
     }
 }

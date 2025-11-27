@@ -1,9 +1,6 @@
 package org.example.interpreter;
 
-import org.example.cmds.AdminAddVehicle;
-import org.example.cmds.AdminRemoveVehicle;
-import org.example.cmds.Command;
-import org.example.cmds.NoCmd;
+import org.example.cmds.*;
 
 import java.util.StringTokenizer;
 
@@ -22,6 +19,7 @@ public class AdminExp implements Expression{
         return switch(action){
             case "add" -> parseAdd(inputTokens);
             case "remove" -> parseRemove(inputTokens);
+            case "check" -> parseCheck(inputTokens);
 
             default -> new NoCmd();
 
@@ -73,18 +71,33 @@ public class AdminExp implements Expression{
     public Command parseRemove(StringTokenizer tokenizer){
         Command cmd = new NoCmd();
         if(!tokenizer.hasMoreTokens()){
-            return new NoCmd();
+            return cmd;
         }
         String remove = tokenizer.nextToken();
 
         switch(remove){
             case "vehicle"->{
                 if(!tokenizer.hasMoreTokens()){
-                    return new NoCmd();
+                    return cmd;
                 }
                 String vehicleID = tokenizer.nextToken();
-                 cmd = new AdminRemoveVehicle(vehicleID);
+                cmd = new AdminRemoveVehicle(vehicleID);
 
+            }
+
+        }
+        return cmd;
+    }
+    public Command parseCheck(StringTokenizer tokenizer){
+        Command cmd = new NoCmd();
+        if(!tokenizer.hasMoreTokens()){
+            return cmd;
+        }
+        String next = tokenizer.nextToken();
+
+        switch(next){
+            case "notifications" ->{
+                cmd = new AdminCheckNotfications();
             }
         }
         return cmd;

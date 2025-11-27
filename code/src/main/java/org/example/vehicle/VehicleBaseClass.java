@@ -87,6 +87,19 @@ public class VehicleBaseClass {
     public void setPassengerCount(int passengerCount) {
         this.passengerCount = passengerCount;
     }
+    @Override
+    public String toString() {
+        return "Vehicle:  {" +
+                "vehicleID='" + vehicleID +
+                ", vehicleGrade=" + vehicleGrade +
+                ", vehicleState=" + vehicleState +
+                ", passengerCount=" + passengerCount +
+                ", make=" + make +
+                ", model=" + model +
+                ", color=" + color +
+                ", rentalRate=" + rentalRate +
+                '}';
+    }
 
 
 }

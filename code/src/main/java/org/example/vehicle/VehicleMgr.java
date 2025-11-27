@@ -1,13 +1,11 @@
 package org.example.vehicle;
 
 import org.example.core.ISingleton;
-import org.example.customer.CustomerMgr;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class VehicleMgr implements ISingleton {
+
 
     private final HashMap<String, VehicleBaseClass> vehicleMap;
     private static ISingleton vehicleMgrInst;
@@ -58,6 +56,7 @@ public class VehicleMgr implements ISingleton {
         else{
             System.out.println("Reporting status of "+vehicleID+ " to "+state);
             vehicle.setVehicleState(state);
+
         }
     }
 
@@ -66,7 +65,7 @@ public class VehicleMgr implements ISingleton {
         if(vehicle == null){
             System.out.println("Vehicle with ID: "+vehicleID+ " does not exist");
         }
-
+        //TODO Check if this has been done
     }
     //Returns all the vehicles
     public HashMap<String, VehicleBaseClass> getAllVehicles(){
@@ -123,4 +122,5 @@ public class VehicleMgr implements ISingleton {
         }
         return null;
     }
+
 }
