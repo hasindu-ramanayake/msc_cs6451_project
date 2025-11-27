@@ -16,14 +16,10 @@ public interface IRentalOrder {
     public boolean getIsPaid();
     public String printRentalOrder();
 
-    public void setCustomerId();
-    public void setRentalDate();
-    public void setVehicleId();
-    public void setIsPaid();
-    public void setFee();
-
-
-
-
+    public void setCustomerId(String customerId);
+    public void setRentalDate(LocalDateTime rentalDate);
+    public void setVehicleId(String vehicleId);
+    public void setIsPaid(boolean isPaid);
+    public void setFee(double fee);
 
 }

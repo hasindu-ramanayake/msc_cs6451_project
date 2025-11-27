@@ -54,6 +54,7 @@ public class VehicleMgr implements ISingleton {
         else{
             System.out.println("Reporting status of "+vehicleID+ " to "+state);
             vehicle.setVehicleState(state);
+
         }
     }
 
@@ -62,7 +63,7 @@ public class VehicleMgr implements ISingleton {
         if(vehicle == null){
             System.out.println("Vehicle with ID: "+vehicleID+ " does not exist");
         }
-
+        //TODO Check if this has been done
     }
     //Returns all the vehicles
     public ArrayList<VehicleBaseClass> getAllVehicles(String userId){
@@ -99,4 +100,5 @@ public class VehicleMgr implements ISingleton {
         }
         return null;
     }
+
 }

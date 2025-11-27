@@ -21,6 +21,7 @@ public class RentalFactory extends AbRentalFactory implements ISingleton {
     }
 
     private String generateUniqueId(String id){
+
         return id;
     }
 
@@ -29,6 +30,7 @@ public class RentalFactory extends AbRentalFactory implements ISingleton {
     }
 
     private String requestVehicleDetails(String vehicleId) {
+
         return "Vehicle Details";
     }
 

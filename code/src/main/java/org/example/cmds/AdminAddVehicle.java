@@ -15,6 +15,7 @@ public class AdminAddVehicle implements Command {
         if (((SessionMgr) sessionMgr).isValidSession(userWrapper)) {
             ISingleton vehicleMgr = VehicleMgr.getInstance();
 
+
         }
 
 
