@@ -2,9 +2,9 @@ name: Java CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "rental_package_jack" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "rental_package_jack" ]
 
 jobs:
   build:
