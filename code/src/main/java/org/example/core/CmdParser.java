@@ -15,7 +15,7 @@ public class CmdParser {
         if ( !inputTokens.hasMoreTokens() ) return new NoCmd();
 
         String inputToken = inputTokens.nextToken();
-        if ( inputToken.matches("login|signup|signout") ) {
+        if ( inputToken.matches("login|signup|signout|help") ) {
             expr = new GeneralExpr();
         } else if (inputToken.startsWith("customer")) {
             expr = new CustomerExpr();
