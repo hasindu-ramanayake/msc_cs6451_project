@@ -19,7 +19,6 @@ public class AdminExp implements Expression{
         return switch(action){
             case "add" -> parseAdd(inputTokens);
             case "remove" -> parseRemove(inputTokens);
-            case "check" -> parseCheck(inputTokens);
 
             default -> new NoCmd();
 
@@ -88,20 +87,7 @@ public class AdminExp implements Expression{
         }
         return cmd;
     }
-    public Command parseCheck(StringTokenizer tokenizer){
-        Command cmd = new NoCmd();
-        if(!tokenizer.hasMoreTokens()){
-            return cmd;
-        }
-        String next = tokenizer.nextToken();
 
-        switch(next){
-            case "notifications" ->{
-                cmd = new AdminCheckNotfications();
-            }
-        }
-        return cmd;
-    }
 
 
 }
