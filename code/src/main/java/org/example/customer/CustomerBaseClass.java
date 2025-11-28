@@ -86,6 +86,7 @@ public class CustomerBaseClass extends UserClass{
     }
 
     public void setCustomerTier(CustomerTierT type) {
+        System.out.println(type);
         switch (type) {
             case CustomerTierT.BASE_TIER -> {
                 customerTier = new CustomerTierBase();

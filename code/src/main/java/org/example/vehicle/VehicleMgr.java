@@ -71,8 +71,11 @@ public class VehicleMgr implements ISingleton {
     }
 
     public List<VehicleBaseClass> searchVehicleByMake(String userId , MakeT make){
-
         return ((FileDbAdapter)db).getAccessibleVehicalListByMake(userId, make);
+    }
+
+    public List<VehicleBaseClass> searchVehicleByDate(String userId , Date date){
+        return ((FileDbAdapter)db).getAccessibleVehicalListByDate(userId, date);
     }
 
     public VehicleBaseClass searchVehicleByModel(ModelT model){

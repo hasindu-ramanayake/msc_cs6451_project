@@ -12,6 +12,6 @@ public class CustomerTierBronze extends CustomerTierBase{
         this.cancellationTime = 1000000000;
         this.loyaltyPointsToUpdate = 1000000000;
         this.vehicleGradeType = List.of(VehicleGradeT.ECONOMY, VehicleGradeT.STANDARD);
-        this.customerTierType = CustomerTierT.BRONZE_TIER;
+        super.customerTierType = CustomerTierT.BRONZE_TIER;
     }
 }

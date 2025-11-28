@@ -1,14 +1,13 @@
 package org.example.rental;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Random;
 
 public class RentalOrder implements IRentalOrder {
     private final String orderId;
-    private final String customerId;
+    private String customerId;
     private String vehicleId;
-    private LocalDateTime rentalDate;
+    private Date rentalDate;
     private float fee;
     private boolean isPaid;
 
@@ -22,13 +21,12 @@ public class RentalOrder implements IRentalOrder {
         this.isPaid = isPaid;
     }
 
-    public RentalOrder(String customerId, String vehicleId, Date rentalDate, float fee, boolean isPaid) {
+    public RentalOrder(String customerId, String vehicleId, Date rentalDate ) {
         super();
         this.customerId = customerId;
         this.vehicleId = vehicleId;
         this.rentalDate = rentalDate;
-        this.fee = fee;
-        this.isPaid = isPaid;
+        this.isPaid = false;
         this.orderId = this.generateId();
     }
 
@@ -49,7 +47,7 @@ public class RentalOrder implements IRentalOrder {
     }
 
     @Override
-    public LocalDateTime getRentalDate() {
+    public Date getRentalDate() {
         return rentalDate;
     }
 
@@ -82,7 +80,7 @@ public class RentalOrder implements IRentalOrder {
     }
 
     @Override
-    public void setRentalDate(LocalDateTime rentalDate) {
+    public void setRentalDate(Date rentalDate) {
         this.rentalDate = rentalDate;
     }
 
@@ -99,10 +97,21 @@ public class RentalOrder implements IRentalOrder {
     }
 
     @Override
-    public void setFee(double fee) {
-        this.fee = (float) fee;
+    public void setFee(float fee) {
+        this.fee = fee;
 
     }
 
+    @Override
+    public String toString() {
+        return "RentalOrder{" +
+                "orderId='" + orderId + '\'' +
+                ", customerId='" + customerId + '\'' +
+                ", vehicleId='" + vehicleId + '\'' +
+                ", rentalDate=" + rentalDate +
+                ", fee=" + fee +
+                ", isPaid=" + isPaid +
+                '}';
+    }
 }
 

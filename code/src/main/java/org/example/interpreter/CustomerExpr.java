@@ -61,6 +61,10 @@ public class CustomerExpr implements Expression {
                 if ( !tokenizer.hasMoreTokens() ) return new NoCmd();
                 String make = tokenizer.nextToken();
                 cmd = new CustomerSearchMake(make);
+            }case "date"->{
+                if ( !tokenizer.hasMoreTokens() ) return new NoCmd();
+                String date = tokenizer.nextToken();
+                cmd = new CustomerSearchDate(date);
             }
         };
         return cmd;
@@ -73,21 +77,27 @@ public class CustomerExpr implements Expression {
 
     public Command parseRent(StringTokenizer inputTokens) {
         String next = inputTokens.nextToken();
-        return switch (next) {
-            case "viewall" -> new CustomerRentViewAll();
-            case "order" -> {
-                if (inputTokens.countTokens() == 3 && "vehicle".equalsIgnoreCase(inputTokens.nextToken())) {
+        Command cmd = new NoCmd();
+        switch (next) {
+            case "viewall" -> {
+                cmd = new CustomerRentViewAll();
+
+            } case "order" -> {
+                if (inputTokens.countTokens() == 2 ) {
                     String vehicleId = inputTokens.nextToken();
                     String dateToken = inputTokens.nextToken();
-                    if ("date".equalsIgnoreCase(dateToken) && inputTokens.hasMoreTokens()) {
-                        String dateStr = inputTokens.nextToken();
-                        yield new CustomerRentOrder(vehicleId, dateStr);
-                    }
+                    System.out.println(vehicleId+" "+dateToken);
+                    cmd = new CustomerRentOrder(vehicleId, dateToken);
+                } else {
+                    System.out.println("Format error> customer rent order [VehicleId] [data{DD/MM/YYYY}]");
                 }
-                yield new NoCmd();
+            } case "view" -> {
+
+            } case "print" -> {
+
             }
-            default -> new NoCmd();
         };
+        return cmd;
     }
 
     public Command parseEvent(StringTokenizer inputTokens) {
