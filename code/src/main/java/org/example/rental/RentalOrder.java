@@ -57,7 +57,7 @@ public class RentalOrder implements IRentalOrder {
     }
 
     @Override
-    public double getFee() {
+    public float getFee() {
         return fee;
     }
 
