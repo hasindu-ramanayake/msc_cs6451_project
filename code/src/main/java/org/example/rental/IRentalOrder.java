@@ -13,7 +13,7 @@ public interface IRentalOrder {
 
     public Date getRentalDate();
     public String getVehicleId();
-    public double getFee();
+    public float getFee();
     public boolean getIsPaid();
     public String printRentalOrder();
 

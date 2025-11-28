@@ -32,16 +32,6 @@ public class RentalFactory extends AbRentalFactory implements ISingleton {
         System.out.println("RENTAL FACTORY");
     }
 
-    private String requestVehicleDetails(String vehicleId) {
-
-        return "Vehicle Details";
-    }
-
-    private String requestCustomerDetails(String customerId){
-        return "Customer Details";
-    }
-
-
 
 
 }
