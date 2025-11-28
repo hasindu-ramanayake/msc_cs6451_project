@@ -1,12 +1,11 @@
 package org.example.rental;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Random;
 
 public class RentalOrder implements IRentalOrder {
     private final String orderId;
-    private final String customerId;
+    private String customerId;
     private String vehicleId;
     private Date rentalDate;
     private float fee;
@@ -22,13 +21,12 @@ public class RentalOrder implements IRentalOrder {
         this.isPaid = isPaid;
     }
 
-    public RentalOrder(String customerId, String vehicleId, Date rentalDate, float fee, boolean isPaid) {
+    public RentalOrder(String customerId, String vehicleId, Date rentalDate ) {
         super();
         this.customerId = customerId;
         this.vehicleId = vehicleId;
         this.rentalDate = rentalDate;
-        this.fee = fee;
-        this.isPaid = isPaid;
+        this.isPaid = false;
         this.orderId = this.generateId();
     }
 
@@ -39,8 +37,8 @@ public class RentalOrder implements IRentalOrder {
     }
 
     @Override
-    public String getOrderId(String orderId) {
-        return "";
+    public String getOrderId() {
+        return this.orderId;
     }
 
     @Override
@@ -49,18 +47,18 @@ public class RentalOrder implements IRentalOrder {
     }
 
     @Override
-    public LocalDateTime getRentalDate() {
-        return null;
+    public Date getRentalDate() {
+        return rentalDate;
     }
 
     @Override
     public String getVehicleId() {
-        return "";
+        return vehicleId;
     }
 
     @Override
     public double getFee() {
-        return 0;
+        return fee;
     }
 
     @Override
@@ -70,33 +68,50 @@ public class RentalOrder implements IRentalOrder {
 
     @Override
     public String printRentalOrder() {
-        return "";
+        return "Order ID: "+orderId +
+                "\nPaid By Customer: "+customerId+
+                "\nPayment Successful: "+isPaid+
+                "\nFee: "+getFee();
     }
 
     @Override
-    public void setCustomerId() {
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    @Override
+    public void setRentalDate(Date rentalDate) {
+        this.rentalDate = rentalDate;
+    }
+
+    @Override
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
 
     }
 
     @Override
-    public void setRentalDate() {
+    public void setIsPaid(boolean isPaid) {
+        this.isPaid = isPaid;
 
     }
 
     @Override
-    public void setVehicleId() {
+    public void setFee(float fee) {
+        this.fee = fee;
 
     }
 
     @Override
-    public void setIsPaid() {
-
+    public String toString() {
+        return "RentalOrder{" +
+                "orderId='" + orderId + '\'' +
+                ", customerId='" + customerId + '\'' +
+                ", vehicleId='" + vehicleId + '\'' +
+                ", rentalDate=" + rentalDate +
+                ", fee=" + fee +
+                ", isPaid=" + isPaid +
+                '}';
     }
-
-    @Override
-    public void setFee() {
-
-    }
-
 }
 

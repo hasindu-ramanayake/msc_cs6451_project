@@ -1,17 +1,20 @@
 package org.example.rental;
 
 import org.example.core.ISingleton;
+import org.example.db.FileDbAdapter;
+import org.example.db.IDbAdapter;
 import org.example.payment.IPaymentGateway;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
 
 public class RentalMgr implements ISingleton{
     private static ISingleton rentalInstance;
     private static ISingleton rentalFactory;
-    private HashMap<String, IRentalOrder> rentalOrderMap;
-    public IPaymentGateway paymentGateway;
+    private IPaymentGateway paymentGateway;
+    private IDbAdapter db;
 
     //Can only have one instance at a time
     public static ISingleton getInstance(){
@@ -27,52 +30,38 @@ public class RentalMgr implements ISingleton{
     }
 
     private RentalMgr () {
-        rentalOrderMap = new HashMap<>();
         rentalFactory = RentalFactory.getInstance();
+        db = FileDbAdapter.getInstance();
     }
 
     //Other Functions
-    public void initialiseRentalOrder(){}
+    public String createRentalOrder( String customerId, String vehicleId, Date rentDate){
+        if ( !((FileDbAdapter)db).isValidVehicle(vehicleId) ) return null;
+        if ( !((FileDbAdapter)db).isAccessibleVehical(customerId, vehicleId) ) return null;
+        if ( !((FileDbAdapter)db).isAvailableVehical(vehicleId, rentDate) ) return null;
+
+        IRentalOrder rental = ((RentalFactory)rentalFactory).createRentalObject(customerId, vehicleId, rentDate);
+        ((FileDbAdapter)db).addRentalOrder(rental);
+        return rental.getOrderId();
+    }
+
     public void requestPayment(){}
     private String getRentalOrderID(String orderId){
-        return "rentalOrder";
+        return orderId;
     }
 
-    public HashMap<String, IRentalOrder> getAllRentalOrdersForCustomer(String customerID){
-        HashMap<String, IRentalOrder> result = new HashMap<>();
-
-        for (var entry : rentalOrderMap.entrySet()) {
-            IRentalOrder order = entry.getValue();
-            if (order instanceof RentalOrder rentalOrder) {
-                if (rentalOrder.getCustomerId().equals(customerID)) {
-                    result.put(entry.getKey(), rentalOrder);
-                }
-            }
-        }
-        return result;
-    }
-
-    public void printAllRentalOrders(HashMap<String, IRentalOrder> allRentalOrders) {
-        for (var entry : allRentalOrders.entrySet()) {
-            IRentalOrder order = entry.getValue();
-            System.out.println("Rental ID: " + entry.getKey());
-            System.out.println("Customer ID: " + order.getCustomerId());
-            System.out.println("Vehicle ID: " + order.getVehicleId());
-            System.out.println("Location Date: " + order.getRentalDate());
-            System.out.println("Location Fee: " + order.getFee());
-            System.out.println("Payment Status: " + (order.getIsPaid() ? "Paid" : "Not Paid"));
-            System.out.println("-----------------------------");
-        }
+    public ArrayList<IRentalOrder> getAllRentalOrdersForCustomer(String customerID){
+        return ((FileDbAdapter)db).getRentalOrdersForCustomer(customerID);
     }
 
     public String getRentalOrderIDForCustomer(String customerID, String vehicleID, Date date) {
-        HashMap<String, IRentalOrder> rentalMap = getAllRentalOrdersForCustomer(customerID);
-        for (var entry : rentalMap.entrySet()) {
-            IRentalOrder order = entry.getValue();
-            if (order.getVehicleId().equals(vehicleID) && order.getRentalDate().equals(date)) {
-                return entry.getKey();
-            }
-        }
+//        ArrayList<IRentalOrder> rentalMap = getAllRentalOrdersForCustomer(customerID);
+//        for (var entry : rentalMap.entrySet()) {
+//            IRentalOrder order = entry.getValue();
+//            if (order.getVehicleId().equals(vehicleID) && order.getRentalDate().equals(date)) {
+//                return entry.getKey();
+//            }
+//        }
         return null;
     }
 }

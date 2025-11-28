@@ -7,13 +7,22 @@ import org.example.vehicle.MakeT;
 import org.example.vehicle.VehicleBaseClass;
 import org.example.vehicle.VehicleMgr;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-public class CustomerSearchMake implements Command{
-    MakeT make;
+public class CustomerSearchDate implements Command{
+    Date orderDate;
 
-    public CustomerSearchMake(String make){
-        this.make = MakeT.getType(make);
+    public CustomerSearchDate(String date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            this.orderDate = formatter.parse(date);
+        } catch (ParseException e) {
+            System.out.println("Issue in date format: dd/MM/yyyy");
+            return;
+        }
     }
 
     @Override
@@ -21,7 +30,7 @@ public class CustomerSearchMake implements Command{
         ISingleton sessionMgr = SessionMgr.getInstance();
         if( ((SessionMgr)sessionMgr).isValidSession(userSession) ){
             ISingleton vehicleMgr = VehicleMgr.getInstance();
-            List<VehicleBaseClass> vehicleList = ((VehicleMgr)vehicleMgr).searchVehicleByMake(userSession.session.getUser() ,make);
+            List<VehicleBaseClass> vehicleList = ((VehicleMgr)vehicleMgr).searchVehicleByDate(userSession.session.getUser() ,orderDate);
             if (vehicleList.isEmpty()) {
                 System.out.println("No Vehicle find in this make..");
                 return;

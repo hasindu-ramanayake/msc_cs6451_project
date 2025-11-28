@@ -1,6 +1,8 @@
 package org.example.customer;
 
 import org.example.core.ISingleton;
+import org.example.db.FileDbAdapter;
+import org.example.db.IDbAdapter;
 import org.example.session.ISessionClass;
 import org.example.session.SessionFactory;
 import org.example.session.SessionMgr;
@@ -10,16 +12,16 @@ import java.util.Map;
 
 public class CustomerMgr implements ISingleton {
     private static ISingleton managerInst;
-    private ISingleton customerFactory;
-    private Map<String, CustomerBaseClass> customerMap;
+    private final ISingleton customerFactory;
+    private final IDbAdapter db;
 
     private CustomerMgr() {
-        customerMap = new HashMap<>();
         customerFactory = CustomerFactory.getCustomerFactoryInstance();
+        db = FileDbAdapter.getInstance();
     }
 
-    public void addCustomer(String customerId, CustomerBaseClass customer) {
-        customerMap.put(customerId, customer);
+    public void addCustomer(CustomerBaseClass customer) {
+        ((FileDbAdapter)db).addCustomer(customer);
     }
 
     public void removeCustomer(){}
@@ -27,12 +29,22 @@ public class CustomerMgr implements ISingleton {
     public void updateCustomerDetails(){}
 
     public void upgradeCustomerTier(String userId){
-        customerMap.get(userId).upgradeCustomerTier();
+        CustomerBaseClass cu = ((FileDbAdapter)db).getCustomer(userId);
+        if (cu == null) {
+            System.out.println("Customer Not Found");
+            return;
+        }
+        cu.upgradeCustomerTier();
 
     }
 
-    public void downgradeCustomerTier(String userId){
-        customerMap.get(userId).downgradeCustomerTier();
+    public void downgradeCustomerTier(String userId) {
+        CustomerBaseClass cu = ((FileDbAdapter)db).getCustomer(userId);
+        if (cu ==null) {
+            System.out.println("Customer Not Found");
+            return;
+        }
+        cu.downgradeCustomerTier();
 
     }
 
@@ -44,23 +56,13 @@ public class CustomerMgr implements ISingleton {
     }
 
     public CustomerBaseClass getCustomerFromId(String customerId) {
-        if (customerId == null || customerId.isEmpty()) {
-            System.out.println("DEBUG: Invalid customerId");
+        CustomerBaseClass cu = ((FileDbAdapter)db).getCustomer(customerId);
+        if (cu ==null) {
+            System.out.println("Customer Not Found");
             return null;
         }
 
-        if (customerMap == null) {
-            System.out.println("DEBUG: customerMap is null");
-            return null;
-        }
-
-        CustomerBaseClass customer = customerMap.get(customerId);
-
-        if (customer == null) {
-            System.out.println("DEBUG: No customer found with id " + customerId);
-        }
-
-        return customer;
+        return cu;
     }
 
     @Override
@@ -68,12 +70,12 @@ public class CustomerMgr implements ISingleton {
         System.out.println("DEBUG: CREATE CUSTOMER MANAGER OBJECT: ");
     }
 
-    public void createCustomerFromFactory(String email, int phoneNumber, CustomerT type, boolean hasValidLicense, String customerID) {
+    public boolean createCustomerFromFactory(String email, String phoneNumber, CustomerT type, boolean hasValidLicense, String customerID) {
         CustomerBaseClass cu = ((CustomerFactory)customerFactory).createCustomer(email, phoneNumber, type, hasValidLicense, customerID);
-        customerMap.put(customerID, cu);
-        if (cu == null) System.out.println("DEBUG: cu is null: " + customerMap.size());
+        this.addCustomer(cu);
+        return ((FileDbAdapter)db).isValidCustomer((cu.getCustomerId()));
     }
     public CustomerTierT getCustomerTier(String userID){
-        return customerMap.get(userID).getCustomerTierType();
+        return ((FileDbAdapter)db).getCustomer(userID).getCustomerTierType();
     }
 }

@@ -11,7 +11,6 @@ public class CustomerDowngradeTier implements Command {
 
     @Override
     public void execute(SessionWrapper userSession) {
-        System.out.println("Downgrade Tier");
         ISingleton sessionMgr = SessionMgr.getInstance();
         if (((SessionMgr)sessionMgr).isValidSession(userSession)) {
             ISingleton customerMgr = CustomerMgr.getInstance();

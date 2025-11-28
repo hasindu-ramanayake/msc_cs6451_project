@@ -1,9 +1,6 @@
 package org.example.interpreter;
 
-import org.example.cmds.AdminAddVehicle;
-import org.example.cmds.AdminRemoveVehicle;
-import org.example.cmds.Command;
-import org.example.cmds.NoCmd;
+import org.example.cmds.*;
 
 import java.util.StringTokenizer;
 
@@ -69,22 +66,24 @@ public class AdminExp implements Expression{
     public Command parseRemove(StringTokenizer tokenizer){
         Command cmd = new NoCmd();
         if(!tokenizer.hasMoreTokens()){
-            return new NoCmd();
+            return cmd;
         }
         String remove = tokenizer.nextToken();
 
         switch(remove){
             case "vehicle"->{
                 if(!tokenizer.hasMoreTokens()){
-                    return new NoCmd();
+                    return cmd;
                 }
                 String vehicleID = tokenizer.nextToken();
-                 cmd = new AdminRemoveVehicle(vehicleID);
+                cmd = new AdminRemoveVehicle(vehicleID);
 
             }
+
         }
         return cmd;
     }
+
 
 
 }

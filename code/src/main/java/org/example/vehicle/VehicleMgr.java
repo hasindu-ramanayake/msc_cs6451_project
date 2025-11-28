@@ -2,13 +2,16 @@ package org.example.vehicle;
 
 import org.example.core.ISingleton;
 import org.example.customer.CustomerMgr;
+import org.example.db.FileDbAdapter;
+import org.example.db.IDbAdapter;
 
 import java.util.*;
 
 public class VehicleMgr implements ISingleton {
 
-    private final HashMap<String, VehicleBaseClass> vehicleMap;
     private static ISingleton vehicleMgrInst;
+    private IDbAdapter db;
+    HashMap<String, VehicleBaseClass> vehicleMap;
 
     //Singleton Design Pattern
     public static ISingleton getInstance() {
@@ -20,11 +23,7 @@ public class VehicleMgr implements ISingleton {
 
     private VehicleMgr() {
         //Initialise 20 dummy vehicles
-        vehicleMap = new HashMap<>();
-        for(int i = 0; i<20; i++){
-            VehicleBaseClass vehicle = new VehicleBaseClass(Integer.toString(i), new GradeStandard(), VehicleStateT.READY,5, MakeT.SEAT, ModelT.CLASS_A , VehicleColorT.SILVER, new RentalRateStandard() );
-            vehicleMap.put(vehicle.getVehicleID(), vehicle );
-        }
+        db = FileDbAdapter.getInstance();
     }
 
 
@@ -55,6 +54,7 @@ public class VehicleMgr implements ISingleton {
         else{
             System.out.println("Reporting status of "+vehicleID+ " to "+state);
             vehicle.setVehicleState(state);
+
         }
     }
 
@@ -63,36 +63,19 @@ public class VehicleMgr implements ISingleton {
         if(vehicle == null){
             System.out.println("Vehicle with ID: "+vehicleID+ " does not exist");
         }
-
+        //TODO Check if this has been done
     }
     //Returns all the vehicles
-    public HashMap<String, VehicleBaseClass> getAllVehicles(){
-        return vehicleMap;
+    public ArrayList<VehicleBaseClass> getAllVehicles(String userId){
+        return ((FileDbAdapter)db).getAccessibleVehicalList(userId);
     }
 
-    public void printAllVehicles(HashMap<String, VehicleBaseClass> allVehicles){
-        for(var entry: allVehicles.entrySet()){
-            VehicleBaseClass vehicle = entry.getValue();
-            System.out.println("ID: "+vehicle.getVehicleID());
-            System.out.println("Vehicle Grade: "+vehicle.getVehicleGrade());
-            System.out.println("Vehicle State: "+vehicle.getVehicleState());
-            System.out.println("Passenger Count: "+vehicle.getPassengerCount());
-            System.out.println("Make: "+vehicle.getMake());
-            System.out.println("Model: "+vehicle.getModel());
-            System.out.println("Rental Rate: "+vehicle.getRentalRate());
-            System.out.println("-------------------");
-        }
+    public List<VehicleBaseClass> searchVehicleByMake(String userId , MakeT make){
+        return ((FileDbAdapter)db).getAccessibleVehicalListByMake(userId, make);
     }
 
-
-    public List<VehicleBaseClass> searchVehicleByMake(MakeT make){
-        ArrayList<VehicleBaseClass> vehicleList = new ArrayList<>();
-        for( Map.Entry<String, VehicleBaseClass> entry: vehicleMap.entrySet()){
-            if (make.equals(entry.getValue().getMake()) ){
-                vehicleList.add(entry.getValue());
-            }
-        }
-        return vehicleList;
+    public List<VehicleBaseClass> searchVehicleByDate(String userId , Date date){
+        return ((FileDbAdapter)db).getAccessibleVehicalListByDate(userId, date);
     }
 
     public VehicleBaseClass searchVehicleByModel(ModelT model){
@@ -120,4 +103,5 @@ public class VehicleMgr implements ISingleton {
         }
         return null;
     }
+
 }

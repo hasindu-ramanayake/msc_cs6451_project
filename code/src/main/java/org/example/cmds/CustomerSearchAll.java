@@ -6,6 +6,7 @@ import org.example.session.SessionWrapper;
 import org.example.vehicle.VehicleBaseClass;
 import org.example.vehicle.VehicleMgr;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CustomerSearchAll implements Command{
@@ -16,13 +17,14 @@ public class CustomerSearchAll implements Command{
 
     @Override
     public void execute(SessionWrapper userSession){
-        System.out.println("Getting all Vehicles");
         ISingleton sessionMgr = SessionMgr.getInstance();
 
         if(((SessionMgr) sessionMgr).isValidSession(userSession)){
             ISingleton vehicleMgr = VehicleMgr.getInstance();
-            HashMap<String, VehicleBaseClass> vehicleMap = ((VehicleMgr) vehicleMgr).getAllVehicles();
-            ((VehicleMgr)vehicleMgr).printAllVehicles(vehicleMap);
+            ArrayList<VehicleBaseClass> vehiclesList = ((VehicleMgr) vehicleMgr).getAllVehicles(userSession.session.getUser());
+            for (VehicleBaseClass v: vehiclesList ) {
+                System.out.println(v);
+            }
 
         }
 

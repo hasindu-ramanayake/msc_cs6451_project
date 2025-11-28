@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Manager extends Staff{
 
-    public Manager(String email, int phoneNumber, String fullName, String staffId, boolean adminPrivilege) {
+    public Manager(String email, String phoneNumber, String fullName, String staffId, boolean adminPrivilege) {
         super(email, phoneNumber, fullName, StaffT.MANAGER, staffId, adminPrivilege);
     }
 

@@ -1,29 +1,46 @@
 package org.example.db;
 
+import org.example.core.ISingleton;
 import org.example.customer.CustomerBaseClass;
 import org.example.customer.CustomerT;
 import org.example.customer.CustomerTierT;
 import org.example.rental.IRentalOrder;
 import org.example.rental.RentalOrder;
+import org.example.session.ISessionClass;
 import org.example.vehicle.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class FileDbAdapter implements IDbAdapter {
+public class FileDbAdapter implements IDbAdapter, ISingleton {
+    private static IDbAdapter dbInstance;
+
+
     private final FileReaderService fileReader;
     private HashMap<String, VehicleBaseClass> vehicleMap;
     private HashMap<String, CustomerBaseClass> customerMap;
-    private HashMap<String, IRentalOrder> RentalMap;
+    private HashMap<String, IRentalOrder> rentalMap;
 
-    public FileDbAdapter() {
+    public static IDbAdapter getInstance() {
+        if (dbInstance == null) {
+            dbInstance = new FileDbAdapter();
+        }
+        return dbInstance;
+    }
+
+    private FileDbAdapter() {
         this.fileReader = new FileReaderService();
         this.vehicleMap = new HashMap<>();
         this.customerMap = new HashMap<>();
-        this.RentalMap = new HashMap<>();
+        this.rentalMap = new HashMap<>();
+        readVehicleData("src/main/java/org/example/db/VehicleData.csv");
+        readRentalData("src/main/java/org/example/db/Orders.csv");
+        readCustomerData("src/main/java/org/example/db/Customer.csv");
+        printMap();
     }
 
     @Override
@@ -82,7 +99,7 @@ public class FileDbAdapter implements IDbAdapter {
                     ,Float.parseFloat(d[4]) // fee
                     ,Boolean.parseBoolean(d[5]) // isPaid
             );
-            this.RentalMap.put(d[0],rO);
+            this.rentalMap.put(d[0],rO);
         }
 
     }
@@ -90,7 +107,7 @@ public class FileDbAdapter implements IDbAdapter {
     private void processCustomerData(List<String[]> data) {
         for (var d: data ) {
             CustomerBaseClass cu = new CustomerBaseClass(d[0] // email
-                    ,Integer.parseInt(d[1]) // phone number
+                    ,d[1] // phone number
                     ,CustomerT.getType(d[2]) // customerT
                     ,Boolean.parseBoolean(d[3]) //isValidDrivingLic
                     ,d[4] //customer id
@@ -98,6 +115,122 @@ public class FileDbAdapter implements IDbAdapter {
             );
             cu.setCustomerTier(CustomerTierT.getType(d[6]));
             this.customerMap.put(d[4], cu);
+        }
+    }
+
+    @Override public boolean isValidCustomer(String userId) {
+        return customerMap.containsKey(userId);
+    }
+
+    @Override public boolean isValidVehicle(String vehicleId) {
+        return vehicleMap.containsKey(vehicleId);
+    }
+
+    @Override public void addCustomer(CustomerBaseClass cu) {
+        System.out.println("Adding Customer: "+ cu);
+        customerMap.put(cu.getCustomerId(), cu);
+    }
+
+    @Override public boolean isAccessibleVehical(String customerId, String vehicleId) {
+        for (VehicleGradeT allowedGrade : customerMap.get(customerId).getCustomerTier().getVehicleGradeType()) {
+            if ( vehicleMap.get(vehicleId).getVehicleGrade().getGrade() == allowedGrade ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override public boolean isAvailableVehical(String vehicleId, Date orderDate) {
+        for (IRentalOrder order : rentalMap.values()) {
+            if (order.getVehicleId().equals(vehicleId) && order.getRentalDate().equals(orderDate)) {
+                return false; // Already booked
+            }
+        }
+        return true;
+    }
+
+    @Override public CustomerBaseClass getCustomer(String customerId) {
+        CustomerBaseClass cu = customerMap.get(customerId);
+        System.out.println(cu);
+        return cu;
+    }
+
+    @Override public ArrayList<VehicleBaseClass> getAccessibleVehicalList(String userId) {
+        // assume this will return valid customer
+        ArrayList<VehicleBaseClass> list = new ArrayList<>();
+        CustomerBaseClass cu = customerMap.get(userId);
+        for (VehicleGradeT ty: cu.getCustomerTier().getVehicleGradeType() ) {
+            for ( var v: vehicleMap.entrySet() ) {
+                if (v.getValue().getVehicleGrade().getGrade() == ty ) {
+                    list.add(v.getValue());
+                }
+            }
+        }
+        return  list;
+    }
+
+    @Override  public ArrayList<VehicleBaseClass> getAccessibleVehicalListByMake(String userId, MakeT make) {
+        // assume this will return valid customer
+        ArrayList<VehicleBaseClass> list = new ArrayList<>();
+        CustomerBaseClass cu = customerMap.get(userId);
+        for (VehicleGradeT ty: cu.getCustomerTier().getVehicleGradeType() ) {
+            for ( var v: vehicleMap.entrySet() ) {
+                if (v.getValue().getVehicleGrade().getGrade() == ty && v.getValue().getMake() == make) {
+                    list.add(v.getValue());
+                }
+            }
+        }
+        return  list;
+    }
+
+    // need a better algorithm or new Bd table for easy filtering
+    @Override
+    public ArrayList<VehicleBaseClass> getAccessibleVehicalListByDate(String userId, Date date) {
+        ArrayList<VehicleBaseClass> list = new ArrayList<>();
+        var accessibleVehicles = getAccessibleVehicalList(userId);
+
+        for (VehicleBaseClass vehicle : accessibleVehicles) {
+            boolean isRentedOnDate = false;
+
+            for (var entry : this.rentalMap.entrySet()) {
+                var rental = entry.getValue();
+                if (rental.getVehicleId().equals(vehicle.getVehicleID()) &&
+                        rental.getRentalDate().equals(date)) {
+                    isRentedOnDate = true;
+                    break; // No need to check further rentals for this vehicle
+                }
+            }
+
+            if (!isRentedOnDate) {
+                list.add(vehicle);
+            }
+        }
+
+        return list;
+    }
+
+
+    @Override public ArrayList<IRentalOrder> getRentalOrdersForCustomer(String userId) {
+        ArrayList<IRentalOrder> orders = new ArrayList<>();
+        for (IRentalOrder order : rentalMap.values()) {
+            if (order.getCustomerId().equals(userId)) {
+                orders.add(order);
+            }
+        }
+        return orders;
+    }
+
+
+    @Override public void addRentalOrder(IRentalOrder rentalOrder) {
+        rentalOrder.setFee( vehicleMap.get(rentalOrder.getVehicleId()).getRentalRate().getRate() );
+        System.out.println(rentalOrder);
+        rentalMap.put(rentalOrder.getOrderId(), rentalOrder);
+    }
+
+
+    private void printMap(){
+        for (var cu: customerMap.entrySet() ) {
+            System.out.println(cu.getValue());
         }
     }
 

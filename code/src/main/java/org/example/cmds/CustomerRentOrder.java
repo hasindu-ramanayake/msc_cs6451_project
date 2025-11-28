@@ -28,29 +28,24 @@ public class CustomerRentOrder implements Command {
         try {
             this.date = formatter.parse(dateStr);
         } catch (ParseException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             System.out.println("The date format is wrong, you should use dd/MM/yyyy format.");
             this.date = null;
         }
     }
 
-    public CustomerRentOrder(String vehicleID, Date date) {
-        this.vehicleID = vehicleID;
-        this.date = date;
-    }
-
     @Override
     public void execute(SessionWrapper userSession) {
-        System.out.println("Get OrderID...");
         ISingleton sessionMgr = SessionMgr.getInstance();
-        if (((SessionMgr) sessionMgr).isValidSession(userSession)) {
+        if (((SessionMgr) sessionMgr).isValidSession(userSession) ) {
+            if ( this.date == null ) return;
             ISingleton rentalMgr = RentalMgr.getInstance();
-            String rentalOrderID = ((RentalMgr)rentalMgr).getRentalOrderIDForCustomer(userSession.session.getUser(), vehicleID, date);
+            String rentalOrderID = ((RentalMgr)rentalMgr).createRentalOrder(userSession.session.getUser(), vehicleID, date);
             if (rentalOrderID != null){
                 System.out.println("The ID that corresponds to a this order is: " + rentalOrderID);
             }
             else {
-                System.out.println("There is no order corresponding.");
+                System.out.println("Unaccessible vehicle or invalid vehicle ID");
             }
         }
     }

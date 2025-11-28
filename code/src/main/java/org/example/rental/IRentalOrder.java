@@ -1,29 +1,26 @@
 package org.example.rental;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Random;
 
 public interface IRentalOrder {
 
-    public String getOrderId(String orderId);
+    public String getOrderId();
     public String getCustomerId();
 
     public String generateId();
 
-    public LocalDateTime getRentalDate();
+    public Date getRentalDate();
     public String getVehicleId();
     public double getFee();
     public boolean getIsPaid();
     public String printRentalOrder();
 
-    public void setCustomerId();
-    public void setRentalDate();
-    public void setVehicleId();
-    public void setIsPaid();
-    public void setFee();
-
-
-
-
+    public void setCustomerId(String customerId);
+    public void setRentalDate(Date rentalDate);
+    public void setVehicleId(String vehicleId);
+    public void setIsPaid(boolean isPaid);
+    public void setFee(float fee);
 
 }
