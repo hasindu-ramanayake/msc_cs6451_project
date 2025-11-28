@@ -10,45 +10,42 @@ import org.example.session.SessionWrapper;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Date;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+
 public class CustomerRentOrder implements Command {
     private final String vehicleID;
-    private final LocalDateTime date;
+    private Date date;
 
     public CustomerRentOrder(String vehicleID, String dateStr) {
         this.vehicleID = vehicleID;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDateTime tempDate;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            tempDate = LocalDate.parse(dateStr, formatter).atStartOfDay();
-        } catch (DateTimeParseException e) {
-            e.printStackTrace();
-            tempDate = LocalDateTime.now();
+            this.date = formatter.parse(dateStr);
+        } catch (ParseException e) {
+//            e.printStackTrace();
+            System.out.println("The date format is wrong, you should use dd/MM/yyyy format.");
+            this.date = null;
         }
-        this.date = tempDate;
-    }
-
-    public CustomerRentOrder(String vehicleID, LocalDateTime date) {
-        this.vehicleID = vehicleID;
-        this.date = date;
     }
 
     @Override
     public void execute(SessionWrapper userSession) {
-        System.out.println("Get OrderID...");
         ISingleton sessionMgr = SessionMgr.getInstance();
-        if (((SessionMgr) sessionMgr).isValidSession(userSession)) {
+        if (((SessionMgr) sessionMgr).isValidSession(userSession) ) {
+            if ( this.date == null ) return;
             ISingleton rentalMgr = RentalMgr.getInstance();
-            HashMap<String, IRentalOrder> rentalMap = ((RentalMgr) rentalMgr).getAllRentalOrdersForCustomer(userSession.session.getUser());
-            String rentalOrderID = ((RentalMgr)rentalMgr).getRentalOrderID(rentalMap, vehicleID, date);
+            String rentalOrderID = ((RentalMgr)rentalMgr).createRentalOrder(userSession.session.getUser(), vehicleID, date);
             if (rentalOrderID != null){
                 System.out.println("The ID that corresponds to a this order is: " + rentalOrderID);
             }
             else {
-                System.out.println("There is no order corresponding.");
+                System.out.println("Unaccessible vehicle or invalid vehicle ID");
             }
         }
     }

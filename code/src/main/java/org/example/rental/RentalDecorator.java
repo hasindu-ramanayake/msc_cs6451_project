@@ -1,27 +1,32 @@
 package org.example.rental;
 
+import org.example.core.RandomKeyGenerator;
+
 import java.time.LocalDateTime;
+import java.util.Date;
 
 // Base Decorator
-public abstract class RentalDecorator implements IRentalOrder {
+public class RentalDecorator implements IRentalOrder {
     protected IRentalOrder decoratedRentalOrder;
     //Constructor
     public RentalDecorator(IRentalOrder decoratedRentalOrder){
         this.decoratedRentalOrder = decoratedRentalOrder;
     }
 
+    @Override public String generateId() { return RandomKeyGenerator.generateRandomKey(); }
     //Override the Methods
     @Override
     public String getOrderId(){
         return decoratedRentalOrder.getOrderId();
     }
+
     @Override
     public String getCustomerId(){
         return decoratedRentalOrder.getCustomerId();
     }
 
     @Override
-    public LocalDateTime getRentalDate(){
+    public Date getRentalDate(){
         return decoratedRentalOrder.getRentalDate();
     }
 
@@ -51,7 +56,7 @@ public abstract class RentalDecorator implements IRentalOrder {
     }
 
     @Override
-    public void setRentalDate(LocalDateTime rentalDate){
+    public void setRentalDate(Date rentalDate){
         decoratedRentalOrder.setRentalDate(rentalDate);
     }
 
@@ -66,7 +71,7 @@ public abstract class RentalDecorator implements IRentalOrder {
     }
 
     @Override
-    public void setFee(double fee){
+    public void setFee(float fee){
         decoratedRentalOrder.setFee(fee);
     }
 }

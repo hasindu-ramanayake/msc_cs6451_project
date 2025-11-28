@@ -36,19 +36,30 @@ public class GeneralExpr implements Expression {
                 cmd = new SignOut();
             }
             case "help" -> {
-                System.out.println("Command help    > help ");
-                System.out.println("Login user      > login [customerID]");
-                System.out.println("SignUp user     > signup [customerID] [email] [phone number] [License ID]");
-                System.out.println("Logout user     > signout ");
-                System.out.println("Upgrade Tier    > customer upgrade tier ");
-                System.out.println("Downgrade Tier  > customer downgrade tier ");
-                System.out.println("Search accessible vehicles  > customer search all ");
-                System.out.println("Search accessible vehicles by make  > customer search make ");
-                System.out.println("Search accessible vehicles by date  > customer search date [DATE] ");
-                System.out.println("View all rental orders  > customer rent view all ");
-                System.out.println("View specific rental orders  > customer rent view [RentalID] ");
-                System.out.println("Print specific rental orders receipt  > customer rent print [RentalID] ");
-                System.out.println("Pay specific rental order  > customer rent pay [RentalID] ");
+
+                System.out.println("==============================================");
+                System.out.println("           Available Commands                ");
+                System.out.println("==============================================");
+                System.out.printf("%-40s %-40s%n", "Command", "Description");
+                System.out.println("----------------------------------------------");
+
+                // Commands
+                System.out.printf("%-40s %-40s%n", "help", "Show all available commands");
+                System.out.printf("%-40s %-40s%n", "login [customerID]", "Login as a customer");
+                System.out.printf("%-40s %-40s%n", "signup [customerID] [email] [phone] [License ID]", "Register a new customer");
+                System.out.printf("%-40s %-40s%n", "signout", "Logout current user");
+                System.out.printf("%-40s %-40s%n", "customer upgrade tier", "Upgrade customer tier");
+                System.out.printf("%-40s %-40s%n", "customer downgrade tier", "Downgrade customer tier");
+                System.out.printf("%-40s %-40s%n", "customer search all", "Search all accessible vehicles");
+                System.out.printf("%-40s %-40s%n", "customer search make", "Search vehicles by make");
+                System.out.printf("%-40s %-40s%n", "customer search date [DATE]", "Search vehicles by date");
+                System.out.printf("%-40s %-40s%n", "customer rent view all", "View all rental orders");
+                System.out.printf("%-40s %-40s%n", "customer rent view [RentalID]", "View specific rental order");
+                System.out.printf("%-40s %-40s%n", "customer rent order [VehicleID] [Date {DD/MM/YYYY}]", "rental a vehicle on a date");
+                System.out.printf("%-40s %-40s%n", "customer rent print [RentalID]", "Print rental order receipt");
+                System.out.printf("%-40s %-40s%n", "customer rent pay [RentalID]", "Pay for a rental order");
+                System.out.println("==============================================");
+
             }
         }
         return cmd;
