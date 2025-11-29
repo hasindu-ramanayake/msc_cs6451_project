@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 // Base Decorator
-public class RentalDecorator implements IRentalOrder {
+public abstract class RentalDecorator implements IRentalOrder {
     protected IRentalOrder decoratedRentalOrder;
     //Constructor
     public RentalDecorator(IRentalOrder decoratedRentalOrder){
@@ -36,7 +36,7 @@ public class RentalDecorator implements IRentalOrder {
     }
 
     @Override
-    public double getFee(){
+    public float getFee(){
         return decoratedRentalOrder.getFee();
     }
 
