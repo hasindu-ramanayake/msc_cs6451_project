@@ -40,7 +40,7 @@ public class CustomerBaseClass extends UserClass{
     }
 
     public int getLoyaltyPoints() {
-        return 1000000000;
+        return this.loyaltyPoints;
     }
 
     public void setLoyaltyPoints(int loyaltyPoints) {
@@ -48,7 +48,7 @@ public class CustomerBaseClass extends UserClass{
     }
 
     public int getMaxAllocations() {
-        return 1000000000;
+        return this.maxAllocations;
     }
 
     public void setMaxAllocations(int maxAllocations) {
@@ -62,7 +62,7 @@ public class CustomerBaseClass extends UserClass{
 //    }
 
     public boolean isHasValidLicense() {
-        return true;
+        return this.hasValidLicense;
     }
 
     public void setHasValidLicense(boolean hasValidLicense) {
