@@ -1,10 +1,14 @@
 package org.example.payment;
 
-public class CardPaymentGateway {
-    private boolean state;
+public class CardPaymentGateway implements IPaymentGateway{
+    @Override
+    public boolean pay(PaymentContent paymentData) {
+        PaymentDispatcher dispatcher = new PaymentDispatcher();
 
-    public CardPaymentGateway(boolean state)
-    {
-        this.state = state;
+        dispatcher.registerInterceptor(new LoggingInterceptor());
+        dispatcher.registerInterceptor(new SecurityInterceptor());
+        dispatcher.registerInterceptor(new FraudCheckInterceptor());
+
+        return dispatcher.processPayment(paymentData);
     }
 }
