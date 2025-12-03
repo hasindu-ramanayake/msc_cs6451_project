@@ -10,6 +10,7 @@ public class StaffReportCheckIn implements Command {
     private final String vehicleId;
     private final VehicleStateT vehicleState;
 
+
     public StaffReportCheckIn(String vehicleId, VehicleStateT vehicleState){
         this.vehicleId = vehicleId;
         this.vehicleState = vehicleState;

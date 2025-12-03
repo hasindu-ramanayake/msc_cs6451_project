@@ -18,7 +18,7 @@ public class CustomerTierBase {
         this.cancellationTime = 1000000000;
         this.loyaltyPointsToUpdate = 1000000000;
         this.vehicleGradeType = List.of(VehicleGradeT.ECONOMY);
-        this.customerTierType = CustomerTierT.BASE_TIER;
+        this.customerTierType = CustomerTierT.BRONZE_TIER;
     }
 
     public int getBookingWindow() {

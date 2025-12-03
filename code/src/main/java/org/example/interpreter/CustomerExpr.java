@@ -72,7 +72,14 @@ public class CustomerExpr implements Expression {
     }
 
     public Command parseReceipt(StringTokenizer tokenizer) {
-        return new NoCmd();
+        String next = tokenizer.nextToken();
+        Command cmd = new NoCmd();
+        switch (next){
+            case "viewall" ->{
+                cmd = new CustomerRentViewAll();
+            }
+        }
+        return cmd;
     }
 
     public Command parseRent(StringTokenizer inputTokens) {

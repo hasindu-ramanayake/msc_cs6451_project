@@ -31,7 +31,16 @@ public interface IDbAdapter {
     public ArrayList<IRentalOrder> getRentalOrdersForCustomer(String userId);
     public void addRentalOrder(IRentalOrder rentalOrder);
 
-
-
     // add function to implement
+
+    //TODO: Add functions to read vehicle data
+
+    //Vehicle Functions
+
+    public void updateVehicleState(VehicleBaseClass vehicle);
+    public void removeVehicle(VehicleBaseClass vehicle);
+    public void addVehicle(VehicleBaseClass vehicle);
+
+
+
 }

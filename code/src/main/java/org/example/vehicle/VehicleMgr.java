@@ -1,7 +1,6 @@
 package org.example.vehicle;
 
 import org.example.core.ISingleton;
-import org.example.customer.CustomerMgr;
 import org.example.db.FileDbAdapter;
 import org.example.db.IDbAdapter;
 
@@ -10,8 +9,10 @@ import java.util.*;
 public class VehicleMgr implements ISingleton {
 
     private static ISingleton vehicleMgrInst;
+    //Database should only be in Manager Classes
     private IDbAdapter db;
-    HashMap<String, VehicleBaseClass> vehicleMap;
+
+    Map<String, VehicleBaseClass> vehicleMap;
 
     //Singleton Design Pattern
     public static ISingleton getInstance() {
@@ -22,24 +23,32 @@ public class VehicleMgr implements ISingleton {
     }
 
     private VehicleMgr() {
-        //Initialise 20 dummy vehicles
+        //Initialised the Vehicle Map
         db = FileDbAdapter.getInstance();
+        this.vehicleMap = new HashMap<>();
+
+        HashMap<String, VehicleBaseClass> adapterMap = ((FileDbAdapter) db).getVehicleMap();
+        this.vehicleMap.putAll(adapterMap);
+
     }
 
 
     public void addVehicleToMap(VehicleBaseClass vehicle){
         vehicleMap.put(vehicle.getVehicleID(), vehicle);
+
         System.out.println("Vehicle added successfully");
+
 
     }
 
     public void removeVehicleFromMap(String vehicleID){
         //Check if the vehicle exists
         if ( vehicleID == null || vehicleID.isEmpty() ){
-            System.out.println("This vehicle does not exist");
-
+            System.out.println("Vehicle with "+vehicleID+" does not exist");
         } else {
+            VehicleBaseClass vehicle = vehicleMap.get(vehicleID);
             vehicleMap.remove(vehicleID);
+            ((FileDbAdapter) db).removeVehicle(vehicle);
             System.out.println("Vehicle removed successfully");
         }
 
@@ -54,6 +63,7 @@ public class VehicleMgr implements ISingleton {
         else{
             System.out.println("Reporting status of "+vehicleID+ " to "+state);
             vehicle.setVehicleState(state);
+            ((FileDbAdapter) db).updateVehicleState(vehicle);
 
         }
     }
@@ -63,7 +73,6 @@ public class VehicleMgr implements ISingleton {
         if(vehicle == null){
             System.out.println("Vehicle with ID: "+vehicleID+ " does not exist");
         }
-        //TODO Check if this has been done
     }
     //Returns all the vehicles
     public ArrayList<VehicleBaseClass> getAllVehicles(String userId){
@@ -89,7 +98,7 @@ public class VehicleMgr implements ISingleton {
         return null;
     }
 
-//| Todo: Check what this actually does
+    //TODO: CHECK THIS FUNCTION
     public VehicleBaseClass getVehicleSpecificObj(String vehicleID){
         return null;
     }
