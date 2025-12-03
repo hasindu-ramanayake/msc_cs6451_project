@@ -1,6 +1,7 @@
 package org.example.interpreter;
 
 import org.example.cmds.*;
+import org.example.vehicle.*;
 
 import java.util.StringTokenizer;
 
@@ -34,14 +35,19 @@ public class AdminExp implements Expression{
 
         switch(add){
             case "vehicle" ->{
-                System.out.println("Please Enter Vehicle Details");
+                System.out.println("Please Enter Vehicle Details in the Format ");
                 if(!tokenizer.hasMoreTokens()){
                     return cmd;
                 }
-                //Enter VehicleID
+                //Enter VehicleID and Details
                 String vehicleID = tokenizer.nextToken();
-                int passangerCount = Integer.parseInt(tokenizer.nextToken());
+                String vehicleGrade = tokenizer.nextToken();
+                int passengerCount = Integer.parseInt(tokenizer.nextToken());
+                String model = tokenizer.nextToken();
+                String make = tokenizer.nextToken();
+                String color = tokenizer.nextToken();
 
+                cmd = new AdminAddVehicle(vehicleID, new GradePremium(), passengerCount, MakeT.BMW, ModelT.CLASS_A, VehicleColorT.RED);
 
             }
             case "staff" ->{

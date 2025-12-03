@@ -16,13 +16,15 @@ public class CustomerRentViewAll implements Command{
 
     @Override
     public void execute(SessionWrapper userSession) {
-        System.out.println("ViewAll");
         ISingleton sessionMgr = SessionMgr.getInstance();
         if (((SessionMgr)sessionMgr).isValidSession(userSession)) {
             ISingleton rentalMgr = RentalMgr.getInstance();
+
             ArrayList<IRentalOrder> rentalList = ((RentalMgr)rentalMgr).getAllRentalOrdersForCustomer(userSession.session.getUser());
             for (IRentalOrder r: rentalList) {
-                System.out.println(r);
+                System.out.println(((RentalMgr) rentalMgr).printReceipt(r));
+                System.out.println(" ");
+
             }
         }
     }

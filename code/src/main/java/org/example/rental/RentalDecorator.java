@@ -2,7 +2,6 @@ package org.example.rental;
 
 import org.example.core.RandomKeyGenerator;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 // Base Decorator
@@ -73,5 +72,10 @@ public abstract class RentalDecorator implements IRentalOrder {
     @Override
     public void setFee(float fee){
         decoratedRentalOrder.setFee(fee);
+    }
+
+    @Override
+    public void setLoyaltyPoints(float loyaltyPoints) {
+        decoratedRentalOrder.setLoyaltyPoints(loyaltyPoints);
     }
 }

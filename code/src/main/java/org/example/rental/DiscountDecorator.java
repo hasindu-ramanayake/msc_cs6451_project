@@ -1,6 +1,6 @@
 package org.example.rental;
 
-public class DiscountDecorator extends RentalDecorator{
+public abstract class DiscountDecorator extends RentalDecorator{
     private float discountPercentage;
 
     public DiscountDecorator(IRentalOrder decoratedRentalOrder, float discountPercentage){

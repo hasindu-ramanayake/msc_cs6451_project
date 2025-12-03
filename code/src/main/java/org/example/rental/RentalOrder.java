@@ -1,23 +1,27 @@
 package org.example.rental;
 
+import org.example.core.RandomKeyGenerator;
+
 import java.util.Date;
-import java.util.Random;
+
 
 public class RentalOrder implements IRentalOrder {
-    private final String orderId;
+    protected final String orderId;
     private String customerId;
     private String vehicleId;
     private Date rentalDate;
     private float fee;
+    private float loyaltyPoints;
     private boolean isPaid;
 
     // this function use when reading from db. to populate data
-    public RentalOrder(String orderId, String customerId, String vehicleId, Date rentalDate, float fee, boolean isPaid) {
+    public RentalOrder(String orderId, String customerId, String vehicleId, Date rentalDate, float fee, float loyaltyPoints, boolean isPaid) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.vehicleId = vehicleId;
         this.rentalDate = rentalDate;
         this.fee = fee;
+        this.loyaltyPoints= loyaltyPoints;
         this.isPaid = isPaid;
     }
 
@@ -32,8 +36,7 @@ public class RentalOrder implements IRentalOrder {
 
     @Override
     public String generateId(){
-        Random rnd = new Random();
-        return "O"+String.valueOf(rnd.nextInt());
+        return RandomKeyGenerator.generateRandomKey();
     }
 
     @Override
@@ -60,6 +63,8 @@ public class RentalOrder implements IRentalOrder {
     public float getFee() {
         return fee;
     }
+    @Override
+    public float getLoyaltyPoints(){ return loyaltyPoints; }
 
     @Override
     public boolean getIsPaid() {
@@ -101,16 +106,20 @@ public class RentalOrder implements IRentalOrder {
         this.fee = fee;
 
     }
+    @Override
+    public void setLoyaltyPoints(float loyaltyPoints){
+        this.loyaltyPoints = loyaltyPoints;
+    }
 
     @Override
     public String toString() {
         return "RentalOrder{" +
-                "orderId='" + orderId + '\'' +
-                ", customerId='" + customerId + '\'' +
-                ", vehicleId='" + vehicleId + '\'' +
-                ", rentalDate=" + rentalDate +
-                ", fee=" + fee +
-                ", isPaid=" + isPaid +
+                "orderId='" + orderId +
+                "\ncustomerId='" + customerId +
+                "\nvehicleId='" + vehicleId +
+                "\nrentalDate=" + rentalDate +
+                "\nfee=" + fee +
+                "\nisPaid=" + isPaid +
                 '}';
     }
 }
