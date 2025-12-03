@@ -6,5 +6,7 @@ public class RentalRateEconomy extends AbRentalRateBaseClass {
     }
 
     @Override
-    public void calculateRentalRate(){}
+    public void calculateRentalRate(){
+
+    }
 }

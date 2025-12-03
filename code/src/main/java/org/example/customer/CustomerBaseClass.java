@@ -40,6 +40,7 @@ public class CustomerBaseClass extends UserClass{
     }
 
     public int getLoyaltyPoints() {
+        return loyaltyPoints;
         return this.loyaltyPoints;
     }
 
@@ -88,44 +89,45 @@ public class CustomerBaseClass extends UserClass{
     public void setCustomerTier(CustomerTierT type) {
         System.out.println(type);
         switch (type) {
-            case CustomerTierT.BASE_TIER -> {
-                customerTier = new CustomerTierBase();
-            } case CustomerTierT.BRONZE_TIER -> {
+            case CustomerTierT.BRONZE_TIER -> {
                 customerTier = new CustomerTierBronze();
             } case CustomerTierT.SILVER_TIER -> {
                 customerTier = new CustomerTierSilver();
             } case CustomerTierT.GOLD_TIER -> {
                 customerTier = new CustomerTierGold();
             }
+            case CustomerTierT.PLATINUM_TIER -> {
+                customerTier = new CustomerTierPlatinum();
+            }
         }
     }
 
     public void upgradeCustomerTier(){
         switch (customerTier.getCustomerTierType()) {
-            case CustomerTierT.BASE_TIER -> {
-                customerTier = new CustomerTierBronze();
-            } case CustomerTierT.BRONZE_TIER -> {
+            case CustomerTierT.BRONZE_TIER -> {
                 customerTier = new CustomerTierSilver();
             } case CustomerTierT.SILVER_TIER -> {
                 customerTier = new CustomerTierGold();
-            } case CustomerTierT.GOLD_TIER -> System.out.println("DEBUG: Already GOLD TIER");
+            } case CustomerTierT.GOLD_TIER -> {
+                customerTier = new CustomerTierPlatinum();
+            } case CustomerTierT.PLATINUM_TIER -> System.out.println("DEBUG: Already PLATINUM TIER");
         }
 
     }
 
     public void downgradeCustomerTier(){
         switch (customerTier.getCustomerTierType()) {
-            case CustomerTierT.BASE_TIER -> {
-                System.out.println("DEBUG: Already BASE TIER");
-            }
             case CustomerTierT.BRONZE_TIER -> {
-                customerTier = new CustomerTierBase();
+                System.out.println("DEBUG: Already BRONZE TIER");
             }
             case CustomerTierT.SILVER_TIER -> {
                 customerTier = new CustomerTierBronze();
             }
             case CustomerTierT.GOLD_TIER -> {
                 customerTier = new CustomerTierSilver();
+            }
+            case CustomerTierT.PLATINUM_TIER -> {
+                customerTier = new CustomerTierGold();
             }
         }
 

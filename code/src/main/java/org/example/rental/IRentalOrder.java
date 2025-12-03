@@ -15,6 +15,7 @@ public interface IRentalOrder {
     public String getVehicleId();
     public float getFee();
     public boolean getIsPaid();
+    public float getLoyaltyPoints();
     public String printRentalOrder();
 
     public void setCustomerId(String customerId);
@@ -22,5 +23,6 @@ public interface IRentalOrder {
     public void setVehicleId(String vehicleId);
     public void setIsPaid(boolean isPaid);
     public void setFee(float fee);
+    public void setLoyaltyPoints(float loyaltyPoints);
 
 }

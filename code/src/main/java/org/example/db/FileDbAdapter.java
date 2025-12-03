@@ -9,6 +9,7 @@ import org.example.rental.RentalOrder;
 import org.example.session.ISessionClass;
 import org.example.vehicle.*;
 
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +43,11 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
         readCustomerData("src/main/java/org/example/db/Customer.csv");
         printMap();
     }
+
+    public HashMap<String, VehicleBaseClass> getVehicleMap() {
+        return vehicleMap;
+    }
+
 
     @Override
     public void readVehicleData(String source) {
@@ -97,7 +103,8 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
                     ,d[2] // vehicleID,
                     ,orderDate // date
                     ,Float.parseFloat(d[4]) // fee
-                    ,Boolean.parseBoolean(d[5]) // isPaid
+                    ,Integer.parseInt(d[5])// loyalityPoints
+                    ,Boolean.parseBoolean(d[6]) // isPaid
             );
             this.rentalMap.put(d[0],rO);
         }
@@ -226,6 +233,53 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
         System.out.println(rentalOrder);
         rentalMap.put(rentalOrder.getOrderId(), rentalOrder);
     }
+
+
+    @Override
+    public void updateVehicleState(VehicleBaseClass vehicle){
+        vehicleMap.put(vehicle.getVehicleID(), vehicle);
+        writeVehicleDataToFile("src/main/java/org/example/db/VehicleData.csv");
+    }
+
+    @Override
+    public void removeVehicle(VehicleBaseClass vehicle){
+        vehicleMap.remove(vehicle.getVehicleID(), vehicle);
+        writeVehicleDataToFile("src/main/java/org/example/db/VehicleData.csv");
+
+    }
+    @Override
+    public void addVehicle(VehicleBaseClass vehicle){
+        vehicleMap.put(vehicle.getVehicleID(), vehicle);
+        writeVehicleDataToFile("src/main/java/org/example/db/VehicleData.csv");
+    }
+
+
+    private void writeVehicleDataToFile(String filePath) {
+        try (PrintWriter pw = new PrintWriter(new File(filePath))) {
+            pw.println("vehicleID,vehicleGrade,vehicleState,passengerCount,make,model,color");
+
+            vehicleMap.values().stream()
+                    .sorted((v1, v2) -> {
+                        int id1 = Integer.parseInt(v1.getVehicleID().substring(1));
+                        int id2 = Integer.parseInt(v2.getVehicleID().substring(1));
+                        return Integer.compare(id1, id2);
+                    })
+                    .forEach(vehicle -> pw.println(String.join(",",
+                            vehicle.getVehicleID(),
+                            vehicle.getVehicleGrade().getGrade().name(),
+                            vehicle.getVehicleState().name(),
+                            String.valueOf(vehicle.getPassengerCount()),
+                            vehicle.getMake().toString(),
+                            vehicle.getModel().toString(),
+                            vehicle.getColor().toString()
+                    )));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
 
     private void printMap(){
