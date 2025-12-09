@@ -14,5 +14,6 @@ public class CustomerTierGold extends CustomerTierBase{
         this.loyaltyPointsToUpdate = 1000000000;
         this.vehicleGradeType = List.of(VehicleGradeT.ECONOMY, VehicleGradeT.STANDARD, VehicleGradeT.PREMIUM, VehicleGradeT.LUXURY);
         super.customerTierType = CustomerTierT.GOLD_TIER;
+        this.discountMultiplier = 0.87f;
     }
 }
