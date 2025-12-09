@@ -1,0 +1,29 @@
+package org.example.cmds;
+
+import org.example.payment.PaymentContent;
+import org.example.payment.PaymentInterceptor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CommandDispatcher {
+    private final List<CommandInterceptor> interceptors;
+
+    public CommandDispatcher() {
+        this.interceptors =  new ArrayList<>();;
+    }
+
+    public void registerInterceptor(CommandInterceptor interceptor) {
+        interceptors.add(interceptor);
+    }
+
+    public void processCommand(CommandContext context) {
+        for (CommandInterceptor interceptor : interceptors) {
+            interceptor.preCommand(context);
+        }
+
+        for (CommandInterceptor interceptor : interceptors) {
+            interceptor.postCommand(context);
+        }
+    }
+}

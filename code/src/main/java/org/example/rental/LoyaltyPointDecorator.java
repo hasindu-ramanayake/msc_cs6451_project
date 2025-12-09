@@ -1,11 +1,15 @@
 package org.example.rental;
 
+import org.example.core.ISingleton;
+import org.example.customer.CustomerMgr;
+
 public class LoyaltyPointDecorator extends RentalDecorator{
     private float loyaltyPoints;
 
-    public LoyaltyPointDecorator(IRentalOrder decoratedRentalOrder, float loyaltyPoints){
+    public LoyaltyPointDecorator(IRentalOrder decoratedRentalOrder){
         super(decoratedRentalOrder);
-        this.loyaltyPoints= loyaltyPoints;
+        ISingleton customerMgr = CustomerMgr.getInstance();
+        this.loyaltyPoints = ((CustomerMgr) customerMgr).getCustomerFromId(getCustomerId()).getCustomerTier().getLoyaltyPointMultiplier();
     }
 
     @Override

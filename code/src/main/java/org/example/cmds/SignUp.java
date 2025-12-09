@@ -1,11 +1,8 @@
 package org.example.cmds;
 
 import org.example.core.ISingleton;
-import org.example.customer.CustomerBaseClass;
 import org.example.customer.CustomerMgr;
 import org.example.customer.CustomerT;
-import org.example.customer.UserClass;
-import org.example.session.SessionMgr;
 import org.example.session.SessionWrapper;
 
 public class SignUp implements Command {
