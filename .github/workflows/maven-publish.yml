@@ -26,18 +26,7 @@ jobs:
       run: mvn -B package --file code/pom.xml
 
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.repository }}:latest ./code
-      - name: Login to GHCR
-        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-      - name: Push Docker image
-        run: docker push ghcr.io/${{ github.repository }}:latest
-
+  
 
 
     
