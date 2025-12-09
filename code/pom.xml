@@ -7,7 +7,31 @@
     <groupId>org.example</groupId>
     <artifactId>code</artifactId>
     <version>1.0-SNAPSHOT</version>
+         
+    <activeProfiles>
+        <activeProfile>github</activeProfile>
+    </activeProfiles>
 
+
+<profiles>
+    <profile>
+      <id>github</id>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+        <repository>
+          <id>github</id>
+          <url>https://maven.pkg.github.com/hasindu-ramanayake/msc_cs6451-project</url>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+         
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -15,7 +39,6 @@
             <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -23,8 +46,22 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-
+         
+   <servers>
+     <server>
+       <id>github</id>
+       <username>USERNAME</username>
+       <password>TOKEN</password>
+     </server>
+   </servers>  
+         
+   <distributionManagement>
+     <repository>
+        <id>github</id>
+        <name>GitHub OWNER Apache Maven Packages</name>
+        <url>https://maven.pkg.github.com/hasindu-ramanayake/msc_cs6451_project</url>
+      </repository>
+   </distributionManagement>      
 
     <build>
         <plugins>
