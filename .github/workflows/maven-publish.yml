@@ -4,7 +4,7 @@ on:
   push:
     branches: ["rental_package_jack"]
   pull_request:
-    branches: ["renytal_package_jack"]
+    branches: ["rental_package_jack"]
 
 permissions: 
   contents: read
