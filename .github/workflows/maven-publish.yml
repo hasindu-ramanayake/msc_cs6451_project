@@ -31,7 +31,7 @@ jobs:
     - name: upload JAR as artifact
       uses: actions/upload-artefact@v3
       with: 
-        name: jcr.jar
+        name: code-1.0-SNAPSHOT.jar
         path: target/*.jar
 
 
