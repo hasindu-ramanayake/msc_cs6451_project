@@ -27,7 +27,7 @@ jobs:
       run: mvn clean install
 
     - name: upload JAR as artifact
-      uses: actions/upload-artifactt@v3
+      uses: actions/upload-artifact@v3
       with: 
         name: code-1.0-SNAPSHOT.jar
         path: target/*.jar
