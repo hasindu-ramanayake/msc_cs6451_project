@@ -7,7 +7,6 @@ import org.example.session.SessionMgr;
 import org.example.session.SessionWrapper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CustomerRentViewAll implements Command{
 

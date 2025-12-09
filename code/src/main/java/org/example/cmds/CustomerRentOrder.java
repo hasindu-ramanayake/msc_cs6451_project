@@ -1,19 +1,11 @@
 package org.example.cmds;
 
 import org.example.core.ISingleton;
-import org.example.customer.CustomerMgr;
-import org.example.rental.IRentalOrder;
 import org.example.rental.RentalMgr;
 import org.example.session.SessionMgr;
 import org.example.session.SessionWrapper;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Date;
-
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 import java.text.SimpleDateFormat;
 import java.text.ParseException;

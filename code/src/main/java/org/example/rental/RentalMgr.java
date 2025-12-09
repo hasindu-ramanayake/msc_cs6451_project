@@ -55,6 +55,8 @@ public class RentalMgr implements ISingleton{
 
     }
 
+
+
     private boolean bookingWindow(String customerId, Date rentDate){
         CustomerBaseClass customer =((FileDbAdapter) db).getCustomer(customerId);
         CustomerTierT customerTier = customer.getCustomerTierType();

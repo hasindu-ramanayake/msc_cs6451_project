@@ -7,7 +7,6 @@ import org.example.vehicle.VehicleBaseClass;
 import org.example.vehicle.VehicleMgr;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CustomerSearchAll implements Command{
 

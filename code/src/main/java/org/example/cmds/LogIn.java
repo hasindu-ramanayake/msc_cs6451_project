@@ -14,8 +14,14 @@ public class LogIn implements Command {
     }
 
     @Override public void execute(SessionWrapper userSession) {
+
+        userSession.cmdDispatcher.registerInterceptor(new LogInFormatInterceptor());
+        CommandContext cmdContext = new CommandContext(userId);
+        userSession.cmdDispatcher.processCommand(cmdContext);
+
         ISingleton sessionMgr = SessionMgr.getInstance();
         userSession.session = ((SessionMgr)sessionMgr).createSessionFromFactory(userId);
+
         if (userSession.session == null) {
             System.out.println("Invalid/Wrong User ID: Please try Again...!!");
             return;

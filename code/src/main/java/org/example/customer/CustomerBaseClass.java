@@ -40,7 +40,6 @@ public class CustomerBaseClass extends UserClass{
     }
 
     public int getLoyaltyPoints() {
-        return loyaltyPoints;
         return this.loyaltyPoints;
     }
 
@@ -104,7 +103,9 @@ public class CustomerBaseClass extends UserClass{
 
     public void upgradeCustomerTier(){
         switch (customerTier.getCustomerTierType()) {
-            case CustomerTierT.BRONZE_TIER -> {
+            case CustomerTierT.BASE_TIER -> {
+                customerTier = new CustomerTierBronze();
+            } case CustomerTierT.BRONZE_TIER -> {
                 customerTier = new CustomerTierSilver();
             } case CustomerTierT.SILVER_TIER -> {
                 customerTier = new CustomerTierGold();
@@ -117,8 +118,11 @@ public class CustomerBaseClass extends UserClass{
 
     public void downgradeCustomerTier(){
         switch (customerTier.getCustomerTierType()) {
+            case CustomerTierT.BASE_TIER -> {
+                System.out.println("DEBUG: Already BASE TIER");
+            }
             case CustomerTierT.BRONZE_TIER -> {
-                System.out.println("DEBUG: Already BRONZE TIER");
+                customerTier = new CustomerTierBase();
             }
             case CustomerTierT.SILVER_TIER -> {
                 customerTier = new CustomerTierBronze();

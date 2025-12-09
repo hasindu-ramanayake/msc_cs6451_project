@@ -1,17 +1,21 @@
 package org.example.rental;
 
+import org.example.core.ISingleton;
+import org.example.customer.CustomerMgr;
+
 public abstract class DiscountDecorator extends RentalDecorator{
     private float discountPercentage;
 
-    public DiscountDecorator(IRentalOrder decoratedRentalOrder, float discountPercentage){
+    public DiscountDecorator(IRentalOrder decoratedRentalOrder){
         super(decoratedRentalOrder);
-        this.discountPercentage = discountPercentage;
+        ISingleton customerMgr = CustomerMgr.getInstance();
+        this.discountPercentage = ((CustomerMgr) customerMgr).getCustomerFromId(getCustomerId()).getCustomerTier().getDiscountMultiplier();
     }
 
     @Override
     public float getFee(){
         //get the original fee and subtract the discount
-        return (decoratedRentalOrder.getFee() - decoratedRentalOrder.getFee()*(discountPercentage/100) );
+        return (decoratedRentalOrder.getFee() - decoratedRentalOrder.getFee()*(discountPercentage) );
     }
     //Adds an extra line under the print order receipt
     @Override

@@ -11,6 +11,7 @@ public class CustomerTierBase {
     protected int loyaltyPointsToUpdate;
     protected List<VehicleGradeT> vehicleGradeType;
     protected CustomerTierT customerTierType;
+    protected float discountMultiplier;
 
     public CustomerTierBase() {
         this.bookingWindow = 1000000000;
@@ -18,7 +19,8 @@ public class CustomerTierBase {
         this.cancellationTime = 1000000000;
         this.loyaltyPointsToUpdate = 1000000000;
         this.vehicleGradeType = List.of(VehicleGradeT.ECONOMY);
-        this.customerTierType = CustomerTierT.BRONZE_TIER;
+        this.customerTierType = CustomerTierT.BASE_TIER;
+        this.discountMultiplier = 1;
     }
 
     public int getBookingWindow() {
@@ -67,5 +69,13 @@ public class CustomerTierBase {
 
     public void setCustomerTierType(CustomerTierT customerTierType) {
         this.customerTierType = customerTierType;
+    }
+
+    public float getDiscountMultiplier() {
+        return discountMultiplier;
+    }
+
+    public void setDiscountMultiplier(float discountMultiplier) {
+        this.discountMultiplier = discountMultiplier;
     }
 }
