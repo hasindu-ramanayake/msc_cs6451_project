@@ -11,8 +11,7 @@ permissions:
   packages: write
 
 jobs:
-  build_test: 
-
+  build: 
     runs-on: ubuntu-latest
 
     steps:
@@ -27,30 +26,17 @@ jobs:
       run: mvn -B package --file code/pom.xml
 
 
-  publish:
-    runs-on: ubuntu-latest
-    needs: build_test
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
-        with:
-          java-version: '25-ea'
-          distribution: 'temurin'
-      - name: Publish to GitHub Packages
-        run: mvn deploy --settings .github/maven-settings.xml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
   deploy:
     runs-on: ubuntu-latest
-    needs: publish
+    needs: build
     steps:
       - uses: actions/checkout@v3
       - name: Build Docker image
         run: docker build -t ghcr.io/${{ github.repository }}:latest .
-      - name: Push Docker image
+      - name: Login to GHCR
         run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-      - run: docker push ghcr.io/${{ github.repository }}:latest
+      - name: Push Docker image
+
 
     
   
