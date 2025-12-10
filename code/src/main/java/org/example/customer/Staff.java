@@ -1,7 +1,5 @@
 package org.example.customer;
 
-import java.util.Date;
-
 public class Staff extends UserClass{
     protected String staffId;
     protected String fullName;

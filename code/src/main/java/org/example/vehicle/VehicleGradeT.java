@@ -13,4 +13,13 @@ public enum VehicleGradeT {
         }
         return UNKNOWN;
     }
+
+    public static IVehicleGrade createInterface(VehicleGradeT t){
+        switch(t){
+            case STANDARD: return new GradeStandard();
+            case LUXURY: return new GradeLuxury();
+            case PREMIUM: return new GradePremium();
+            default: return new GradeEconomy();
+        }
+    }
 }
