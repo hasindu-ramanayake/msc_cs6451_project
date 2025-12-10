@@ -7,6 +7,7 @@ public class CustomerBaseClass extends UserClass{
     protected boolean hasValidLicense;
     protected CustomerT customerType;
     protected CustomerTierBase customerTier;
+    private ILogger logger;
 
     public CustomerBaseClass(){}
 
@@ -18,6 +19,8 @@ public class CustomerBaseClass extends UserClass{
         this.loyaltyPoints = loyaltyPoints;
         this.maxAllocations = 1;
         this.customerTier = new CustomerTierBase();
+        AbLoggerFactory log = new LoggerFactory();
+        this.logger = log.createLogger();
     }
 
     public CustomerBaseClass(String email, String phoneNumber, CustomerT customerType, boolean hasValidLicense, String customerId) {
@@ -108,21 +111,16 @@ public class CustomerBaseClass extends UserClass{
                 break;
             } case CustomerTierT.GOLD_TIER : {
                 customerTier = new CustomerTierPlatinum();
-                break;
-            } case CustomerTierT.PLATINUM_TIER : {
-                System.out.println("DEBUG: Already PLATINUM TIER");
-                break;
-            }
-            default: assert(true);
+            } case CustomerTierT.PLATINUM_TIER ->
+                    System.out.println("Already PLATINUM TIER");
         }
 
     }
 
     public void downgradeCustomerTier(){
         switch (customerTier.getCustomerTierType()) {
-            case CustomerTierT.BASE_TIER : {
-                System.out.println("DEBUG: Already BASE TIER");
-                break;
+            case CustomerTierT.BASE_TIER -> {
+                System.out.println("Already BASE TIER");
             }
             case CustomerTierT.BRONZE_TIER : {
                 customerTier = new CustomerTierBase();

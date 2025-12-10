@@ -12,7 +12,6 @@ public class StaffExpr implements  Expression {
 
         Command cmd = new NoCmd();
 
-//        if ( !inputTokens.hasMoreTokens() ) return new NoCmd();
         inputTokens.nextToken(); // skip staff token
         if ( !inputTokens.hasMoreTokens() ) return new NoCmd();
 
@@ -24,7 +23,6 @@ public class StaffExpr implements  Expression {
             return new NoCmd();
         }
         String vehicleId = inputTokens.nextToken();
-        // TODO: check the id valid
         if (!inputTokens.hasMoreTokens()){
             return new NoCmd();
         }
@@ -42,11 +40,12 @@ public class StaffExpr implements  Expression {
             case "ready" ->{
                 cmd = new StaffReportReady(vehicleId, VehicleStateT.READY);
             }
+            default ->{
+                return new NoCmd();
+            }
+
         }
         return cmd;
     }
 
-//    public Command parseReport(StringTokenizer tokenizer) {
-//        return new NoCmd();
-//    }
 }

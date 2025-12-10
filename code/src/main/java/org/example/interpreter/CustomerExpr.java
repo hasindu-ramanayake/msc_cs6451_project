@@ -66,7 +66,10 @@ public class CustomerExpr implements Expression {
                 String date = tokenizer.nextToken();
                 cmd = new CustomerSearchDate(date);
             }
-        };
+            default ->{
+                return new NoCmd();
+            }
+        }
         return cmd;
 
     }

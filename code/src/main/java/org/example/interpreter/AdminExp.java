@@ -87,7 +87,10 @@ public class AdminExp implements Expression{
                 cmd = new AdminRemoveVehicle(vehicleID);
                 break;
             }
-            default : assert(true);
+            default ->{
+                return new NoCmd();
+            }
+
         }
         return cmd;
     }

@@ -1,12 +1,22 @@
 package org.example.customer;
 
+import org.example.core.AbLoggerFactory;
+import org.example.core.ILogger;
 import org.example.core.ISingleton;
+import org.example.core.LoggerFactory;
+import org.example.db.FileDbAdapter;
+import org.example.db.IDbAdapter;
+import org.example.session.SessionFactory;
 
 public class CustomerFactory extends AbCustomerFactory implements ISingleton {
 
     private static ISingleton customerFactoryInstance;
+    private ILogger logger;
 
     private CustomerFactory() {
+        AbLoggerFactory log = new LoggerFactory();
+        this.logger = log.createLogger();
+
     }
 
     @Override
@@ -19,7 +29,8 @@ public class CustomerFactory extends AbCustomerFactory implements ISingleton {
 
     @Override
     public void showMgrName() {
-        System.out.println("DEBUG: CREATE CUSTOMER FACTORY OBJECT: ");
+
+        logger.debugMessage("CREATE CUSTOMER FACTORY OBJECT: ");
     }
 
     public static ISingleton getCustomerFactoryInstance() {
