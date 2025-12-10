@@ -50,9 +50,12 @@ public class CustomerRentOrder implements Command {
             ISingleton rentalMgr = RentalMgr.getInstance();
             String rentalOrderID = ((RentalMgr)rentalMgr).createRentalOrder(userSession.session.getUser(), vehicleID, date, discountPercentage);
             if (rentalOrderID != null){
+                if ( rentalOrderID.equals("EBD") ) {
+                    System.out.println("Exceeding booking window: ");
+                    return;
+                }
                 System.out.println("The ID that corresponds to a this order is: " + rentalOrderID);
-            }
-            else {
+            } else {
                 System.out.println("Unaccessible vehicle or invalid vehicle ID");
             }
         }

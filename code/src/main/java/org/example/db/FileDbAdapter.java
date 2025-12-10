@@ -255,7 +255,7 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
     }
 
     @Override public void addRentalOrder(IRentalOrder rentalOrder) {
-        rentalOrder.setFee( vehicleMap.get(rentalOrder.getVehicleId()).getRentalRate().getRate() );
+//        rentalOrder.setFee( vehicleMap.get(rentalOrder.getVehicleId()).getRentalRate().getRate() );
         System.out.println(rentalOrder);
         rentalMap.put(rentalOrder.getOrderId(), rentalOrder);
     }

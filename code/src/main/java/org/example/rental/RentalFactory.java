@@ -17,6 +17,15 @@ public class RentalFactory extends AbRentalFactory implements ISingleton {
         return new RentalOrder(customerId, vehicleId, rentalDate);
     }
 
+    public IRentalOrder addDiscount(IRentalOrder rentalOrder, DiscountData data) {
+        if (data.discountType == DiscountTypeT.DISCOUNT_CODE) {
+            logger.debugMessage("Adding a discount: " +  ((Float)data.value) );
+            return new DiscountCodeDecorator(rentalOrder, ((Float)data.value) );
+        }
+        return rentalOrder;
+    }
+
+
     public IRentalOrder addDiscountCode(IRentalOrder rentalOrder, float discountPercentage){
         return new DiscountCodeDecorator(rentalOrder, discountPercentage);
     }
