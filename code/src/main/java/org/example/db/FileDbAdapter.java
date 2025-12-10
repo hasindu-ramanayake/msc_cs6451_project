@@ -21,10 +21,12 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
     private HashMap<String, VehicleBaseClass> vehicleMap;
     private HashMap<String, CustomerBaseClass> customerMap;
     private HashMap<String, IRentalOrder> rentalMap;
+    private HashMap<String, Float> discountMap;
 
     private static final String VEHICLE_DATA = "src/main/java/org/example/db/VehicleData.csv";
     private static final String ORDER_DATA = "src/main/java/org/example/db/Orders.csv";
     private static final String CUSTOMER_DATA = "src/main/java/org/example/db/Customer.csv";
+    private static final String DISCOUNT_DATA = "src/main/java/org/example/db/Discount.csv";
 
     public static IDbAdapter getInstance() {
         if (dbInstance == null) {
@@ -38,9 +40,11 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
         this.vehicleMap = new HashMap<>();
         this.customerMap = new HashMap<>();
         this.rentalMap = new HashMap<>();
+        this.discountMap = new HashMap<>();
         readVehicleData(VEHICLE_DATA);
         readRentalData(ORDER_DATA);
         readCustomerData(CUSTOMER_DATA);
+        readDiscountData(DISCOUNT_DATA);
         printMap();
     }
 
@@ -61,6 +65,11 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
     @Override
     public void readRentalData(String source) {
         this.processRentalData(fileReader.loadFromFile(source));
+    }
+
+    @Override
+    public void readDiscountData(String source)  {
+        this.processDiscountData(fileReader.loadFromFile(source));
     }
 
     private void processVehicleData(List<String[]> data){
@@ -122,6 +131,14 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
             );
             cu.setCustomerTier(CustomerTierT.getType(d[6]));
             this.customerMap.put(d[4], cu);
+        }
+    }
+
+    private void processDiscountData(List<String[]> data){
+        for (var d: data ) {
+            String name = d[0];
+            float percentage = Float.parseFloat(d[1]);
+            this.discountMap.put(name, percentage);
         }
     }
 
@@ -227,6 +244,15 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
         return orders;
     }
 
+    @Override public IRentalOrder getRentalOrderFromID(String orderID){
+        IRentalOrder rentalOrder = this.rentalMap.get(orderID);
+
+        if (rentalOrder == null) {
+            throw new IllegalArgumentException("No rental order found for ID: " + orderID);
+        }
+
+        return rentalOrder;
+    }
 
     @Override public void addRentalOrder(IRentalOrder rentalOrder) {
         rentalOrder.setFee( vehicleMap.get(rentalOrder.getVehicleId()).getRentalRate().getRate() );
@@ -272,7 +298,16 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
 
     }
 
-
+    public float getDiscountPercentage(String discountName){
+        for (Map.Entry<String, Float> entry : discountMap.entrySet()) {
+            String name = entry.getKey();
+            float percentage = entry.getValue();
+            if (name.equals(discountName)) {
+                return percentage;
+            }
+        }
+        return 0;
+    }
 
 
     private void printMap(){
