@@ -12,6 +12,7 @@ public interface IDbAdapter {
     void readVehicleData(String source);
     void readCustomerData(String source);
     void readRentalData(String source);
+    public void readDiscountData(String source);
 
     //customer check functions:
     public boolean isValidCustomer(String userId);
@@ -28,13 +29,14 @@ public interface IDbAdapter {
 
     //rental Orders
     public List<IRentalOrder> getRentalOrdersForCustomer(String userId);
+    public IRentalOrder getRentalOrderFromID(String orderID);
     public void addRentalOrder(IRentalOrder rentalOrder);
 
     //Vehicle Functions
-
     public void removeVehicle(VehicleBaseClass vehicle);
     public void addVehicle(VehicleBaseClass vehicle);
 
-
+    //Discount Functions
+    public float getDiscountPercentage(String discountName);
 
 }

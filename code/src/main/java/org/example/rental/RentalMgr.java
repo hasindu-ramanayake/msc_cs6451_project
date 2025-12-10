@@ -36,7 +36,7 @@ public class RentalMgr implements ISingleton{
     }
 
     //Other Functions
-    public String createRentalOrder( String customerId, String vehicleId, Date rentDate){
+    public String createRentalOrder( String customerId, String vehicleId, Date rentDate, float discountPercentage){
         if ( !((FileDbAdapter)db).isValidVehicle(vehicleId) ) return null;
         if ( !((FileDbAdapter)db).isAccessibleVehical(customerId, vehicleId) ) return null;
         if ( !((FileDbAdapter)db).isAvailableVehical(vehicleId, rentDate) ) return null;
@@ -44,18 +44,27 @@ public class RentalMgr implements ISingleton{
         if(!bookingWindow(customerId, rentDate)){
             return "Exceeds the Booking Date";
         }
-        else{
-            IRentalOrder rental = ((RentalFactory)rentalFactory).createRentalObject(customerId, vehicleId, rentDate);
+        else if(discountPercentage != 0){
+
+            IRentalOrder rental = ((RentalFactory)rentalFactory).addDiscountCode(((RentalFactory)rentalFactory).createRentalObject(customerId, vehicleId, rentDate), discountPercentage);
             ((FileDbAdapter)db).addRentalOrder(rental);
 
             return rental.getOrderId();
 
         }
+        else {
+            IRentalOrder rental = ((RentalFactory)rentalFactory).createRentalObject(customerId, vehicleId, rentDate);
+            ((FileDbAdapter)db).addRentalOrder(rental);
+
+            return rental.getOrderId();
+        }
 
 
     }
 
-
+    public float getDiscountPercentage(String discountCode){
+        return db.getDiscountPercentage(discountCode);
+    }
 
     private boolean bookingWindow(String customerId, Date rentDate){
         CustomerBaseClass customer =((FileDbAdapter) db).getCustomer(customerId);
@@ -109,18 +118,10 @@ public class RentalMgr implements ISingleton{
 //        }
         return null;
     }
+
     //Function To Print Receipt
-    public String printReceipt(IRentalOrder order){
-        String receipt =
-                "******JCR RENTAL RECEIPT*******" +
-                "\nOrder ID: "+ order.getOrderId()+
-                "\nCustomer ID: "+ order.getCustomerId()+
-                "\nVehicle ID: "+ order.getVehicleId()+
-                "\nRental Date: "+ order.getRentalDate()+
-                "\nFee: "+ order.getFee()+
-                "\nPaid: "+ order.getIsPaid()+
-                "\nThank You For Choosing JCR";
-        return receipt;
+    public void printReceipt(String orderID){
+        System.out.println(db.getRentalOrderFromID(orderID).printRentalOrder());
     }
 
 }

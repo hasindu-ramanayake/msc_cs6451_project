@@ -95,13 +95,21 @@ public class CustomerExpr implements Expression {
                     String dateToken = inputTokens.nextToken();
                     System.out.println(vehicleId+" "+dateToken);
                     cmd = new CustomerRentOrder(vehicleId, dateToken);
-                } else {
-                    System.out.println("Format error> customer rent order [VehicleId] [data{DD/MM/YYYY}]");
+                }
+                else if (inputTokens.countTokens() == 3 ) {
+                    String vehicleId = inputTokens.nextToken();
+                    String dateToken = inputTokens.nextToken();
+                    String discountCode = inputTokens.nextToken();
+                    System.out.println(vehicleId + " " + dateToken + " " + discountCode);
+                    cmd = new CustomerRentOrder(vehicleId, dateToken, discountCode);
+                }else {
+                    System.out.println("Format error> customer rent order [VehicleId] [data{DD/MM/YYYY}] [Discount code (optional)]");
                 }
             } case "view" -> {
 
             } case "print" -> {
-
+                String orderId = inputTokens.nextToken();
+                cmd = new CustomerRentPrint(orderId);
             }
         };
         return cmd;
