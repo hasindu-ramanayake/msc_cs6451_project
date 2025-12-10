@@ -1,0 +1,895 @@
+@startuml
+class org.example.vehicle.VehicleBaseClass {
+# String vehicleID
+- IVehicleGrade vehicleGrade
+- VehicleStateT vehicleState
+- int passengerCount
+- MakeT make
+- ModelT model
+- VehicleColorT color
+- AbRentalRateBaseClass rentalRate
++ <<Create>> VehicleBaseClass()
++ <<Create>> VehicleBaseClass(String,IVehicleGrade,VehicleStateT,int,MakeT,ModelT,VehicleColorT,AbRentalRateBaseClass)
++ String getVehicleID()
++ IVehicleGrade getVehicleGrade()
++ void setVehicleGrade(IVehicleGrade)
++ VehicleStateT getVehicleState()
++ void setVehicleState(VehicleStateT)
++ MakeT getMake()
++ void setMake(MakeT)
++ ModelT getModel()
++ void setModel(ModelT)
++ VehicleColorT getColor()
++ void setColor(VehicleColorT)
++ AbRentalRateBaseClass getRentalRate()
++ void setRentalRate(AbRentalRateBaseClass)
++ int getPassengerCount()
++ void setPassengerCount(int)
++ String toString()
+}
+
+
+class org.example.cmds.CustomerRentViewAll {
++ <<Create>> CustomerRentViewAll()
++ void execute(SessionWrapper)
+}
+
+class org.example.customer.CustomerTierBronze {
++ <<Create>> CustomerTierBronze()
+}
+
+class org.example.cmds.StaffReportReady {
+- String vehicleID
+- VehicleStateT vehicleState
++ <<Create>> StaffReportReady(String,VehicleStateT)
++ void execute(SessionWrapper)
+}
+
+
+class org.example.customer.CustomerTierPlatinum {
++ <<Create>> CustomerTierPlatinum()
+}
+
+interface org.example.core.ISingleton {
+~ void showMgrName()
+}
+
+class org.example.cmds.AdminAddVehicle {
+- String vehicleID
+- IVehicleGrade vehicleGrade
+- int passengerCount
+- MakeT make
+- ModelT model
+- VehicleColorT color
++ <<Create>> AdminAddVehicle(String,IVehicleGrade,int,MakeT,ModelT,VehicleColorT)
++ void execute(SessionWrapper)
+}
+
+
+abstract class org.example.session.AbSessionFactory {
++ {abstract}ISessionClass createSession(String)
+# String generateUniqueId()
+}
+
+class org.example.vehicle.GradeLuxury {
++ VehicleGradeT getGrade()
+}
+
+class org.example.interpreter.EmptyExpr {
++ Command interpret(String)
+}
+
+enum org.example.vehicle.MakeT {
++  SEAT
++  BMW
++  TOYOTA
++  HONDA
++  KIA
++  NISSAN
++  AUDI
++  LEXUS
++  UNKNOWN
++ {static} MakeT getType(String)
+}
+
+
+class org.example.db.FileReaderService {
++ List<String[]> loadFromFile(String)
+}
+
+class org.example.vehicle.GradePremium {
++ VehicleGradeT getGrade()
+}
+
+class org.example.vehicle.VehicleMgr {
+- {static} ISingleton vehicleMgrInst
+- IDbAdapter db
+~ Map<String,VehicleBaseClass> vehicleMap
+- <<Create>> VehicleMgr()
++ {static} ISingleton getInstance()
++ void addVehicleToMap(VehicleBaseClass)
++ void removeVehicleFromMap(String)
++ void modifyVehicleState(String,VehicleStateT)
++ void modifyVehicleGrade(String,IVehicleGrade)
++ ArrayList<VehicleBaseClass> getAllVehicles(String)
++ List<VehicleBaseClass> searchVehicleByMake(String,MakeT)
++ List<VehicleBaseClass> searchVehicleByDate(String,Date)
++ VehicleBaseClass searchVehicleByModel(ModelT)
++ VehicleBaseClass getVehicleSpecificObj(String)
++ VehicleBaseClass getAllVehicleByGrade(IVehicleGrade)
+}
+
+
+class org.example.payment.SecurityInterceptor {
++ void postPayment(PaymentContent)
++ void prePayment(PaymentContent)
+}
+
+class org.example.cmds.CommandContext {
+- String userID
++ <<Create>> CommandContext(String)
++ String getUserID()
++ void setUserID(String)
+}
+
+
+interface org.example.cmds.CommandInterceptor {
++ void preCommand(CommandContext)
++ void postCommand(CommandContext)
+}
+
+class org.example.interpreter.AdminExp {
++ Command interpret(String)
++ Command parseAdd(StringTokenizer)
++ Command parseRemove(StringTokenizer)
+}
+
+class org.example.vehicle.RentalRateStandard {
++ <<Create>> RentalRateStandard()
++ void calculateRentalRate()
+}
+
+class org.example.cmds.SignUp {
+- String email
+- String phoneNumber
+- boolean hasValidLicense
+- String customerId
++ <<Create>> SignUp(String,String,String,String)
++ void execute(SessionWrapper)
+}
+
+
+class org.example.customer.UserClass {
+# String email
+# Date joinedDate
+# String phoneNumber
+# UserT userType
+# boolean adminPrivilege
++ <<Create>> UserClass()
++ <<Create>> UserClass(String,String,UserT)
++ String getEmail()
++ String getPhoneNumber()
++ UserT getUserType()
+}
+
+
+enum org.example.vehicle.VehicleGradeT {
++  ECONOMY
++  STANDARD
++  LUXURY
++  PREMIUM
++  UNKNOWN
++ {static} VehicleGradeT getType(String)
+}
+
+
+class org.example.db.FileDbAdapter {
+- {static} IDbAdapter dbInstance
+- FileReaderService fileReader
+- HashMap<String,VehicleBaseClass> vehicleMap
+- HashMap<String,CustomerBaseClass> customerMap
+- HashMap<String,IRentalOrder> rentalMap
+- <<Create>> FileDbAdapter()
++ {static} IDbAdapter getInstance()
++ HashMap<String,VehicleBaseClass> getVehicleMap()
++ void readVehicleData(String)
++ void readCustomerData(String)
++ void readRentalData(String)
+- void processVehicleData(List<String[]>)
+- void processRentalData(List<String[]>)
+- void processCustomerData(List<String[]>)
++ boolean isValidCustomer(String)
++ boolean isValidVehicle(String)
++ void addCustomer(CustomerBaseClass)
++ boolean isAccessibleVehical(String,String)
++ boolean isAvailableVehical(String,Date)
++ CustomerBaseClass getCustomer(String)
++ ArrayList<VehicleBaseClass> getAccessibleVehicalList(String)
++ ArrayList<VehicleBaseClass> getAccessibleVehicalListByMake(String,MakeT)
++ ArrayList<VehicleBaseClass> getAccessibleVehicalListByDate(String,Date)
++ ArrayList<IRentalOrder> getRentalOrdersForCustomer(String)
++ void addRentalOrder(IRentalOrder)
++ void updateVehicleState(VehicleBaseClass)
++ void removeVehicle(VehicleBaseClass)
++ void addVehicle(VehicleBaseClass)
+- void writeVehicleDataToFile(String)
+- void printMap()
+}
+
+
+interface org.example.rental.IRentalOrder {
++ String getOrderId()
++ String getCustomerId()
++ String generateId()
++ Date getRentalDate()
++ String getVehicleId()
++ float getFee()
++ boolean getIsPaid()
++ float getLoyaltyPoints()
++ String printRentalOrder()
++ void setCustomerId(String)
++ void setRentalDate(Date)
++ void setVehicleId(String)
++ void setIsPaid(boolean)
++ void setFee(float)
++ void setLoyaltyPoints(float)
+}
+
+class org.example.rental.RentalFactory {
+- {static} ISingleton rentalFactoryInstance
+- long rentalCounter
+- <<Create>> RentalFactory()
++ IRentalOrder createRentalObject(String,String,Date)
++ {static} ISingleton getInstance()
+- String generateUniqueId(String)
+}
+
+
+enum org.example.vehicle.VehicleColorT {
++  BLACK
++  WHITE
++  GRAY
++  RED
++  BLUE
++  SILVER
++  UNKNOWN
++ {static} VehicleColorT getType(String)
+}
+
+
+enum org.example.customer.StaffT {
++  STAFF
++  MANAGER
+}
+
+abstract class org.example.customer.AbCustomerFactory {
+~ {abstract}CustomerBaseClass createCustomer(String,String,CustomerT,boolean,String)
+- String generateUniqueId()
+}
+
+class org.example.core.JCRMain {
+- {static} ISingleton jcrMgr
+- HashMap<MgrT,ISingleton> mgrMap
+- <<Create>> JCRMain()
++ {static} ISingleton getInstance()
+- void initMgrClasses()
++ void showMgrName()
++ ISingleton getMgrInstance(MgrT)
+}
+
+
+abstract class org.example.rental.RentalDecorator {
+# IRentalOrder decoratedRentalOrder
++ <<Create>> RentalDecorator(IRentalOrder)
++ String generateId()
++ String getOrderId()
++ String getCustomerId()
++ Date getRentalDate()
++ String getVehicleId()
++ float getFee()
++ boolean getIsPaid()
++ String printRentalOrder()
++ void setCustomerId(String)
++ void setRentalDate(Date)
++ void setVehicleId(String)
++ void setIsPaid(boolean)
++ void setFee(float)
++ void setLoyaltyPoints(float)
+}
+
+
+class org.example.payment.FraudCheckInterceptor {
++ void prePayment(PaymentContent)
++ void postPayment(PaymentContent)
+}
+
+class org.example.Main {
+~ {static} void main()
+}
+
+class org.example.customer.Staff {
+# String staffId
+# String fullName
+# boolean adminPrivilege
+# StaffT staffType
++ <<Create>> Staff(String,String,String,StaffT,String,boolean)
++ void reportCarState()
++ String getStaffId()
++ void setStaffId(String)
++ boolean isAdminPrivilege()
++ void setAdminPrivilege(boolean)
++ StaffT getStaffType()
++ void setStaffType(StaffT)
++ String getFullName()
+}
+
+
+class org.example.customer.CustomerTierBase {
+# int bookingWindow
+# double loyaltyPointMultiplier
+# int cancellationTime
+# int loyaltyPointsToUpdate
+# List<VehicleGradeT> vehicleGradeType
+# CustomerTierT customerTierType
+# float discountMultiplier
++ <<Create>> CustomerTierBase()
++ int getBookingWindow()
++ void setBookingWindow(int)
++ float getLoyaltyPointMultiplier()
++ void setLoyaltyPointMultiplier(float)
++ int getCancellationTime()
++ void setCancellationTime(int)
++ int getLoyaltyPointsToUpdate()
++ void setLoyaltyPointsToUpdate(int)
++ List<VehicleGradeT> getVehicleGradeType()
++ void setVehicleGradeType(List<VehicleGradeT>)
++ CustomerTierT getCustomerTierType()
++ void setCustomerTierType(CustomerTierT)
++ float getDiscountMultiplier()
++ void setDiscountMultiplier(float)
+}
+
+
+class org.example.customer.PersonalCustomerClass {
+- String lastName
+- String firstName
++ <<Create>> PersonalCustomerClass(String,String,CustomerT,boolean,String,String,String)
++ <<Create>> PersonalCustomerClass(String,String,CustomerT,boolean,String)
++ String getLastName()
++ void setLastName(String)
++ String getFirstName()
++ void setFirstName(String)
+}
+
+
+class org.example.interpreter.GeneralExpr {
++ Command interpret(String)
+}
+
+class org.example.cmds.LogInFormatInterceptor {
++ void preCommand(CommandContext)
++ void postCommand(CommandContext)
+}
+
+class org.example.vehicle.RentalRateLuxury {
++ <<Create>> RentalRateLuxury()
++ void calculateRentalRate()
+}
+
+class org.example.rental.RentalOrder {
+# String orderId
+- String customerId
+- String vehicleId
+- Date rentalDate
+- float fee
+- float loyaltyPoints
+- boolean isPaid
++ <<Create>> RentalOrder(String,String,String,Date,float,float,boolean)
++ <<Create>> RentalOrder(String,String,Date)
++ String generateId()
++ String getOrderId()
++ String getCustomerId()
++ Date getRentalDate()
++ String getVehicleId()
++ float getFee()
++ float getLoyaltyPoints()
++ boolean getIsPaid()
++ String printRentalOrder()
++ void setCustomerId(String)
++ void setRentalDate(Date)
++ void setVehicleId(String)
++ void setIsPaid(boolean)
++ void setFee(float)
++ void setLoyaltyPoints(float)
++ String toString()
+}
+
+
+enum org.example.customer.UserT {
++  CUSTOMER
++  STAFF
+}
+
+interface org.example.session.ISessionClass {
++ String getUser()
++ String getSessionId()
++ void updateTimeStamp()
++ LocalDateTime getLastTimeStamp()
+}
+
+class org.example.payment.PaymentDispatcher {
+- List<PaymentInterceptor> interceptors
++ <<Create>> PaymentDispatcher()
++ void registerInterceptor(PaymentInterceptor)
++ boolean processPayment(PaymentContent)
+}
+
+
+class org.example.cmds.StaffReportCheckIn {
+- String vehicleId
+- VehicleStateT vehicleState
++ <<Create>> StaffReportCheckIn(String,VehicleStateT)
++ void execute(SessionWrapper)
+}
+
+
+class org.example.rental.RentalMgr {
+- {static} ISingleton rentalInstance
+- {static} ISingleton rentalFactory
+- IPaymentGateway paymentGateway
+- IDbAdapter db
+- <<Create>> RentalMgr()
++ {static} ISingleton getInstance()
++ void showMgrName()
++ String createRentalOrder(String,String,Date)
+- boolean bookingWindow(String,Date)
++ void requestPayment()
+- String getRentalOrderID(String)
++ ArrayList<IRentalOrder> getAllRentalOrdersForCustomer(String)
++ String getRentalOrderIDForCustomer(String,String,Date)
++ String printReceipt(IRentalOrder)
+}
+
+
+class org.example.cmds.LogIn {
+- String userId
++ <<Create>> LogIn(String)
++ void execute(SessionWrapper)
+}
+
+
+class org.example.session.SessionMgr {
+- {static} ISingleton sessionInst
+- {static} ISingleton sessionFactory
+- <<Create>> SessionMgr()
++ {static} ISingleton getInstance()
++ void showMgrName()
++ boolean isValidSession(SessionWrapper)
++ void deleteSession(SessionWrapper)
++ ISessionClass createSessionFromFactory(String)
+}
+
+
+class org.example.customer.CustomerTierGold {
++ <<Create>> CustomerTierGold()
+}
+
+interface org.example.payment.IPaymentGateway {
++ boolean pay(PaymentContent)
+}
+
+class org.example.payment.CardPaymentGateway {
++ boolean pay(PaymentContent)
+}
+
+class org.example.rental.LoyaltyPointDecorator {
+- float loyaltyPoints
++ <<Create>> LoyaltyPointDecorator(IRentalOrder)
++ float getLoyaltyPoints()
++ String printRentalOrder()
+}
+
+
+abstract class org.example.rental.DiscountDecorator {
+- float discountPercentage
++ <<Create>> DiscountDecorator(IRentalOrder)
++ float getFee()
++ String printRentalOrder()
+}
+
+
+class org.example.customer.CustomerTierSilver {
++ <<Create>> CustomerTierSilver()
+}
+
+class org.example.payment.PaymentContent {
+- String userId
+- float amount
+- String currency
+- String cardNumber
++ <<Create>> PaymentContent(String,float,String,String)
++ String getUserId()
++ void setUserId(String)
++ float getAmount()
++ void setAmount(float)
++ String getCurrency()
++ void setCurrency(String)
++ String getCardNumber()
++ void setCardNumber(String)
+}
+
+
+class org.example.customer.Manager {
++ <<Create>> Manager(String,String,String,String,boolean)
++ void addStaff()
++ void removeStaff()
+}
+
+class org.example.session.SessionFactory {
+- {static} ISingleton factoryInstance
+~ IDbAdapter db
+- <<Create>> SessionFactory()
++ {static} ISingleton getInstance()
++ ISessionClass createSession(String)
++ void showMgrName()
+}
+
+
+class org.example.interpreter.CustomerExpr {
++ Command interpret(String)
++ Command parseUpgrade(StringTokenizer)
++ Command parseDowngrade(StringTokenizer)
++ Command parseSearch(StringTokenizer)
++ Command parseReceipt(StringTokenizer)
++ Command parseRent(StringTokenizer)
++ Command parseEvent(StringTokenizer)
+}
+
+class org.example.cmds.SignOut {
++ <<Create>> SignOut()
++ void execute(SessionWrapper)
+}
+
+class org.example.cmds.CustomerSearchDate {
+~ Date orderDate
++ <<Create>> CustomerSearchDate(String)
++ void execute(SessionWrapper)
+}
+
+
+class org.example.payment.LoggingInterceptor {
++ void prePayment(PaymentContent)
++ void postPayment(PaymentContent)
+}
+
+class org.example.cmds.CustomerDowngradeTier {
++ <<Create>> CustomerDowngradeTier()
++ void execute(SessionWrapper)
+}
+
+class org.example.cmds.CustomerUpgradeTier {
++ <<Create>> CustomerUpgradeTier()
++ void execute(SessionWrapper)
+}
+
+interface org.example.cmds.Command {
+~ void execute(SessionWrapper)
+}
+
+enum org.example.vehicle.ModelT {
++  CLASS_A
++  CLASS_B
++  CLASS_C
++  UNKNOWN
++ {static} ModelT getType(String)
+}
+
+
+class org.example.cmds.NoCmd {
++ <<Create>> NoCmd()
++ void execute(SessionWrapper)
+}
+
+class org.example.vehicle.GradeStandard {
++ VehicleGradeT getGrade()
+}
+
+abstract class org.example.vehicle.AbRentalRateBaseClass {
+- int rate
++ int getRate()
+~ {abstract}void calculateRentalRate()
+}
+
+
+class org.example.core.RandomKeyGenerator {
+- {static} String CHARACTERS
+- {static} int KEY_LENGTH
++ {static} String generateRandomKey()
+}
+
+
+class org.example.cmds.CustomerRentOrder {
+- String vehicleID
+- Date date
++ <<Create>> CustomerRentOrder(String,String)
++ void execute(SessionWrapper)
+}
+
+
+class org.example.cmds.CustomerSearchMake {
+~ MakeT make
++ <<Create>> CustomerSearchMake(String)
++ void execute(SessionWrapper)
+}
+
+
+abstract class org.example.rental.AbRentalFactory {
++ {abstract}IRentalOrder createRentalObject(String,String,Date)
+# String generateUniqueId()
+}
+
+class org.example.customer.CustomerBaseClass {
+# String customerId
+# int loyaltyPoints
+# int maxAllocations
+# boolean hasValidLicense
+# CustomerT customerType
+# CustomerTierBase customerTier
++ <<Create>> CustomerBaseClass()
++ <<Create>> CustomerBaseClass(String,String,CustomerT,boolean,String,int)
++ <<Create>> CustomerBaseClass(String,String,CustomerT,boolean,String)
++ String getCustomerId()
++ int getLoyaltyPoints()
++ void setLoyaltyPoints(int)
++ int getMaxAllocations()
++ void setMaxAllocations(int)
++ boolean isHasValidLicense()
++ void setHasValidLicense(boolean)
++ CustomerT getCustomerType()
++ void setCustomerType(CustomerT)
++ CustomerTierBase getCustomerTier()
++ CustomerTierT getCustomerTierType()
++ void setCustomerTier(CustomerTierT)
++ void upgradeCustomerTier()
++ void downgradeCustomerTier()
++ String toString()
+}
+
+
+class org.example.customer.CustomerFactory {
+- {static} ISingleton customerFactoryInstance
+- <<Create>> CustomerFactory()
++ CustomerBaseClass createCustomer(String,String,CustomerT,boolean,String)
++ void showMgrName()
++ {static} ISingleton getCustomerFactoryInstance()
+}
+
+
+enum org.example.customer.CustomerT {
++  PERSONAL_CUSTOMER
++  BUSINESS_CUSTOMER
++ {static} CustomerT getType(String)
+}
+
+
+enum org.example.core.MgrT {
++  CUSTOMER_MGR
++  SESSION_MGR
++  RENTAL_MGR
++  VEHICLE_MGR
+}
+
+interface org.example.db.IDbAdapter {
+~ void readVehicleData(String)
+~ void readCustomerData(String)
+~ void readRentalData(String)
++ boolean isValidCustomer(String)
++ boolean isValidVehicle(String)
++ void addCustomer(CustomerBaseClass)
++ boolean isAccessibleVehical(String,String)
++ boolean isAvailableVehical(String,Date)
++ CustomerBaseClass getCustomer(String)
++ ArrayList<VehicleBaseClass> getAccessibleVehicalList(String)
++ ArrayList<VehicleBaseClass> getAccessibleVehicalListByMake(String,MakeT)
++ ArrayList<VehicleBaseClass> getAccessibleVehicalListByDate(String,Date)
++ ArrayList<IRentalOrder> getRentalOrdersForCustomer(String)
++ void addRentalOrder(IRentalOrder)
++ void updateVehicleState(VehicleBaseClass)
++ void removeVehicle(VehicleBaseClass)
++ void addVehicle(VehicleBaseClass)
+}
+
+class org.example.cmds.StaffReportOutOfOrder {
+- String vehicleID
+- VehicleStateT vehicleState
++ <<Create>> StaffReportOutOfOrder(String,VehicleStateT)
++ void execute(SessionWrapper)
+}
+
+
+enum org.example.customer.CustomerTierT {
++  BASE_TIER
++  BRONZE_TIER
++  SILVER_TIER
++  GOLD_TIER
++  PLATINUM_TIER
++ {static} CustomerTierT getType(String)
+}
+
+
+class org.example.vehicle.RentalRateEconomy {
++ <<Create>> RentalRateEconomy()
++ void calculateRentalRate()
+}
+
+class org.example.interpreter.StaffExpr {
++ Command interpret(String)
+}
+
+interface org.example.vehicle.IVehicleGrade {
++ VehicleGradeT getGrade()
+}
+
+interface org.example.payment.PaymentInterceptor {
++ void prePayment(PaymentContent)
++ void postPayment(PaymentContent)
+}
+
+class org.example.session.SessionClass {
+- String user
+- String sessionId
+- LocalDateTime timeStamp
++ <<Create>> SessionClass(String,String)
++ String getUser()
++ String getSessionId()
++ LocalDateTime getLastTimeStamp()
++ void updateTimeStamp()
+}
+
+
+class org.example.cmds.StaffReportCheckOut {
+- String vehicleId
+- VehicleStateT vehicleState
++ <<Create>> StaffReportCheckOut(String,VehicleStateT)
++ void execute(SessionWrapper)
+}
+
+
+enum org.example.vehicle.VehicleStateT {
++  READY
++  CHECK_IN
++  CHECK_OUT
++  OUT_OF_ORDER
++ {static} VehicleStateT getType(String)
+}
+
+
+interface org.example.interpreter.Expression {
++ Command interpret(String)
+}
+
+class org.example.core.CmdParser {
++ {static} Command parse(String)
+}
+
+class org.example.vehicle.GradeEconomy {
++ VehicleGradeT getGrade()
+}
+
+class org.example.session.SessionWrapper {
++ ISessionClass session
++ CommandDispatcher cmdDispatcher
++ <<Create>> SessionWrapper()
+}
+
+
+class org.example.customer.CustomerMgr {
+- {static} ISingleton managerInst
+- ISingleton customerFactory
+- IDbAdapter db
+- <<Create>> CustomerMgr()
++ void addCustomer(CustomerBaseClass)
++ void removeCustomer()
++ void updateCustomerDetails()
++ void upgradeCustomerTier(String)
++ void downgradeCustomerTier(String)
++ {static} ISingleton getInstance()
++ CustomerBaseClass getCustomerFromId(String)
++ void showMgrName()
++ boolean createCustomerFromFactory(String,String,CustomerT,boolean,String)
++ CustomerTierT getCustomerTier(String)
+}
+
+
+class org.example.customer.BusinessCustomerClass {
+- String companyName
++ <<Create>> BusinessCustomerClass()
++ String getCompanyName()
++ void setCompanyName(String)
+}
+
+
+class org.example.cmds.AdminRemoveVehicle {
+- String vehicleID
++ <<Create>> AdminRemoveVehicle(String)
++ void execute(SessionWrapper)
+}
+
+
+class org.example.cmds.CommandDispatcher {
+- List<CommandInterceptor> interceptors
++ <<Create>> CommandDispatcher()
++ void registerInterceptor(CommandInterceptor)
++ void processCommand(CommandContext)
+}
+
+
+class org.example.cmds.CustomerSearchAll {
++ <<Create>> CustomerSearchAll()
++ void execute(SessionWrapper)
+}
+
+
+
+org.example.cmds.Command <|.. org.example.cmds.CustomerRentViewAll
+org.example.customer.CustomerTierBase <|-- org.example.customer.CustomerTierBronze
+org.example.cmds.Command <|.. org.example.cmds.StaffReportReady
+org.example.customer.CustomerTierBase <|-- org.example.customer.CustomerTierPlatinum
+org.example.cmds.Command <|.. org.example.cmds.AdminAddVehicle
+org.example.vehicle.IVehicleGrade <|.. org.example.vehicle.GradeLuxury
+org.example.interpreter.Expression <|.. org.example.interpreter.EmptyExpr
+org.example.vehicle.IVehicleGrade <|.. org.example.vehicle.GradePremium
+org.example.core.ISingleton <|.. org.example.vehicle.VehicleMgr
+org.example.payment.PaymentInterceptor <|.. org.example.payment.SecurityInterceptor
+org.example.interpreter.Expression <|.. org.example.interpreter.AdminExp
+org.example.vehicle.AbRentalRateBaseClass <|-- org.example.vehicle.RentalRateStandard
+org.example.cmds.Command <|.. org.example.cmds.SignUp
+org.example.db.IDbAdapter <|.. org.example.db.FileDbAdapter
+org.example.core.ISingleton <|.. org.example.db.FileDbAdapter
+org.example.core.ISingleton <|.. org.example.rental.RentalFactory
+org.example.rental.AbRentalFactory <|-- org.example.rental.RentalFactory
+org.example.core.ISingleton <|.. org.example.core.JCRMain
+org.example.rental.IRentalOrder <|.. org.example.rental.RentalDecorator
+org.example.payment.PaymentInterceptor <|.. org.example.payment.FraudCheckInterceptor
+org.example.customer.UserClass <|-- org.example.customer.Staff
+org.example.customer.CustomerBaseClass <|-- org.example.customer.PersonalCustomerClass
+org.example.interpreter.Expression <|.. org.example.interpreter.GeneralExpr
+org.example.cmds.CommandInterceptor <|.. org.example.cmds.LogInFormatInterceptor
+org.example.vehicle.AbRentalRateBaseClass <|-- org.example.vehicle.RentalRateLuxury
+org.example.rental.IRentalOrder <|.. org.example.rental.RentalOrder
+org.example.cmds.Command <|.. org.example.cmds.StaffReportCheckIn
+org.example.core.ISingleton <|.. org.example.rental.RentalMgr
+org.example.cmds.Command <|.. org.example.cmds.LogIn
+org.example.core.ISingleton <|.. org.example.session.SessionMgr
+org.example.customer.CustomerTierBase <|-- org.example.customer.CustomerTierGold
+org.example.payment.IPaymentGateway <|.. org.example.payment.CardPaymentGateway
+org.example.rental.RentalDecorator <|-- org.example.rental.LoyaltyPointDecorator
+org.example.rental.RentalDecorator <|-- org.example.rental.DiscountDecorator
+org.example.customer.CustomerTierBase <|-- org.example.customer.CustomerTierSilver
+org.example.customer.Staff <|-- org.example.customer.Manager
+org.example.core.ISingleton <|.. org.example.session.SessionFactory
+org.example.session.AbSessionFactory <|-- org.example.session.SessionFactory
+org.example.interpreter.Expression <|.. org.example.interpreter.CustomerExpr
+org.example.cmds.Command <|.. org.example.cmds.SignOut
+org.example.cmds.Command <|.. org.example.cmds.CustomerSearchDate
+org.example.payment.PaymentInterceptor <|.. org.example.payment.LoggingInterceptor
+org.example.cmds.Command <|.. org.example.cmds.CustomerDowngradeTier
+org.example.cmds.Command <|.. org.example.cmds.CustomerUpgradeTier
+org.example.cmds.Command <|.. org.example.cmds.NoCmd
+org.example.vehicle.IVehicleGrade <|.. org.example.vehicle.GradeStandard
+org.example.cmds.Command <|.. org.example.cmds.CustomerRentOrder
+org.example.cmds.Command <|.. org.example.cmds.CustomerSearchMake
+org.example.customer.UserClass <|-- org.example.customer.CustomerBaseClass
+org.example.core.ISingleton <|.. org.example.customer.CustomerFactory
+org.example.customer.AbCustomerFactory <|-- org.example.customer.CustomerFactory
+org.example.cmds.Command <|.. org.example.cmds.StaffReportOutOfOrder
+org.example.vehicle.AbRentalRateBaseClass <|-- org.example.vehicle.RentalRateEconomy
+org.example.interpreter.Expression <|.. org.example.interpreter.StaffExpr
+org.example.session.ISessionClass <|.. org.example.session.SessionClass
+org.example.cmds.Command <|.. org.example.cmds.StaffReportCheckOut
+org.example.vehicle.IVehicleGrade <|.. org.example.vehicle.GradeEconomy
+org.example.core.ISingleton <|.. org.example.customer.CustomerMgr
+org.example.customer.CustomerBaseClass <|-- org.example.customer.BusinessCustomerClass
+org.example.cmds.Command <|.. org.example.cmds.AdminRemoveVehicle
+org.example.cmds.Command <|.. org.example.cmds.CustomerSearchAll
+@enduml

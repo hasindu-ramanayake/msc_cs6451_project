@@ -23,4 +23,7 @@ public class SessionClass implements ISessionClass{
     public void updateTimeStamp() {
         this.timeStamp = LocalDateTime.now();
     }
+    public boolean isExpired() {
+        return (ChronoUnit.MINUTES.between(this.getLastTimeStamp(), LocalDateTime.now()) <= 5 );
+    }
 }
