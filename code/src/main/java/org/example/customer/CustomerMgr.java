@@ -6,18 +6,13 @@ import org.example.core.ISingleton;
 import org.example.core.LoggerFactory;
 import org.example.db.FileDbAdapter;
 import org.example.db.IDbAdapter;
-import org.example.session.ISessionClass;
-import org.example.session.SessionFactory;
-import org.example.session.SessionMgr;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class CustomerMgr implements ISingleton {
     private static ISingleton managerInst;
     private final ISingleton customerFactory;
     private final IDbAdapter db;
     private ILogger logger;
+    private static final String CUSTOMER_NOT_FOUND = "Customer not found";
 
     private CustomerMgr() {
         customerFactory = CustomerFactory.getCustomerFactoryInstance();
@@ -38,7 +33,7 @@ public class CustomerMgr implements ISingleton {
     public void upgradeCustomerTier(String userId){
         CustomerBaseClass cu = ((FileDbAdapter)db).getCustomer(userId);
         if (cu == null) {
-            System.out.println("Customer Not Found");
+            System.out.println(CUSTOMER_NOT_FOUND);
             return;
         }
         cu.upgradeCustomerTier();
@@ -48,7 +43,7 @@ public class CustomerMgr implements ISingleton {
     public void downgradeCustomerTier(String userId) {
         CustomerBaseClass cu = ((FileDbAdapter)db).getCustomer(userId);
         if (cu ==null) {
-            System.out.println("Customer Not Found");
+            System.out.println(CUSTOMER_NOT_FOUND);
             return;
         }
         cu.downgradeCustomerTier();
@@ -65,7 +60,7 @@ public class CustomerMgr implements ISingleton {
     public CustomerBaseClass getCustomerFromId(String customerId) {
         CustomerBaseClass cu = ((FileDbAdapter)db).getCustomer(customerId);
         if (cu ==null) {
-            System.out.println("Customer Not Found");
+            System.out.println(CUSTOMER_NOT_FOUND);
             return null;
         }
 

@@ -1,18 +1,9 @@
 package org.example.customer;
 
-import org.example.core.AbLoggerFactory;
-import org.example.core.ILogger;
-import org.example.core.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 public class CustomerBaseClass extends UserClass{
     protected String customerId;
     protected int loyaltyPoints;
     protected int maxAllocations;
-//    protected List<String> bookings;
     protected boolean hasValidLicense;
     protected CustomerT customerType;
     protected CustomerTierBase customerTier;
@@ -62,12 +53,6 @@ public class CustomerBaseClass extends UserClass{
         this.maxAllocations = maxAllocations;
     }
 
-//    public List<String> getBookings() {
-//        bookings = new ArrayList<String>();
-//        bookings.add("bookings");
-//        return bookings;
-//    }
-
     public boolean isHasValidLicense() {
         return this.hasValidLicense;
     }
@@ -95,28 +80,36 @@ public class CustomerBaseClass extends UserClass{
     public void setCustomerTier(CustomerTierT type) {
         System.out.println(type);
         switch (type) {
-            case CustomerTierT.BRONZE_TIER -> {
+            case CustomerTierT.BRONZE_TIER : {
                 customerTier = new CustomerTierBronze();
-            } case CustomerTierT.SILVER_TIER -> {
+                break;
+            } case CustomerTierT.SILVER_TIER : {
                 customerTier = new CustomerTierSilver();
-            } case CustomerTierT.GOLD_TIER -> {
+                break;
+            } case CustomerTierT.GOLD_TIER : {
                 customerTier = new CustomerTierGold();
+                break;
             }
-            case CustomerTierT.PLATINUM_TIER -> {
+            case CustomerTierT.PLATINUM_TIER : {
                 customerTier = new CustomerTierPlatinum();
+                break;
             }
+            default: assert(true);
         }
     }
 
     public void upgradeCustomerTier(){
         switch (customerTier.getCustomerTierType()) {
-            case CustomerTierT.BASE_TIER -> {
+            case CustomerTierT.BASE_TIER : {
                 customerTier = new CustomerTierBronze();
-            } case CustomerTierT.BRONZE_TIER -> {
+                break;
+            } case CustomerTierT.BRONZE_TIER : {
                 customerTier = new CustomerTierSilver();
-            } case CustomerTierT.SILVER_TIER -> {
+                break;
+            } case CustomerTierT.SILVER_TIER : {
                 customerTier = new CustomerTierGold();
-            } case CustomerTierT.GOLD_TIER -> {
+                break;
+            } case CustomerTierT.GOLD_TIER : {
                 customerTier = new CustomerTierPlatinum();
             } case CustomerTierT.PLATINUM_TIER ->
                     System.out.println("Already PLATINUM TIER");
@@ -129,18 +122,23 @@ public class CustomerBaseClass extends UserClass{
             case CustomerTierT.BASE_TIER -> {
                 System.out.println("Already BASE TIER");
             }
-            case CustomerTierT.BRONZE_TIER -> {
+            case CustomerTierT.BRONZE_TIER : {
                 customerTier = new CustomerTierBase();
+                break;
             }
-            case CustomerTierT.SILVER_TIER -> {
+            case CustomerTierT.SILVER_TIER : {
                 customerTier = new CustomerTierBronze();
+                break;
             }
-            case CustomerTierT.GOLD_TIER -> {
+            case CustomerTierT.GOLD_TIER : {
                 customerTier = new CustomerTierSilver();
+                break;
             }
-            case CustomerTierT.PLATINUM_TIER -> {
+            case CustomerTierT.PLATINUM_TIER : {
                 customerTier = new CustomerTierGold();
+                break;
             }
+            default: assert(true);
         }
 
     }

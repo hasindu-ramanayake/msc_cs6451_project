@@ -34,23 +34,23 @@ public class AdminExp implements Expression{
         String add = tokenizer.nextToken();
 
         switch(add){
-            case "vehicle" ->{
+            case "vehicle" :{
                 System.out.println("Please Enter Vehicle Details in the Format ");
                 if(!tokenizer.hasMoreTokens()){
                     return cmd;
                 }
                 //Enter VehicleID and Details
                 String vehicleID = tokenizer.nextToken();
-                String vehicleGrade = tokenizer.nextToken();
+                VehicleGradeT vehicleGrade = VehicleGradeT.getType(tokenizer.nextToken());
                 int passengerCount = Integer.parseInt(tokenizer.nextToken());
-                String model = tokenizer.nextToken();
-                String make = tokenizer.nextToken();
-                String color = tokenizer.nextToken();
+                ModelT model = ModelT.getType(tokenizer.nextToken());
+                MakeT make = MakeT.getType(tokenizer.nextToken());
+                VehicleColorT color = VehicleColorT.getType(tokenizer.nextToken());
 
-                cmd = new AdminAddVehicle(vehicleID, new GradePremium(), passengerCount, MakeT.BMW, ModelT.CLASS_A, VehicleColorT.RED);
-
+                cmd = new AdminAddVehicle(vehicleID, VehicleGradeT.createInterface(vehicleGrade), passengerCount, make, model, color);
+                break;
             }
-            case "staff" ->{
+            case "staff" :{
                 System.out.println("Please Enter Staff Details");
                 if(!tokenizer.hasMoreTokens()){
                     return cmd;
@@ -64,8 +64,10 @@ public class AdminExp implements Expression{
                 String fullname = tokenizer.nextToken();
                 if(!tokenizer.hasMoreTokens()){return cmd;}
                 String staffID = tokenizer.nextToken();
+                break;
             }
-        };
+            default : assert(true);
+        }
 
         return cmd;
     }
@@ -77,13 +79,13 @@ public class AdminExp implements Expression{
         String remove = tokenizer.nextToken();
 
         switch(remove){
-            case "vehicle"->{
+            case "vehicle" : {
                 if(!tokenizer.hasMoreTokens()){
                     return cmd;
                 }
                 String vehicleID = tokenizer.nextToken();
                 cmd = new AdminRemoveVehicle(vehicleID);
-
+                break;
             }
             default ->{
                 return new NoCmd();

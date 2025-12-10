@@ -1,8 +1,5 @@
 package org.example.customer;
 
-import java.util.Date;
-import java.util.List;
-
 public class PersonalCustomerClass extends CustomerBaseClass{
 
     private String lastName;
@@ -12,10 +9,6 @@ public class PersonalCustomerClass extends CustomerBaseClass{
         super(email, phoneNumber, customerType, hasValidLicense, customerId);
         this.lastName = lastName;
         this.firstName = firstName;
-    }
-
-    public PersonalCustomerClass(String email, String phoneNumber, CustomerT customerType, boolean hasValidLicense, String customerId) {
-
     }
 
     public String getLastName() {

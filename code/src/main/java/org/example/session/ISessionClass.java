@@ -7,4 +7,5 @@ public interface ISessionClass {
     public String getSessionId();
     public void updateTimeStamp();
     public LocalDateTime getLastTimeStamp();
+    public boolean isExpired();
 }

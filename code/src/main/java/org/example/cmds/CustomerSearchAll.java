@@ -6,7 +6,7 @@ import org.example.session.SessionWrapper;
 import org.example.vehicle.VehicleBaseClass;
 import org.example.vehicle.VehicleMgr;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerSearchAll implements Command{
 
@@ -20,7 +20,7 @@ public class CustomerSearchAll implements Command{
 
         if(((SessionMgr) sessionMgr).isValidSession(userSession)){
             ISingleton vehicleMgr = VehicleMgr.getInstance();
-            ArrayList<VehicleBaseClass> vehiclesList = ((VehicleMgr) vehicleMgr).getAllVehicles(userSession.session.getUser());
+            List<VehicleBaseClass> vehiclesList = ((VehicleMgr) vehicleMgr).getAllVehicles(userSession.session.getUser());
             for (VehicleBaseClass v: vehiclesList ) {
                 System.out.println(v);
             }
