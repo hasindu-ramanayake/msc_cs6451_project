@@ -1,5 +1,9 @@
 package org.example.customer;
 
+import org.example.core.AbLoggerFactory;
+import org.example.core.ILogger;
+import org.example.core.LoggerFactory;
+
 public class CustomerBaseClass extends UserClass{
     protected String customerId;
     protected int loyaltyPoints;
@@ -111,15 +115,14 @@ public class CustomerBaseClass extends UserClass{
                 break;
             } case CustomerTierT.GOLD_TIER : {
                 customerTier = new CustomerTierPlatinum();
-            } case CustomerTierT.PLATINUM_TIER ->
-                    System.out.println("Already PLATINUM TIER");
+            } case CustomerTierT.PLATINUM_TIER : { System.out.println("Already PLATINUM TIER");}
         }
 
     }
 
     public void downgradeCustomerTier(){
         switch (customerTier.getCustomerTierType()) {
-            case CustomerTierT.BASE_TIER -> {
+            case CustomerTierT.BASE_TIER : {
                 System.out.println("Already BASE TIER");
             }
             case CustomerTierT.BRONZE_TIER : {
