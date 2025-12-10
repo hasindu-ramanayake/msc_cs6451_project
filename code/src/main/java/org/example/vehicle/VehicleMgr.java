@@ -106,7 +106,6 @@ public class VehicleMgr implements ISingleton {
         return null;
     }
 
-    //TODO: CHECK THIS FUNCTION
     public VehicleBaseClass getVehicleSpecificObj(String vehicleID){
         return null;
     }

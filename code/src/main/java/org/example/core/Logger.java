@@ -21,6 +21,4 @@ public class Logger implements ILogger{
     public void errorMessage(String message){
         if(debug) System.out.println("ERROR: "+message);
     }
-
-
 }
