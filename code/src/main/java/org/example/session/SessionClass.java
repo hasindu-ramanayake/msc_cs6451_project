@@ -5,6 +5,7 @@ import org.example.core.ILogger;
 import org.example.core.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 
 public class SessionClass implements ISessionClass{
@@ -28,5 +29,8 @@ public class SessionClass implements ISessionClass{
     public LocalDateTime getLastTimeStamp( ) { return this.timeStamp;}
     public void updateTimeStamp() {
         this.timeStamp = LocalDateTime.now();
+    }
+    public boolean isExpired() {
+        return (ChronoUnit.MINUTES.between(this.getLastTimeStamp(), LocalDateTime.now()) <= 5 );
     }
 }

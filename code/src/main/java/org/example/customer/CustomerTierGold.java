@@ -8,7 +8,7 @@ public class CustomerTierGold extends CustomerTierBase{
 
     public CustomerTierGold() {
         super();
-        this.bookingWindow = 1000000000;
+        this.bookingWindow = 14;
         this.loyaltyPointMultiplier = 1.5;
         this.cancellationTime = 1000000000;
         this.loyaltyPointsToUpdate = 1000000000;

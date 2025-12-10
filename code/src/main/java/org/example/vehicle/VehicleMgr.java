@@ -32,7 +32,7 @@ public class VehicleMgr implements ISingleton {
         db = FileDbAdapter.getInstance();
         this.vehicleMap = new HashMap<>();
 
-        HashMap<String, VehicleBaseClass> adapterMap = ((FileDbAdapter) db).getVehicleMap();
+        Map<String, VehicleBaseClass> adapterMap = ((FileDbAdapter) db).getVehicleMap();
         this.vehicleMap.putAll(adapterMap);
 
         AbLoggerFactory log = new LoggerFactory();
@@ -71,7 +71,7 @@ public class VehicleMgr implements ISingleton {
         else{
             logger.debugMessage("Reporting status of "+vehicleID+ " to "+state);
             vehicle.setVehicleState(state);
-            ((FileDbAdapter) db).updateVehicleState(vehicle);
+            ((FileDbAdapter) db).addVehicle(vehicle);
 
         }
     }
@@ -83,7 +83,7 @@ public class VehicleMgr implements ISingleton {
         }
     }
     //Returns all the vehicles
-    public ArrayList<VehicleBaseClass> getAllVehicles(String userId){
+    public List<VehicleBaseClass> getAllVehicles(String userId){
         return ((FileDbAdapter)db).getAccessibleVehicalList(userId);
     }
 

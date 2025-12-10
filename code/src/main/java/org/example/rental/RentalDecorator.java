@@ -8,7 +8,7 @@ import java.util.Date;
 public abstract class RentalDecorator implements IRentalOrder {
     protected IRentalOrder decoratedRentalOrder;
     //Constructor
-    public RentalDecorator(IRentalOrder decoratedRentalOrder){
+    protected RentalDecorator(IRentalOrder decoratedRentalOrder){
         this.decoratedRentalOrder = decoratedRentalOrder;
     }
 
@@ -45,6 +45,11 @@ public abstract class RentalDecorator implements IRentalOrder {
     }
 
     @Override
+    public float getLoyaltyPoints(){
+        return decoratedRentalOrder.getLoyaltyPoints();
+    }
+
+    @Override
     public String printRentalOrder(){
         return decoratedRentalOrder.printRentalOrder();
     }
@@ -77,5 +82,12 @@ public abstract class RentalDecorator implements IRentalOrder {
     @Override
     public void setLoyaltyPoints(float loyaltyPoints) {
         decoratedRentalOrder.setLoyaltyPoints(loyaltyPoints);
+    }
+
+    @Override
+    public String toString() {
+        return "RentalDecorator{" +
+                "decoratedRentalOrder=" + decoratedRentalOrder +
+                '}';
     }
 }

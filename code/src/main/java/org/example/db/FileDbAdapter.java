@@ -12,19 +12,21 @@ import org.example.vehicle.*;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class FileDbAdapter implements IDbAdapter, ISingleton {
     private static IDbAdapter dbInstance;
-
 
     private final FileReaderService fileReader;
     private HashMap<String, VehicleBaseClass> vehicleMap;
     private HashMap<String, CustomerBaseClass> customerMap;
     private HashMap<String, IRentalOrder> rentalMap;
+    private HashMap<String, Float> discountMap;
+
+    private static final String VEHICLE_DATA = "src/main/java/org/example/db/VehicleData.csv";
+    private static final String ORDER_DATA = "src/main/java/org/example/db/Orders.csv";
+    private static final String CUSTOMER_DATA = "src/main/java/org/example/db/Customer.csv";
+    private static final String DISCOUNT_DATA = "src/main/java/org/example/db/Discount.csv";
 
     public static IDbAdapter getInstance() {
         if (dbInstance == null) {
@@ -38,13 +40,15 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
         this.vehicleMap = new HashMap<>();
         this.customerMap = new HashMap<>();
         this.rentalMap = new HashMap<>();
-        readVehicleData("src/main/java/org/example/db/VehicleData.csv");
-        readRentalData("src/main/java/org/example/db/Orders.csv");
-        readCustomerData("src/main/java/org/example/db/Customer.csv");
+        this.discountMap = new HashMap<>();
+        readVehicleData(VEHICLE_DATA);
+        readRentalData(ORDER_DATA);
+        readCustomerData(CUSTOMER_DATA);
+        readDiscountData(DISCOUNT_DATA);
         printMap();
     }
 
-    public HashMap<String, VehicleBaseClass> getVehicleMap() {
+    public Map<String, VehicleBaseClass> getVehicleMap() {
         return vehicleMap;
     }
 
@@ -61,6 +65,11 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
     @Override
     public void readRentalData(String source) {
         this.processRentalData(fileReader.loadFromFile(source));
+    }
+
+    @Override
+    public void readDiscountData(String source)  {
+        this.processDiscountData(fileReader.loadFromFile(source));
     }
 
     private void processVehicleData(List<String[]> data){
@@ -96,7 +105,7 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
             try {
                 orderDate = formatter.parse(d[3]);
             } catch (ParseException e) {
-                throw new RuntimeException(e);
+                throw new IllegalArgumentException("Invalid date format: " + d[3], e);
             }
             IRentalOrder rO = new RentalOrder( d[0] // orderID
                     ,d[1] // customerID
@@ -122,6 +131,14 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
             );
             cu.setCustomerTier(CustomerTierT.getType(d[6]));
             this.customerMap.put(d[4], cu);
+        }
+    }
+
+    private void processDiscountData(List<String[]> data){
+        for (var d: data ) {
+            String name = d[0];
+            float percentage = Float.parseFloat(d[1]);
+            this.discountMap.put(name, percentage);
         }
     }
 
@@ -162,7 +179,7 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
         return cu;
     }
 
-    @Override public ArrayList<VehicleBaseClass> getAccessibleVehicalList(String userId) {
+    @Override public List<VehicleBaseClass> getAccessibleVehicalList(String userId) {
         // assume this will return valid customer
         ArrayList<VehicleBaseClass> list = new ArrayList<>();
         CustomerBaseClass cu = customerMap.get(userId);
@@ -176,7 +193,7 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
         return  list;
     }
 
-    @Override  public ArrayList<VehicleBaseClass> getAccessibleVehicalListByMake(String userId, MakeT make) {
+    @Override  public List<VehicleBaseClass> getAccessibleVehicalListByMake(String userId, MakeT make) {
         // assume this will return valid customer
         ArrayList<VehicleBaseClass> list = new ArrayList<>();
         CustomerBaseClass cu = customerMap.get(userId);
@@ -192,7 +209,7 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
 
     // need a better algorithm or new Bd table for easy filtering
     @Override
-    public ArrayList<VehicleBaseClass> getAccessibleVehicalListByDate(String userId, Date date) {
+    public List<VehicleBaseClass> getAccessibleVehicalListByDate(String userId, Date date) {
         ArrayList<VehicleBaseClass> list = new ArrayList<>();
         var accessibleVehicles = getAccessibleVehicalList(userId);
 
@@ -227,30 +244,32 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
         return orders;
     }
 
+    @Override public IRentalOrder getRentalOrderFromID(String orderID){
+        IRentalOrder rentalOrder = this.rentalMap.get(orderID);
 
-    @Override public void addRentalOrder(IRentalOrder rentalOrder) {
-        rentalOrder.setFee( vehicleMap.get(rentalOrder.getVehicleId()).getRentalRate().getRate() );
-        System.out.println(rentalOrder);
-        rentalMap.put(rentalOrder.getOrderId(), rentalOrder);
+        if (rentalOrder == null) {
+            throw new IllegalArgumentException("No rental order found for ID: " + orderID);
+        }
+
+        return rentalOrder;
     }
 
-
-    @Override
-    public void updateVehicleState(VehicleBaseClass vehicle){
-        vehicleMap.put(vehicle.getVehicleID(), vehicle);
-        writeVehicleDataToFile("src/main/java/org/example/db/VehicleData.csv");
+    @Override public void addRentalOrder(IRentalOrder rentalOrder) {
+//        rentalOrder.setFee( vehicleMap.get(rentalOrder.getVehicleId()).getRentalRate().getRate() );
+        System.out.println(rentalOrder);
+        rentalMap.put(rentalOrder.getOrderId(), rentalOrder);
     }
 
     @Override
     public void removeVehicle(VehicleBaseClass vehicle){
         vehicleMap.remove(vehicle.getVehicleID(), vehicle);
-        writeVehicleDataToFile("src/main/java/org/example/db/VehicleData.csv");
+        writeVehicleDataToFile(VEHICLE_DATA);
 
     }
     @Override
     public void addVehicle(VehicleBaseClass vehicle){
         vehicleMap.put(vehicle.getVehicleID(), vehicle);
-        writeVehicleDataToFile("src/main/java/org/example/db/VehicleData.csv");
+        writeVehicleDataToFile(VEHICLE_DATA);
     }
 
 
@@ -279,7 +298,16 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
 
     }
 
-
+    public float getDiscountPercentage(String discountName){
+        for (Map.Entry<String, Float> entry : discountMap.entrySet()) {
+            String name = entry.getKey();
+            float percentage = entry.getValue();
+            if (name.equals(discountName)) {
+                return percentage;
+            }
+        }
+        return 0;
+    }
 
 
     private void printMap(){

@@ -3,10 +3,10 @@ package org.example.rental;
 import org.example.core.ISingleton;
 import org.example.customer.CustomerMgr;
 
-public abstract class DiscountDecorator extends RentalDecorator{
-    private float discountPercentage;
+public class DiscountDecorator extends RentalDecorator{
+    private final float discountPercentage;
 
-    public DiscountDecorator(IRentalOrder decoratedRentalOrder){
+    protected DiscountDecorator(IRentalOrder decoratedRentalOrder){
         super(decoratedRentalOrder);
         ISingleton customerMgr = CustomerMgr.getInstance();
         this.discountPercentage = ((CustomerMgr) customerMgr).getCustomerFromId(getCustomerId()).getCustomerTier().getDiscountMultiplier();

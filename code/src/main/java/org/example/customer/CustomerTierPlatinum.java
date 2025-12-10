@@ -8,7 +8,7 @@ public class CustomerTierPlatinum extends CustomerTierBase{
 
     public CustomerTierPlatinum() {
         super();
-        this.bookingWindow = 1000000000;
+        this.bookingWindow = 30;
         this.loyaltyPointMultiplier = 1.5;
         this.cancellationTime = 1000000000;
         this.loyaltyPointsToUpdate = 1000000000;
