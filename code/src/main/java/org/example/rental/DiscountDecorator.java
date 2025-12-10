@@ -6,7 +6,7 @@ import org.example.customer.CustomerMgr;
 public abstract class DiscountDecorator extends RentalDecorator{
     private float discountPercentage;
 
-    public DiscountDecorator(IRentalOrder decoratedRentalOrder){
+    protected DiscountDecorator(IRentalOrder decoratedRentalOrder){
         super(decoratedRentalOrder);
         ISingleton customerMgr = CustomerMgr.getInstance();
         this.discountPercentage = ((CustomerMgr) customerMgr).getCustomerFromId(getCustomerId()).getCustomerTier().getDiscountMultiplier();

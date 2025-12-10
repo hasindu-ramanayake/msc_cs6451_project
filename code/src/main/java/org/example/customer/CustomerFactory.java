@@ -1,9 +1,6 @@
 package org.example.customer;
 
 import org.example.core.ISingleton;
-import org.example.db.FileDbAdapter;
-import org.example.db.IDbAdapter;
-import org.example.session.SessionFactory;
 
 public class CustomerFactory extends AbCustomerFactory implements ISingleton {
 

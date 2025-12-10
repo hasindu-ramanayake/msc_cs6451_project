@@ -7,7 +7,6 @@ public class UserClass {
     protected Date joinedDate;
     protected String phoneNumber;
     protected UserT userType;
-    protected boolean adminPrivilege;
 
     public UserClass() {}
 

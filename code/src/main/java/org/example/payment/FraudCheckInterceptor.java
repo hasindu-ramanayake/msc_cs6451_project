@@ -9,6 +9,8 @@ public class FraudCheckInterceptor implements PaymentInterceptor {
     }
 
     @Override
-    public void postPayment(PaymentContent paymentContent) {}
+    public void postPayment(PaymentContent paymentContent) {
+        System.out.println("Payment done.");
+    }
 
 }

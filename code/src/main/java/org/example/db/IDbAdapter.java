@@ -1,13 +1,12 @@
 package org.example.db;
 
-import org.example.core.ISingleton;
 import org.example.customer.CustomerBaseClass;
 import org.example.rental.IRentalOrder;
 import org.example.vehicle.MakeT;
 import org.example.vehicle.VehicleBaseClass;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public interface IDbAdapter {
     void readVehicleData(String source);
@@ -23,21 +22,16 @@ public interface IDbAdapter {
     public CustomerBaseClass getCustomer(String customerId);
 
     //get Vehicle data
-    public ArrayList<VehicleBaseClass> getAccessibleVehicalList(String userId);
-    public ArrayList<VehicleBaseClass> getAccessibleVehicalListByMake(String userId, MakeT make);
-    public ArrayList<VehicleBaseClass> getAccessibleVehicalListByDate(String userId, Date date);
+    public List<VehicleBaseClass> getAccessibleVehicalList(String userId);
+    public List<VehicleBaseClass> getAccessibleVehicalListByMake(String userId, MakeT make);
+    public List<VehicleBaseClass> getAccessibleVehicalListByDate(String userId, Date date);
 
     //rental Orders
-    public ArrayList<IRentalOrder> getRentalOrdersForCustomer(String userId);
+    public List<IRentalOrder> getRentalOrdersForCustomer(String userId);
     public void addRentalOrder(IRentalOrder rentalOrder);
-
-    // add function to implement
-
-    //TODO: Add functions to read vehicle data
 
     //Vehicle Functions
 
-    public void updateVehicleState(VehicleBaseClass vehicle);
     public void removeVehicle(VehicleBaseClass vehicle);
     public void addVehicle(VehicleBaseClass vehicle);
 
