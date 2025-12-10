@@ -1,12 +1,16 @@
 package org.example.session;
 
+import org.example.core.AbLoggerFactory;
+import org.example.core.ILogger;
 import org.example.core.ISingleton;
+import org.example.core.LoggerFactory;
 import org.example.db.FileDbAdapter;
 import org.example.db.IDbAdapter;
 
 public class SessionFactory extends AbSessionFactory implements ISingleton {
     private static ISingleton factoryInstance;
     IDbAdapter db;
+    private final ILogger logger;
 
     public static ISingleton getInstance() {
         if ( factoryInstance == null) {
@@ -22,12 +26,14 @@ public class SessionFactory extends AbSessionFactory implements ISingleton {
     }
 
     private SessionFactory() {
-        System.out.println("DEBUG: CREATE SESSION MGR OBJECT: ");
+        AbLoggerFactory lf = new LoggerFactory();
+        this.logger = lf.createLogger();
+        logger.debugMessage("CREATE SESSION MGR OBJECT: ");
         db = FileDbAdapter.getInstance();
     }
 
     @Override
     public void showMgrName() {
-        System.out.println("DEBUG: CREATE SESSION FACTORY OBJECT: ");
+        logger.debugMessage("CREATE SESSION FACTORY OBJECT: ");
     }
 }

@@ -18,6 +18,10 @@ public class SignUp implements Command {
         this.customerId = customerId;
     }
     @Override public void execute(SessionWrapper userSession) {
+        userSession.cmdDispatcher.registerInterceptor(new SignUpInterceptor());
+        CommandContext context = new CommandContext(email);
+        userSession.cmdDispatcher.processCommand(context);
+
         ISingleton customerMgr = CustomerMgr.getInstance();
         if ( ((CustomerMgr)customerMgr).createCustomerFromFactory(email, phoneNumber, CustomerT.PERSONAL_CUSTOMER, hasValidLicense, customerId) ) {
             System.out.println("Signed up as " + customerId + "\n Please login using > login "+ customerId );

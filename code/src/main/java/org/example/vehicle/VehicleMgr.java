@@ -1,6 +1,9 @@
 package org.example.vehicle;
 
+import org.example.core.AbLoggerFactory;
+import org.example.core.ILogger;
 import org.example.core.ISingleton;
+import org.example.core.LoggerFactory;
 import org.example.db.FileDbAdapter;
 import org.example.db.IDbAdapter;
 
@@ -10,7 +13,9 @@ public class VehicleMgr implements ISingleton {
 
     private static ISingleton vehicleMgrInst;
     //Database should only be in Manager Classes
-    private IDbAdapter db;
+    private final IDbAdapter db;
+
+    private final ILogger logger;
 
     Map<String, VehicleBaseClass> vehicleMap;
 
@@ -30,13 +35,16 @@ public class VehicleMgr implements ISingleton {
         HashMap<String, VehicleBaseClass> adapterMap = ((FileDbAdapter) db).getVehicleMap();
         this.vehicleMap.putAll(adapterMap);
 
+        AbLoggerFactory log = new LoggerFactory();
+        this.logger = log.createLogger();
+
     }
 
 
     public void addVehicleToMap(VehicleBaseClass vehicle){
         vehicleMap.put(vehicle.getVehicleID(), vehicle);
 
-        System.out.println("Vehicle added successfully");
+        logger.debugMessage("Vehicle added successfully");
 
 
     }
@@ -44,12 +52,12 @@ public class VehicleMgr implements ISingleton {
     public void removeVehicleFromMap(String vehicleID){
         //Check if the vehicle exists
         if ( vehicleID == null || vehicleID.isEmpty() ){
-            System.out.println("Vehicle with "+vehicleID+" does not exist");
+            logger.errorMessage("Vehicle with "+vehicleID+" does not exist");
         } else {
             VehicleBaseClass vehicle = vehicleMap.get(vehicleID);
             vehicleMap.remove(vehicleID);
             ((FileDbAdapter) db).removeVehicle(vehicle);
-            System.out.println("Vehicle removed successfully");
+            logger.debugMessage("Vehicle removed successfully");
         }
 
     }
@@ -58,10 +66,10 @@ public class VehicleMgr implements ISingleton {
         //Gets the vehicle with a specific ID
         VehicleBaseClass vehicle = vehicleMap.get(vehicleID);
         if(vehicle == null){
-            System.out.println("Vehicle with ID: "+vehicleID+ " does not exist");
+            logger.errorMessage("Vehicle with ID: "+vehicleID+ " does not exist");
         }
         else{
-            System.out.println("Reporting status of "+vehicleID+ " to "+state);
+            logger.debugMessage("Reporting status of "+vehicleID+ " to "+state);
             vehicle.setVehicleState(state);
             ((FileDbAdapter) db).updateVehicleState(vehicle);
 
@@ -71,7 +79,7 @@ public class VehicleMgr implements ISingleton {
     public void modifyVehicleGrade(String vehicleID, IVehicleGrade grade){
         VehicleBaseClass vehicle = vehicleMap.get(vehicleID);
         if(vehicle == null){
-            System.out.println("Vehicle with ID: "+vehicleID+ " does not exist");
+            logger.errorMessage("Vehicle with ID: "+vehicleID+ " does not exist");
         }
     }
     //Returns all the vehicles

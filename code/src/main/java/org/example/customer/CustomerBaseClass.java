@@ -1,5 +1,9 @@
 package org.example.customer;
 
+import org.example.core.AbLoggerFactory;
+import org.example.core.ILogger;
+import org.example.core.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +16,7 @@ public class CustomerBaseClass extends UserClass{
     protected boolean hasValidLicense;
     protected CustomerT customerType;
     protected CustomerTierBase customerTier;
+    private ILogger logger;
 
     public CustomerBaseClass(){}
 
@@ -23,6 +28,8 @@ public class CustomerBaseClass extends UserClass{
         this.loyaltyPoints = loyaltyPoints;
         this.maxAllocations = 1;
         this.customerTier = new CustomerTierBase();
+        AbLoggerFactory log = new LoggerFactory();
+        this.logger = log.createLogger();
     }
 
     public CustomerBaseClass(String email, String phoneNumber, CustomerT customerType, boolean hasValidLicense, String customerId) {
@@ -111,7 +118,8 @@ public class CustomerBaseClass extends UserClass{
                 customerTier = new CustomerTierGold();
             } case CustomerTierT.GOLD_TIER -> {
                 customerTier = new CustomerTierPlatinum();
-            } case CustomerTierT.PLATINUM_TIER -> System.out.println("DEBUG: Already PLATINUM TIER");
+            } case CustomerTierT.PLATINUM_TIER ->
+                    System.out.println("Already PLATINUM TIER");
         }
 
     }
@@ -119,7 +127,7 @@ public class CustomerBaseClass extends UserClass{
     public void downgradeCustomerTier(){
         switch (customerTier.getCustomerTierType()) {
             case CustomerTierT.BASE_TIER -> {
-                System.out.println("DEBUG: Already BASE TIER");
+                System.out.println("Already BASE TIER");
             }
             case CustomerTierT.BRONZE_TIER -> {
                 customerTier = new CustomerTierBase();

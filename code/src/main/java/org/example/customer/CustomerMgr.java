@@ -1,6 +1,9 @@
 package org.example.customer;
 
+import org.example.core.AbLoggerFactory;
+import org.example.core.ILogger;
 import org.example.core.ISingleton;
+import org.example.core.LoggerFactory;
 import org.example.db.FileDbAdapter;
 import org.example.db.IDbAdapter;
 import org.example.session.ISessionClass;
@@ -14,10 +17,14 @@ public class CustomerMgr implements ISingleton {
     private static ISingleton managerInst;
     private final ISingleton customerFactory;
     private final IDbAdapter db;
+    private ILogger logger;
 
     private CustomerMgr() {
         customerFactory = CustomerFactory.getCustomerFactoryInstance();
         db = FileDbAdapter.getInstance();
+        AbLoggerFactory log = new LoggerFactory();
+        this.logger = log.createLogger();
+
     }
 
     public void addCustomer(CustomerBaseClass customer) {
@@ -67,7 +74,8 @@ public class CustomerMgr implements ISingleton {
 
     @Override
     public void showMgrName() {
-        System.out.println("DEBUG: CREATE CUSTOMER MANAGER OBJECT: ");
+
+        logger.debugMessage("CREATE CUSTOMER MANAGER OBJECT: ");
     }
 
     public boolean createCustomerFromFactory(String email, String phoneNumber, CustomerT type, boolean hasValidLicense, String customerID) {

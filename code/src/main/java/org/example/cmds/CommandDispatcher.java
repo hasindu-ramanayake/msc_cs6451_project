@@ -1,16 +1,13 @@
 package org.example.cmds;
 
-import org.example.payment.PaymentContent;
-import org.example.payment.PaymentInterceptor;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommandDispatcher {
-    private final List<CommandInterceptor> interceptors;
+    private List<CommandInterceptor> interceptors;
 
     public CommandDispatcher() {
-        this.interceptors =  new ArrayList<>();;
+        this.interceptors =  new ArrayList<>();
     }
 
     public void registerInterceptor(CommandInterceptor interceptor) {
@@ -25,5 +22,9 @@ public class CommandDispatcher {
         for (CommandInterceptor interceptor : interceptors) {
             interceptor.postCommand(context);
         }
+
+        interceptors.clear();
     }
+
+
 }
