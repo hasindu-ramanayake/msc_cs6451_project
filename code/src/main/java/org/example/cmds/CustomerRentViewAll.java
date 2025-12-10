@@ -21,7 +21,7 @@ public class CustomerRentViewAll implements Command{
 
             ArrayList<IRentalOrder> rentalList = ((RentalMgr)rentalMgr).getAllRentalOrdersForCustomer(userSession.session.getUser());
             for (IRentalOrder r: rentalList) {
-                System.out.println(((RentalMgr) rentalMgr).printReceipt(r));
+        //        System.out.println(((RentalMgr) rentalMgr).printReceipt(r));
                 System.out.println(" ");
 
             }

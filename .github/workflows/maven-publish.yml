@@ -2,9 +2,9 @@ name: CI/CD Pipeline for JCR
 
 on: 
   push:
-    branches: ["main"]
+    branches: ["rental_package_jack"]
   pull_request:
-    branches: ["main"]
+    branches: ["rental_package_jack"]
 
 permissions: 
   contents: read
@@ -35,7 +35,18 @@ jobs:
         name: code-1.0-SNAPSHOT.jar
         path: code/target/*.jar
         
-  
+  deploy:
+    runs-on: ubuntu-latest
+    
+    needs: build
+    steps:
+    - uses: actions/checkout@v4
+    - name: Login to GHCR
+      run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+    - name: Build Docker image
+      run: docker build -t ghcr.io/${{ github.repository }}:latest ./code
+    - name: Push Docker image
+      run: docker push ghcr.io/${{ github.repository }}:latest
 
    
   

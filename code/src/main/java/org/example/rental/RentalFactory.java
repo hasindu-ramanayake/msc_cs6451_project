@@ -1,7 +1,6 @@
 package org.example.rental;
 
-import org.example.core.ISingleton;
-import org.example.core.RandomKeyGenerator;
+import org.example.core.*;
 import org.example.session.SessionFactory;
 
 import java.time.LocalDateTime;
@@ -10,6 +9,8 @@ import java.util.Date;
 public class RentalFactory extends AbRentalFactory implements ISingleton {
     private static ISingleton rentalFactoryInstance;
     private long rentalCounter;
+
+    private ILogger logger;
 
     public IRentalOrder createRentalObject(String customerId, String vehicleId, Date rentalDate) {
         (this.rentalCounter)++;
@@ -28,8 +29,11 @@ public class RentalFactory extends AbRentalFactory implements ISingleton {
     }
 
     private RentalFactory(){
+        AbLoggerFactory log = new LoggerFactory();
+        this.logger = log.createLogger();
+        logger.debugMessage("RENTAL FACTORY");
         this.rentalCounter = 12;
-        System.out.println("RENTAL FACTORY");
+
     }
 
 

@@ -11,6 +11,7 @@ import java.util.HashMap;
 public class JCRMain implements ISingleton{
     private static ISingleton jcrMgr;
     private HashMap<MgrT, ISingleton> mgrMap;
+    private final ILogger logger;
 
     public static ISingleton getInstance() {
         if ( jcrMgr == null) {
@@ -19,7 +20,9 @@ public class JCRMain implements ISingleton{
         return jcrMgr;
     }
     private JCRMain() {
-        System.out.println("DEBUG: CREATE JCR MGR OBJECT: ");
+        AbLoggerFactory log = new LoggerFactory();
+        this.logger = log.createLogger();
+        logger.debugMessage("CREATE JCR MGR OBJECT");
         mgrMap = new HashMap<>();
         this.initMgrClasses();
     }
@@ -33,7 +36,7 @@ public class JCRMain implements ISingleton{
 
     @Override
     public void showMgrName() {
-        System.out.println("DEBUG: CREATE JCR MGR OBJECT: ");
+        logger.debugMessage("CREATE JCR MGR OBJECT:");
 
     }
 

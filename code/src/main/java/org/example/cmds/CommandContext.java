@@ -1,17 +1,17 @@
 package org.example.cmds;
 
 public class CommandContext {
-    private String userID;
+    private String data;
 
-    public CommandContext(String userID) {
-        this.userID = userID;
+    public CommandContext(String data) {
+        this.data = data;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getContext() {
+        return data;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setContext(String data) {
+        this.data = data;
     }
 }

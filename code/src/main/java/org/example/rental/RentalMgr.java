@@ -109,18 +109,5 @@ public class RentalMgr implements ISingleton{
 //        }
         return null;
     }
-    //Function To Print Receipt
-    public String printReceipt(IRentalOrder order){
-        String receipt =
-                "******JCR RENTAL RECEIPT*******" +
-                "\nOrder ID: "+ order.getOrderId()+
-                "\nCustomer ID: "+ order.getCustomerId()+
-                "\nVehicle ID: "+ order.getVehicleId()+
-                "\nRental Date: "+ order.getRentalDate()+
-                "\nFee: "+ order.getFee()+
-                "\nPaid: "+ order.getIsPaid()+
-                "\nThank You For Choosing JCR";
-        return receipt;
-    }
 
 }
