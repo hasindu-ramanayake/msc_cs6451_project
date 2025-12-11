@@ -40,59 +40,34 @@ public class RentalMgr implements ISingleton{
         if ( !((FileDbAdapter)db).isValidVehicle(vehicleId) ) return null;
         if ( !((FileDbAdapter)db).isAccessibleVehical(customerId, vehicleId) ) return null;
         if ( !((FileDbAdapter)db).isAvailableVehical(vehicleId, rentDate) ) return null;
+        if( !isWithinBookingWindow(customerId, rentDate)){ return "EBD";}
 
-        if(!bookingWindow(customerId, rentDate)){
-            return "Exceeds the Booking Date";
+        IRentalOrder rental = ((RentalFactory)rentalFactory).createRentalObject(customerId, vehicleId, rentDate);
+        if( discountPercentage != 0){
+            DiscountData<Float> data = new DiscountData<>();
+            data.value = discountPercentage;
+            data.discountType = DiscountTypeT.DISCOUNT_CODE;
+//            rental = ((RentalFactory)rentalFactory).addDiscountCode( rental, discountPercentage);
+            rental = ((RentalFactory)rentalFactory).addDiscount( rental, data);
         }
-        else if(discountPercentage != 0){
-
-            IRentalOrder rental = ((RentalFactory)rentalFactory).addDiscountCode(((RentalFactory)rentalFactory).createRentalObject(customerId, vehicleId, rentDate), discountPercentage);
-            ((FileDbAdapter)db).addRentalOrder(rental);
-
-            return rental.getOrderId();
-
-        }
-        else {
-            IRentalOrder rental = ((RentalFactory)rentalFactory).createRentalObject(customerId, vehicleId, rentDate);
-            ((FileDbAdapter)db).addRentalOrder(rental);
-
-            return rental.getOrderId();
-        }
-
-
+        rental.printRentalOrder();
+        ((FileDbAdapter)db).addRentalOrder(rental);
+        return rental.getOrderId();
     }
 
     public float getDiscountPercentage(String discountCode){
         return db.getDiscountPercentage(discountCode);
     }
 
-    private boolean bookingWindow(String customerId, Date rentDate){
+    private boolean isWithinBookingWindow(String customerId, Date rentDate){
         CustomerBaseClass customer =((FileDbAdapter) db).getCustomer(customerId);
         CustomerTierT customerTier = customer.getCustomerTierType();
 
-        int days = 0;
+        int days = customer.getCustomerTier().getBookingWindow();
 
-        if(customerTier == CustomerTierT.BRONZE_TIER){
-            days = 3;
-        }
-        else if(customerTier == CustomerTierT.SILVER_TIER){
-            days = 7;
-        }
-        else if(customerTier == CustomerTierT.GOLD_TIER){
-            days = 14;
-        }
-        else if(customerTier == CustomerTierT.PLATINUM_TIER){
-            days = 30;
-        }
-
-
-        long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(
-                java.time.LocalDate.now(),
-                rentDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate()
-        );
-
-        return daysBetween <= days;
-
+        return  ( java.time.temporal.ChronoUnit.DAYS.between(
+                        java.time.LocalDate.now(),
+                        rentDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate()) <= days );
     }
 
 

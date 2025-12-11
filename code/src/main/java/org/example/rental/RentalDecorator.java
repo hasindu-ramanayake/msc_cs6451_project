@@ -83,4 +83,11 @@ public abstract class RentalDecorator implements IRentalOrder {
     public void setLoyaltyPoints(float loyaltyPoints) {
         decoratedRentalOrder.setLoyaltyPoints(loyaltyPoints);
     }
+
+    @Override
+    public String toString() {
+        return "RentalDecorator{" +
+                "decoratedRentalOrder=" + decoratedRentalOrder +
+                '}';
+    }
 }

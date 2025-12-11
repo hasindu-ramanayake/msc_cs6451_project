@@ -14,7 +14,7 @@ public class CustomerTierBase {
     protected float discountMultiplier;
 
     public CustomerTierBase() {
-        this.bookingWindow = 1000000000;
+        this.bookingWindow = 1;
         this.loyaltyPointMultiplier = 1.0;
         this.cancellationTime = 1000000000;
         this.loyaltyPointsToUpdate = 1000000000;
@@ -22,6 +22,21 @@ public class CustomerTierBase {
         this.customerTierType = CustomerTierT.BASE_TIER;
         this.discountMultiplier = 1;
     }
+
+
+    public CustomerTierBase(int bookingWindow, double loyaltyPointMultiplier, int cancellationTime,
+                            int loyaltyPointsToUpdate, List<VehicleGradeT> vehicleGradeType,
+                            CustomerTierT customerTierType, float discountMultiplier) {
+        this.bookingWindow = bookingWindow;
+        this.loyaltyPointMultiplier = loyaltyPointMultiplier;
+        this.cancellationTime = cancellationTime;
+        this.loyaltyPointsToUpdate = loyaltyPointsToUpdate;
+        this.vehicleGradeType = vehicleGradeType;
+        this.customerTierType = customerTierType;
+        this.discountMultiplier = discountMultiplier;
+    }
+
+
 
     public int getBookingWindow() {
         return 1000000000;
@@ -32,7 +47,7 @@ public class CustomerTierBase {
     }
 
     public float getLoyaltyPointMultiplier() {
-        return 1000000000;
+        return 0;
     }
 
     public void setLoyaltyPointMultiplier(float loyaltyPointMultiplier) {
@@ -40,7 +55,7 @@ public class CustomerTierBase {
     }
 
     public int getCancellationTime() {
-        return 1000000000;
+        return 0;
     }
 
     public void setCancellationTime(int cancellationTime) {
@@ -48,7 +63,7 @@ public class CustomerTierBase {
     }
 
     public int getLoyaltyPointsToUpdate() {
-        return 1000000000;
+        return 1;
     }
 
     public void setLoyaltyPointsToUpdate(int loyaltyPointsToUpdate) {

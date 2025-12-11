@@ -31,6 +31,7 @@ public class RentalOrder implements IRentalOrder {
         this.vehicleId = vehicleId;
         this.rentalDate = rentalDate;
         this.isPaid = false;
+        this.fee = 100;
         this.orderId = this.generateId();
     }
 
