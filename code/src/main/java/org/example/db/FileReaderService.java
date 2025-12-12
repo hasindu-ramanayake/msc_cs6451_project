@@ -12,7 +12,7 @@ public class FileReaderService {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             // Read header
             String header = br.readLine();
-            System.out.println("Header: " + header);
+            //System.out.println("Header: " + header);
             String line;
 
             while ((line = br.readLine()) != null) {

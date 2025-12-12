@@ -25,7 +25,6 @@ public class RentalFactory extends AbRentalFactory implements ISingleton {
         return rentalOrder;
     }
 
-
     public IRentalOrder addDiscountCode(IRentalOrder rentalOrder, float discountPercentage){
         return new DiscountCodeDecorator(rentalOrder, discountPercentage);
     }

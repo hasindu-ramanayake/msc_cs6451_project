@@ -82,7 +82,7 @@ public class CustomerBaseClass extends UserClass{
     }
 
     public void setCustomerTier(CustomerTierT type) {
-        System.out.println(type);
+        //System.out.println(type);
         switch (type) {
             case CustomerTierT.BRONZE_TIER : {
                 customerTier = new CustomerTierBronze();
