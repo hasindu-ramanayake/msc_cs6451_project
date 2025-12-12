@@ -26,6 +26,7 @@ public interface IDbAdapter {
     public List<VehicleBaseClass> getAccessibleVehicalList(String userId);
     public List<VehicleBaseClass> getAccessibleVehicalListByMake(String userId, MakeT make);
     public List<VehicleBaseClass> getAccessibleVehicalListByDate(String userId, Date date);
+    public VehicleBaseClass getSpecificVehicle(String vehicleID);
 
     //rental Orders
     public List<IRentalOrder> getRentalOrdersForCustomer(String userId);

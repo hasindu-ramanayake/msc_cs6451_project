@@ -15,8 +15,7 @@ public class CustomerRentViewAll implements Command{
 
     @Override
     public void execute(SessionWrapper userSession) {
-        ISingleton sessionMgr = SessionMgr.getInstance();
-        if (((SessionMgr)sessionMgr).isValidSession(userSession)) {
+        if (userSession.isValidSession()){
             ISingleton rentalMgr = RentalMgr.getInstance();
 
             ArrayList<IRentalOrder> rentalList = ((RentalMgr)rentalMgr).getAllRentalOrdersForCustomer(userSession.session.getUser());

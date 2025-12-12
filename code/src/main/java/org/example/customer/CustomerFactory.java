@@ -4,9 +4,6 @@ import org.example.core.AbLoggerFactory;
 import org.example.core.ILogger;
 import org.example.core.ISingleton;
 import org.example.core.LoggerFactory;
-import org.example.db.FileDbAdapter;
-import org.example.db.IDbAdapter;
-import org.example.session.SessionFactory;
 
 public class CustomerFactory extends AbCustomerFactory implements ISingleton {
 

@@ -13,6 +13,11 @@ public class Logger implements ILogger{
     }
 
     @Override
+    public void normalMessage(String message){
+        System.out.println(message);
+    }
+
+    @Override
     public void debugMessage(String message){
         if(debug) System.out.println("DEBUG: "+message);
     }
@@ -21,6 +26,4 @@ public class Logger implements ILogger{
     public void errorMessage(String message){
         if(debug) System.out.println("ERROR: "+message);
     }
-
-
 }

@@ -24,11 +24,9 @@ public class AdminAddVehicle implements Command {
 
     @Override
     public void execute(SessionWrapper userWrapper){
-        ISingleton sessionMgr = SessionMgr.getInstance();
-
-        if (((SessionMgr) sessionMgr).isValidSession(userWrapper)) {
+        if (userWrapper.isValidSession()){
             ISingleton vehicleMgr = VehicleMgr.getInstance();
-            VehicleBaseClass newVehicle = new VehicleBaseClass(vehicleID, new GradePremium(), VehicleStateT.CHECK_IN, passengerCount, make, model, color, new RentalRateEconomy());
+            VehicleBaseClass newVehicle = new VehicleBaseClass(vehicleID, vehicleGrade, VehicleStateT.CHECK_IN, passengerCount, make, model, color);
             ((VehicleMgr) vehicleMgr).addVehicleToMap(newVehicle);
         }
     }

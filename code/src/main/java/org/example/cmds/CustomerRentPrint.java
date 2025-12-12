@@ -14,8 +14,7 @@ public class CustomerRentPrint implements Command{
 
     @Override
     public void execute(SessionWrapper userSession){
-        ISingleton sessionMgr = SessionMgr.getInstance();
-        if (((SessionMgr) sessionMgr).isValidSession(userSession) ) {
+        if (userSession.isValidSession()){
             ISingleton rentalMgr = RentalMgr.getInstance();
             ((RentalMgr)rentalMgr).printReceipt(orderID);
         }

@@ -1,6 +1,10 @@
+
 package org.example.rental;
 
+import org.example.core.AbLoggerFactory;
+import org.example.core.ILogger;
 import org.example.core.ISingleton;
+import org.example.core.LoggerFactory;
 import org.example.customer.CustomerBaseClass;
 import org.example.customer.CustomerTierT;
 import org.example.db.FileDbAdapter;
@@ -16,6 +20,7 @@ public class RentalMgr implements ISingleton{
     private static ISingleton rentalFactory;
     private IPaymentGateway paymentGateway;
     private IDbAdapter db;
+    private ILogger logger;
 
     //Can only have one instance at a time
     public static ISingleton getInstance(){
@@ -24,16 +29,19 @@ public class RentalMgr implements ISingleton{
         }
         return rentalInstance;
     }
-
-    @Override
-    public void showMgrName(){
-        System.out.println("This is the Rental Manager");
-    }
-
     private RentalMgr () {
         rentalFactory = RentalFactory.getInstance();
         db = FileDbAdapter.getInstance();
+        AbLoggerFactory log = new LoggerFactory();
+
     }
+
+    @Override
+    public void showMgrName(){
+        logger.debugMessage("This is the Rental Manager");
+    }
+
+
 
     //Other Functions
     public String createRentalOrder( String customerId, String vehicleId, Date rentDate, float discountPercentage){
@@ -66,8 +74,8 @@ public class RentalMgr implements ISingleton{
         int days = customer.getCustomerTier().getBookingWindow();
 
         return  ( java.time.temporal.ChronoUnit.DAYS.between(
-                        java.time.LocalDate.now(),
-                        rentDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate()) <= days );
+                java.time.LocalDate.now(),
+                rentDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate()) <= days );
     }
 
 
