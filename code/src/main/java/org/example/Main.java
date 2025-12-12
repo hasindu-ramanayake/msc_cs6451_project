@@ -21,7 +21,7 @@ public class Main {
         // starting the main terminal:
         Scanner cmdReader = new Scanner(System.in);
         System.out.println("===Welcome to JCR rental services ====\n");
-        System.out.println("Use Command login/signin or signout/exit \n\n");
+        System.out.println("Use Command help to access any further information. \n\n");
 
         // set session for the user
         SessionWrapper userSession = new SessionWrapper();
