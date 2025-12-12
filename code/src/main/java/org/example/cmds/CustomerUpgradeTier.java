@@ -12,8 +12,7 @@ public class CustomerUpgradeTier implements Command {
     @Override
     public void execute(SessionWrapper userSession) {
         System.out.println("Upgrade Tier");
-        ISingleton sessionMgr = SessionMgr.getInstance();
-        if (((SessionMgr)sessionMgr).isValidSession(userSession)) {
+        if (userSession.isValidSession()){
             ISingleton customerMgr = CustomerMgr.getInstance();
             ((CustomerMgr)customerMgr).upgradeCustomerTier(userSession.session.getUser());
             System.out.println("You have been upgraded to: " + ((CustomerMgr)customerMgr).getCustomerTier(userSession.session.getUser()) + " for user " + userSession.session.getUser());

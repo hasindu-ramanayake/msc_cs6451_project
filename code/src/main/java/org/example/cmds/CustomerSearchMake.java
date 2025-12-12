@@ -18,8 +18,7 @@ public class CustomerSearchMake implements Command{
 
     @Override
     public void execute(SessionWrapper userSession){
-        ISingleton sessionMgr = SessionMgr.getInstance();
-        if( ((SessionMgr)sessionMgr).isValidSession(userSession) ){
+        if (userSession.isValidSession()){
             ISingleton vehicleMgr = VehicleMgr.getInstance();
             List<VehicleBaseClass> vehicleList = ((VehicleMgr)vehicleMgr).searchVehicleByMake(userSession.session.getUser() ,make);
             if (vehicleList.isEmpty()) {

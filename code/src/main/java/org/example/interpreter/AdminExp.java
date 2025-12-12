@@ -35,7 +35,6 @@ public class AdminExp implements Expression{
 
         switch(add){
             case "vehicle" :{
-                System.out.println("Please Enter Vehicle Details in the Format ");
                 if(!tokenizer.hasMoreTokens()){
                     return cmd;
                 }
@@ -43,8 +42,8 @@ public class AdminExp implements Expression{
                 String vehicleID = tokenizer.nextToken();
                 VehicleGradeT vehicleGrade = VehicleGradeT.getType(tokenizer.nextToken());
                 int passengerCount = Integer.parseInt(tokenizer.nextToken());
-                ModelT model = ModelT.getType(tokenizer.nextToken());
                 MakeT make = MakeT.getType(tokenizer.nextToken());
+                ModelT model = ModelT.getType(tokenizer.nextToken());
                 VehicleColorT color = VehicleColorT.getType(tokenizer.nextToken());
 
                 cmd = new AdminAddVehicle(vehicleID, VehicleGradeT.createInterface(vehicleGrade), passengerCount, make, model, color);

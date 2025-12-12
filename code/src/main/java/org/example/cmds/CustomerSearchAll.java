@@ -16,9 +16,7 @@ public class CustomerSearchAll implements Command{
 
     @Override
     public void execute(SessionWrapper userSession){
-        ISingleton sessionMgr = SessionMgr.getInstance();
-
-        if(((SessionMgr) sessionMgr).isValidSession(userSession)){
+        if (userSession.isValidSession()){
             ISingleton vehicleMgr = VehicleMgr.getInstance();
             List<VehicleBaseClass> vehiclesList = ((VehicleMgr) vehicleMgr).getAllVehicles(userSession.session.getUser());
             for (VehicleBaseClass v: vehiclesList ) {

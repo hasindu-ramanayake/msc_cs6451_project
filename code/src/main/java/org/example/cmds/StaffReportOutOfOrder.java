@@ -16,9 +16,7 @@ public class StaffReportOutOfOrder implements Command{
     }
     @Override
     public void execute(SessionWrapper userSession){
-        ISingleton sessionMgr = SessionMgr.getInstance();
-
-        if(((SessionMgr) sessionMgr).isValidSession(userSession)){
+        if (userSession.isValidSession()){
             ISingleton vehicleMgr = VehicleMgr.getInstance();
             ((VehicleMgr) vehicleMgr).modifyVehicleState(vehicleID, vehicleState);
         }

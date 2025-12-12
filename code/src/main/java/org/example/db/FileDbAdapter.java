@@ -75,13 +75,12 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
     private void processVehicleData(List<String[]> data){
         for( var d: data ) {
             IVehicleGrade vG = new GradeEconomy();
-            AbRentalRateBaseClass rr = new RentalRateEconomy();
             switch (VehicleGradeT.getType(d[1])) {
-                case VehicleGradeT.ECONOMY ->  { vG= new GradeEconomy(); rr= new RentalRateEconomy(); }
-                case VehicleGradeT.STANDARD -> { vG = new GradeStandard(); rr = new RentalRateStandard(); }
-                case VehicleGradeT.LUXURY -> { vG = new GradeLuxury(); rr = new RentalRateLuxury(); }
-                case VehicleGradeT.PREMIUM -> { vG = new GradePremium(); rr = new RentalRateLuxury(); }// need to premium
-                case VehicleGradeT.UNKNOWN -> { vG = new GradeEconomy(); rr = new RentalRateEconomy(); } // need new CLass for unknown
+                case VehicleGradeT.ECONOMY ->  { vG= new GradeEconomy(); }
+                case VehicleGradeT.STANDARD -> { vG = new GradeStandard();}
+                case VehicleGradeT.LUXURY -> { vG = new GradeLuxury(); }
+                case VehicleGradeT.PREMIUM -> { vG = new GradePremium();  }// need to premium
+                case VehicleGradeT.UNKNOWN -> { vG = new GradeEconomy();  } // need new CLass for unknown
             }
 
             VehicleBaseClass ve = new VehicleBaseClass( d[0] //vehicleId
@@ -91,7 +90,7 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
                     ,MakeT.getType(d[4]) //Make
                     ,ModelT.getType(d[5]) //Model
                     ,VehicleColorT.getType(d[6]) //color
-                    ,rr ); //rental rate
+                    ); //rental rate
             this.vehicleMap.put(d[0], ve);
         }
 
@@ -205,6 +204,10 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
             }
         }
         return  list;
+    }
+    @Override
+    public VehicleBaseClass getSpecificVehicle(String vehicleID){
+        return vehicleMap.get(vehicleID);
     }
 
     // need a better algorithm or new Bd table for easy filtering

@@ -44,8 +44,7 @@ public class CustomerRentOrder implements Command {
 
     @Override
     public void execute(SessionWrapper userSession) {
-        ISingleton sessionMgr = SessionMgr.getInstance();
-        if (((SessionMgr) sessionMgr).isValidSession(userSession) ) {
+        if (userSession.isValidSession()){
             if ( this.date == null ) return;
             ISingleton rentalMgr = RentalMgr.getInstance();
             String rentalOrderID = ((RentalMgr)rentalMgr).createRentalOrder(userSession.session.getUser(), vehicleID, date, discountPercentage);
