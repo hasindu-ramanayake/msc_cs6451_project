@@ -768,7 +768,7 @@ interface org.example.interpreter.Expression {
 + Command interpret(String)
 }
 
-class org.example.core.CmdParser {
+class org.example.interpreter.CmdParser {
 + {static} Command parse(String)
 }
 
