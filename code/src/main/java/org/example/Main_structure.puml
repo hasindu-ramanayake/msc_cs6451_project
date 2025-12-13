@@ -35,7 +35,7 @@ config=StructureConfiguration;
     "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
     "removeByClassName": "",
     "cutMappings": false,
-    "cutEnum": false,
+    "cutEnum": true,
     "cutTests": true,
     "cutClient": true,
     "cutDataAccess": false,
@@ -107,7 +107,19 @@ subgraph cluster_134862429 {
 	fillcolor="#d8d8d8"
 	style=filled
    
-   CmdParser2051934099[
+   AbLoggerFactory2051934099[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbLoggerFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ createLogger(): ILogger</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+CmdParser2051934099[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)CmdParser</TD></TR>
 <HR/>
@@ -123,6 +135,7 @@ JCRMain2051934099[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)JCRMain</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >-   logger: ILogger [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   mgrMap: HashMap&lt;MgrT, ISingleton&gt; [0..*]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ getMgrInstance(type: MgrT): ISingleton</TD></TR>
@@ -135,22 +148,32 @@ JCRMain2051934099[
 	fillcolor="#FFFFFF"
 ];
 
-MgrT2051934099[
+Logger2051934099[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(E)MgrT</TD></TR>
+<TR><TD ALIGN="LEFT" >(C)Logger</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+   CUSTOMER_MGR: MgrT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   RENTAL_MGR: MgrT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   SESSION_MGR: MgrT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   VEHICLE_MGR: MgrT [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   debug: boolean [1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ valueOf(name: String): MgrT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ values(): MgrT[]</TD></TR>
+<TR><TD ALIGN="LEFT" >+ debugMessage(message: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ errorMessage(message: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ normalMessage(message: String)</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
 	shape=plaintext
-	fillcolor="#DCFBD5"
+	fillcolor="#FFFFFF"
+];
+
+LoggerFactory2051934099[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LoggerFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ createLogger(): ILogger</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
 ];
 
 RandomKeyGenerator2051934099[
@@ -172,7 +195,21 @@ subgraph cluster_134864771 {
 	fillcolor="#d8d8d8"
 	style=filled
    
-   AdminAddVehicle2051936441[
+   AbCommand2051936441[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbCommand</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   sessionMgr: ISingleton [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># isSessionValid(userSession: SessionWrapper): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AdminAddVehicle2051936441[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)AdminAddVehicle</TD></TR>
 <HR/>
@@ -237,7 +274,22 @@ CustomerRentOrder2051936441[
 <TR><TD ALIGN="LEFT" >(C)CustomerRentOrder</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >-   date: Date [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   discountPercentage: float [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   vehicleID: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ execute(userSession: SessionWrapper)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+CustomerRentPrint2051936441[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)CustomerRentPrint</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   orderID: String [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ execute(userSession: SessionWrapper)</TD></TR>
 </TABLE>>
@@ -379,6 +431,19 @@ SignUp2051936441[
 	fillcolor="#FFFFFF"
 ];
 
+SignUpInterceptor2051936441[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SignUpInterceptor</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ postCommand(context: CommandContext)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ preCommand(context: CommandContext)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
 StaffReportCheckIn2051936441[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)StaffReportCheckIn</TD></TR>
@@ -451,7 +516,6 @@ subgraph cluster_1747691550 {
 <TR><TD ALIGN="LEFT" >(C)AbCustomerFactory</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" ># createCustomer(email: String, phoneNumber: String, type: CustomerT, hasValidLicense: boolean, customerID: String): CustomerBaseClass</TD></TR>
-<TR><TD ALIGN="LEFT" >- generateUniqueId(): String</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -479,6 +543,7 @@ CustomerBaseClass840413612[
 <TR><TD ALIGN="LEFT" >#   customerTier: CustomerTierBase [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >#   customerType: CustomerT [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >#   hasValidLicense: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   logger: ILogger [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >#   loyaltyPoints: int [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >#   maxAllocations: int [1]</TD></TR>
 <HR/>
@@ -495,6 +560,8 @@ CustomerFactory840413612[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)CustomerFactory</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >-   logger: ILogger [0..1]</TD></TR>
+<HR/>
 <TR><TD ALIGN="LEFT" >+ createCustomer(email: String, phoneNumber: String, type: CustomerT, hasValidLicense: boolean, customerID: String): CustomerBaseClass</TD></TR>
 <TR><TD ALIGN="LEFT" >+ showMgrName()</TD></TR>
 </TABLE>>
@@ -510,6 +577,7 @@ CustomerMgr840413612[
 <HR/>
 <TR><TD ALIGN="LEFT" >-   customerFactory: ISingleton [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   db: IDbAdapter [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   logger: ILogger [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ addCustomer(customer: CustomerBaseClass)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ createCustomerFromFactory(email: String, phoneNumber: String, type: CustomerT, hasValidLicense: boolean, customerID: String): boolean</TD></TR>
@@ -525,23 +593,6 @@ CustomerMgr840413612[
 	margin=0
 	shape=plaintext
 	fillcolor="#FFFFFF"
-];
-
-CustomerT840413612[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(E)CustomerT</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+   BUSINESS_CUSTOMER: CustomerT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   PERSONAL_CUSTOMER: CustomerT [1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ getType(t: String): CustomerT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ valueOf(name: String): CustomerT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ values(): CustomerT[]</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#DCFBD5"
 ];
 
 CustomerTierBase840413612[
@@ -562,26 +613,6 @@ CustomerTierBase840413612[
 	fillcolor="#FFFFFF"
 ];
 
-CustomerTierT840413612[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(E)CustomerTierT</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+   BASE_TIER: CustomerTierT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   BRONZE_TIER: CustomerTierT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   GOLD_TIER: CustomerTierT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   PLATINUM_TIER: CustomerTierT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   SILVER_TIER: CustomerTierT [1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ getType(t: String): CustomerTierT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ valueOf(name: String): CustomerTierT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ values(): CustomerTierT[]</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#DCFBD5"
-];
-
 PersonalCustomerClass840413612[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)PersonalCustomerClass</TD></TR>
@@ -599,7 +630,6 @@ UserClass840413612[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)UserClass</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >#   adminPrivilege: boolean [1]</TD></TR>
 <TR><TD ALIGN="LEFT" >#   email: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >#   joinedDate: Date [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >#   phoneNumber: String [0..1]</TD></TR>
@@ -618,21 +648,7 @@ subgraph cluster_1790158504 {
 	fillcolor="#d8d8d8"
 	style=filled
    
-   AbRentalRateBaseClass488172446[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)AbRentalRateBaseClass</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >-   rate: int [1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" ># calculateRentalRate()</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
-
-GradeEconomy488172446[
+   GradeEconomy488172446[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)GradeEconomy</TD></TR>
 </TABLE>>
@@ -672,49 +688,6 @@ GradeStandard488172446[
 	fillcolor="#FFFFFF"
 ];
 
-MakeT488172446[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(E)MakeT</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+   AUDI: MakeT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   BMW: MakeT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   HONDA: MakeT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   KIA: MakeT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   LEXUS: MakeT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   NISSAN: MakeT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   SEAT: MakeT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   TOYOTA: MakeT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   UNKNOWN: MakeT [1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ getType(t: String): MakeT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ valueOf(name: String): MakeT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ values(): MakeT[]</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#DCFBD5"
-];
-
-ModelT488172446[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(E)ModelT</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+   CLASS_A: ModelT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   CLASS_B: ModelT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   CLASS_C: ModelT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   UNKNOWN: ModelT [1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ getType(t: String): ModelT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ valueOf(name: String): ModelT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ values(): ModelT[]</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#DCFBD5"
-];
-
 VehicleBaseClass488172446[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)VehicleBaseClass</TD></TR>
@@ -723,7 +696,6 @@ VehicleBaseClass488172446[
 <TR><TD ALIGN="LEFT" >-   make: MakeT [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   model: ModelT [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   passengerCount: int [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   rentalRate: AbRentalRateBaseClass [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   vehicleGrade: IVehicleGrade [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >#   vehicleID: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   vehicleState: VehicleStateT [0..1]</TD></TR>
@@ -734,89 +706,26 @@ VehicleBaseClass488172446[
 	fillcolor="#FFFFFF"
 ];
 
-VehicleColorT488172446[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(E)VehicleColorT</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+   BLACK: VehicleColorT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   BLUE: VehicleColorT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   GRAY: VehicleColorT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   RED: VehicleColorT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   SILVER: VehicleColorT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   UNKNOWN: VehicleColorT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   WHITE: VehicleColorT [1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ getType(t: String): VehicleColorT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ valueOf(name: String): VehicleColorT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ values(): VehicleColorT[]</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#DCFBD5"
-];
-
-VehicleGradeT488172446[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(E)VehicleGradeT</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+   ECONOMY: VehicleGradeT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   LUXURY: VehicleGradeT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   PREMIUM: VehicleGradeT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   STANDARD: VehicleGradeT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   UNKNOWN: VehicleGradeT [1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ getType(t: String): VehicleGradeT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ valueOf(name: String): VehicleGradeT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ values(): VehicleGradeT[]</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#DCFBD5"
-];
-
 VehicleMgr488172446[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)VehicleMgr</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >-   db: IDbAdapter [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >#   vehicleMap: Map&lt;String, VehicleBaseClass&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   logger: ILogger [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ addVehicleToMap(vehicle: VehicleBaseClass)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ getAllVehicleByGrade(grade: IVehicleGrade): VehicleBaseClass</TD></TR>
-<TR><TD ALIGN="LEFT" >+ getAllVehicles(userId: String): ArrayList&lt;VehicleBaseClass&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ getVehicleSpecificObj(vehicleID: String): VehicleBaseClass</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getAllVehicles(userId: String): List&lt;VehicleBaseClass&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getVehicleByID(vehicleID: String): VehicleBaseClass</TD></TR>
 <TR><TD ALIGN="LEFT" >+ modifyVehicleGrade(vehicleID: String, grade: IVehicleGrade)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ modifyVehicleState(vehicleID: String, state: VehicleStateT)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ removeVehicleFromMap(vehicleID: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchVehicleByDate(userId: String, date: Date): List&lt;VehicleBaseClass&gt;</TD></TR>
 <TR><TD ALIGN="LEFT" >+ searchVehicleByMake(userId: String, make: MakeT): List&lt;VehicleBaseClass&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ searchVehicleByModel(model: ModelT): VehicleBaseClass</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
 	shape=plaintext
 	fillcolor="#FFFFFF"
-];
-
-VehicleStateT488172446[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(E)VehicleStateT</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+   CHECK_IN: VehicleStateT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   CHECK_OUT: VehicleStateT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   OUT_OF_ORDER: VehicleStateT [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >+   READY: VehicleStateT [1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ getType(t: String): VehicleStateT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ valueOf(name: String): VehicleStateT</TD></TR>
-<TR><TD ALIGN="LEFT" >+ values(): VehicleStateT[]</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#DCFBD5"
 ];
 } 
 
@@ -831,6 +740,7 @@ subgraph cluster_2002372734 {
 <TR><TD ALIGN="LEFT" >(C)FileDbAdapter</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >-   customerMap: HashMap&lt;String, CustomerBaseClass&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   discountMap: HashMap&lt;String, Float&gt; [0..*]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   fileReader: FileReaderService [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   rentalMap: HashMap&lt;String, IRentalOrder&gt; [0..*]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   vehicleMap: HashMap&lt;String, VehicleBaseClass&gt; [0..*]</TD></TR>
@@ -838,24 +748,28 @@ subgraph cluster_2002372734 {
 <TR><TD ALIGN="LEFT" >+ addCustomer(cu: CustomerBaseClass)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ addRentalOrder(rentalOrder: IRentalOrder)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ addVehicle(vehicle: VehicleBaseClass)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ getAccessibleVehicalList(userId: String): ArrayList&lt;VehicleBaseClass&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ getAccessibleVehicalListByDate(userId: String, date: Date): ArrayList&lt;VehicleBaseClass&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ getAccessibleVehicalListByMake(userId: String, make: MakeT): ArrayList&lt;VehicleBaseClass&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getAccessibleVehicalList(userId: String): List&lt;VehicleBaseClass&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getAccessibleVehicalListByDate(userId: String, date: Date): List&lt;VehicleBaseClass&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getAccessibleVehicalListByMake(userId: String, make: MakeT): List&lt;VehicleBaseClass&gt;</TD></TR>
 <TR><TD ALIGN="LEFT" >+ getCustomer(customerId: String): CustomerBaseClass</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getDiscountPercentage(discountName: String): float</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getRentalOrderFromID(orderID: String): IRentalOrder</TD></TR>
 <TR><TD ALIGN="LEFT" >+ getRentalOrdersForCustomer(userId: String): ArrayList&lt;IRentalOrder&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getSpecificVehicle(vehicleID: String): VehicleBaseClass</TD></TR>
 <TR><TD ALIGN="LEFT" >+ isAccessibleVehical(customerId: String, vehicleId: String): boolean</TD></TR>
 <TR><TD ALIGN="LEFT" >+ isAvailableVehical(vehicleId: String, orderDate: Date): boolean</TD></TR>
 <TR><TD ALIGN="LEFT" >+ isValidCustomer(userId: String): boolean</TD></TR>
 <TR><TD ALIGN="LEFT" >+ isValidVehicle(vehicleId: String): boolean</TD></TR>
 <TR><TD ALIGN="LEFT" >- printMap()</TD></TR>
 <TR><TD ALIGN="LEFT" >- processCustomerData(data: List&lt;String[]&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >- processDiscountData(data: List&lt;String[]&gt;)</TD></TR>
 <TR><TD ALIGN="LEFT" >- processRentalData(data: List&lt;String[]&gt;)</TD></TR>
 <TR><TD ALIGN="LEFT" >- processVehicleData(data: List&lt;String[]&gt;)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ readCustomerData(source: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ readDiscountData(source: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ readRentalData(source: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ readVehicleData(source: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ removeVehicle(vehicle: VehicleBaseClass)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ updateVehicleState(vehicle: VehicleBaseClass)</TD></TR>
 <TR><TD ALIGN="LEFT" >- writeVehicleDataToFile(filePath: String)</TD></TR>
 </TABLE>>
 	style=filled
@@ -971,6 +885,20 @@ subgraph cluster_333674968 {
 	fillcolor="#FFFFFF"
 ];
 
+DiscountCodeDecorator98579854[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DiscountCodeDecorator</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   discountPercentage: float [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ printRentalOrder(): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
 DiscountDecorator98579854[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)DiscountDecorator</TD></TR>
@@ -1018,8 +946,11 @@ RentalFactory98579854[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)RentalFactory</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >-   logger: ILogger [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   rentalCounter: long [1]</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >+ addDiscount(rentalOrder: IRentalOrder, data: DiscountData): IRentalOrder</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addDiscountCode(rentalOrder: IRentalOrder, discountPercentage: float): IRentalOrder</TD></TR>
 <TR><TD ALIGN="LEFT" >+ createRentalObject(customerId: String, vehicleId: String, rentalDate: Date): IRentalOrder</TD></TR>
 <TR><TD ALIGN="LEFT" >- generateUniqueId(id: String): String</TD></TR>
 </TABLE>>
@@ -1034,14 +965,16 @@ RentalMgr98579854[
 <TR><TD ALIGN="LEFT" >(C)RentalMgr</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >-   db: IDbAdapter [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   logger: ILogger [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   paymentGateway: IPaymentGateway [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >- bookingWindow(customerId: String, rentDate: Date): boolean</TD></TR>
-<TR><TD ALIGN="LEFT" >+ createRentalOrder(customerId: String, vehicleId: String, rentDate: Date): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createRentalOrder(customerId: String, vehicleId: String, rentDate: Date, discountPercentage: float): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ getAllRentalOrdersForCustomer(customerID: String): ArrayList&lt;IRentalOrder&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getDiscountPercentage(discountCode: String): float</TD></TR>
 <TR><TD ALIGN="LEFT" >- getRentalOrderID(orderId: String): String</TD></TR>
 <TR><TD ALIGN="LEFT" >+ getRentalOrderIDForCustomer(customerID: String, vehicleID: String, date: Date): String</TD></TR>
-<TR><TD ALIGN="LEFT" >+ printReceipt(order: IRentalOrder): String</TD></TR>
+<TR><TD ALIGN="LEFT" >- isWithinBookingWindow(customerId: String, rentDate: Date): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ printReceipt(orderID: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ requestPayment()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ showMgrName()</TD></TR>
 </TABLE>>
@@ -1096,6 +1029,7 @@ PaymentDispatcher640577928[
 <TR><TD ALIGN="LEFT" >(C)PaymentDispatcher</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >-   interceptors: List&lt;PaymentInterceptor&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   logger: ILogger [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ processPayment(context: PaymentContent): boolean</TD></TR>
 <TR><TD ALIGN="LEFT" >+ registerInterceptor(interceptor: PaymentInterceptor)</TD></TR>
@@ -1130,6 +1064,7 @@ SessionClass2131091208[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)SessionClass</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >-   logger: ILogger [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   sessionId: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   timeStamp: LocalDateTime [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   user: String [0..1]</TD></TR>
@@ -1147,6 +1082,7 @@ SessionFactory2131091208[
 <TR><TD ALIGN="LEFT" >(C)SessionFactory</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >#   db: IDbAdapter [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   logger: ILogger [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ createSession(userId: String): ISessionClass</TD></TR>
 <TR><TD ALIGN="LEFT" >+ showMgrName()</TD></TR>
@@ -1160,6 +1096,8 @@ SessionFactory2131091208[
 SessionMgr2131091208[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)SessionMgr</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   logger: ILogger [0..1]</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >+ createSessionFromFactory(userId: String): ISessionClass</TD></TR>
 <TR><TD ALIGN="LEFT" >+ deleteSession(userSession: SessionWrapper)</TD></TR>
@@ -1175,18 +1113,13 @@ SessionMgr2131091208[
 } 
 
 'edges    
+AbCommand2051936441 -> SessionMgr2131091208[label="isSessionValid() -> isValidSession()"];
 AbCustomerFactory840413612 -> CustomerFactory840413612[arrowhead=none, arrowtail=empty, dir=both];
+AbLoggerFactory2051934099 -> LoggerFactory2051934099[arrowhead=none, arrowtail=empty, dir=both];
 AbRentalFactory98579854 -> RentalFactory98579854[arrowhead=none, arrowtail=empty, dir=both];
+AbSessionFactory2131091208 -> RandomKeyGenerator2051934099[label="generateUniqueId() -> generateRandomKey()"];
 AbSessionFactory2131091208 -> SessionFactory2131091208[arrowhead=none, arrowtail=empty, dir=both];
-AdminAddVehicle2051936441 -> MakeT488172446[label="make
-[0..1]"];
-AdminAddVehicle2051936441 -> ModelT488172446[label="model
-[0..1]"];
-AdminAddVehicle2051936441 -> SessionMgr2131091208[label="execute() -> isValidSession()"];
-AdminAddVehicle2051936441 -> VehicleColorT488172446[label="color
-[0..1]"];
 AdminAddVehicle2051936441 -> VehicleMgr488172446[label="execute() -> addVehicleToMap()"];
-AdminRemoveVehicle2051936441 -> SessionMgr2131091208[label="execute() -> isValidSession()"];
 AdminRemoveVehicle2051936441 -> VehicleMgr488172446[label="execute() -> removeVehicleFromMap()"];
 CmdParser2051934099 -> AdminExp1161693676[arrowhead=none];
 CmdParser2051934099 -> CustomerExpr1161693676[arrowhead=none];
@@ -1194,48 +1127,33 @@ CmdParser2051934099 -> EmptyExpr1161693676[arrowhead=none];
 CmdParser2051934099 -> GeneralExpr1161693676[arrowhead=none];
 CmdParser2051934099 -> StaffExpr1161693676[arrowhead=none];
 CommandDispatcher2051936441 -> LogInFormatInterceptor2051936441[arrowhead=none];
+CommandDispatcher2051936441 -> SignUpInterceptor2051936441[arrowhead=none];
 CustomerBaseClass840413612 -> BusinessCustomerClass840413612[arrowhead=none, arrowtail=empty, dir=both];
-CustomerBaseClass840413612 -> CustomerT840413612[label="customerType
-[0..1]"];
 CustomerBaseClass840413612 -> CustomerTierBase840413612[label="customerTier
 [0..1]"];
 CustomerBaseClass840413612 -> PersonalCustomerClass840413612[arrowhead=none, arrowtail=empty, dir=both];
-CustomerDowngradeTier2051936441 -> SessionMgr2131091208[label="execute() -> isValidSession()"];
+CustomerFactory840413612 -> Logger2051934099[arrowhead=none];
 CustomerMgr840413612 -> CustomerFactory840413612[label="createCustomerFromFactory() -> createCustomer()"];
 CustomerRentOrder2051936441 -> RentalMgr98579854[label="execute() -> createRentalOrder()"];
-CustomerRentOrder2051936441 -> SessionMgr2131091208[label="execute() -> isValidSession()"];
-CustomerRentViewAll2051936441 -> SessionMgr2131091208[label="execute() -> isValidSession()"];
-CustomerSearchAll2051936441 -> SessionMgr2131091208[label="execute() -> isValidSession()"];
+CustomerRentPrint2051936441 -> RentalMgr98579854[label="execute() -> printReceipt()"];
+CustomerRentViewAll2051936441 -> RentalMgr98579854[label="execute() -> getAllRentalOrdersForCustomer()"];
 CustomerSearchAll2051936441 -> VehicleMgr488172446[label="execute() -> getAllVehicles()"];
-CustomerSearchDate2051936441 -> SessionMgr2131091208[label="execute() -> isValidSession()"];
 CustomerSearchDate2051936441 -> VehicleMgr488172446[label="execute() -> searchVehicleByDate()"];
-CustomerSearchMake2051936441 -> MakeT488172446[label="make
-[0..1]"];
-CustomerSearchMake2051936441 -> SessionMgr2131091208[label="execute() -> isValidSession()"];
 CustomerSearchMake2051936441 -> VehicleMgr488172446[label="execute() -> searchVehicleByMake()"];
-CustomerUpgradeTier2051936441 -> SessionMgr2131091208[label="execute() -> isValidSession()"];
 FileDbAdapter2017775412 -> CustomerBaseClass840413612[label="customerMap
 [0..*]"];
-FileDbAdapter2017775412 -> CustomerT840413612[label="processCustomerData() -> getType()"];
-FileDbAdapter2017775412 -> CustomerTierT840413612[label="processCustomerData() -> getType()"];
 FileDbAdapter2017775412 -> FileReaderService2017775412[label="fileReader
 [0..1]"];
 FileDbAdapter2017775412 -> GradeEconomy488172446[arrowhead=none];
 FileDbAdapter2017775412 -> GradeLuxury488172446[arrowhead=none];
 FileDbAdapter2017775412 -> GradePremium488172446[arrowhead=none];
 FileDbAdapter2017775412 -> GradeStandard488172446[arrowhead=none];
-FileDbAdapter2017775412 -> MakeT488172446[label="processVehicleData() -> getType()"];
-FileDbAdapter2017775412 -> ModelT488172446[label="processVehicleData() -> getType()"];
 FileDbAdapter2017775412 -> RentalDecorator98579854[arrowhead=none];
 FileDbAdapter2017775412 -> RentalOrder98579854[arrowhead=none];
 FileDbAdapter2017775412 -> VehicleBaseClass488172446[label="vehicleMap
 [0..*]"];
-FileDbAdapter2017775412 -> VehicleColorT488172446[label="processVehicleData() -> getType()"];
-FileDbAdapter2017775412 -> VehicleGradeT488172446[label="processVehicleData() -> getType()"];
-FileDbAdapter2017775412 -> VehicleStateT488172446[label="processVehicleData() -> getType()"];
-JCRMain2051934099 -> MgrT2051934099[label="mgrMap
-[0..*]"];
 LogIn2051936441 -> SessionMgr2131091208[label="execute() -> createSessionFromFactory()"];
+Main1526836320 -> AbCommand2051936441[arrowhead=none];
 Main1526836320 -> AdminAddVehicle2051936441[arrowhead=none];
 Main1526836320 -> AdminRemoveVehicle2051936441[arrowhead=none];
 Main1526836320 -> CmdParser2051934099[label="main() -> parse()"];
@@ -1243,6 +1161,7 @@ Main1526836320 -> CustomerDowngradeTier2051936441[arrowhead=none];
 Main1526836320 -> CustomerFactory840413612[arrowhead=none];
 Main1526836320 -> CustomerMgr840413612[arrowhead=none];
 Main1526836320 -> CustomerRentOrder2051936441[arrowhead=none];
+Main1526836320 -> CustomerRentPrint2051936441[arrowhead=none];
 Main1526836320 -> CustomerRentViewAll2051936441[arrowhead=none];
 Main1526836320 -> CustomerSearchAll2051936441[arrowhead=none];
 Main1526836320 -> CustomerSearchDate2051936441[arrowhead=none];
@@ -1251,6 +1170,7 @@ Main1526836320 -> CustomerUpgradeTier2051936441[arrowhead=none];
 Main1526836320 -> FileDbAdapter2017775412[arrowhead=none];
 Main1526836320 -> JCRMain2051934099[arrowhead=none];
 Main1526836320 -> LogIn2051936441[arrowhead=none];
+Main1526836320 -> LoggerFactory2051934099[arrowhead=none];
 Main1526836320 -> NoCmd2051936441[arrowhead=none];
 Main1526836320 -> RentalFactory98579854[arrowhead=none];
 Main1526836320 -> RentalMgr98579854[arrowhead=none];
@@ -1263,45 +1183,21 @@ Main1526836320 -> StaffReportCheckOut2051936441[arrowhead=none];
 Main1526836320 -> StaffReportOutOfOrder2051936441[arrowhead=none];
 Main1526836320 -> StaffReportReady2051936441[arrowhead=none];
 Main1526836320 -> VehicleMgr488172446[arrowhead=none];
+RentalDecorator98579854 -> DiscountCodeDecorator98579854[arrowhead=none, arrowtail=empty, dir=both];
 RentalDecorator98579854 -> DiscountDecorator98579854[arrowhead=none, arrowtail=empty, dir=both];
 RentalDecorator98579854 -> LoyaltyPointDecorator98579854[arrowhead=none, arrowtail=empty, dir=both];
 RentalDecorator98579854 -> RandomKeyGenerator2051934099[label="generateId() -> generateRandomKey()"];
 RentalMgr98579854 -> CardPaymentGateway640577928[arrowhead=none];
-RentalMgr98579854 -> RentalFactory98579854[label="createRentalOrder() -> createRentalObject()"];
 RentalOrder98579854 -> RandomKeyGenerator2051934099[label="generateId() -> generateRandomKey()"];
 SessionMgr2131091208 -> SessionClass2131091208[arrowhead=none];
 SessionMgr2131091208 -> SessionFactory2131091208[label="createSessionFromFactory() -> createSession()"];
 SignOut2051936441 -> SessionMgr2131091208[label="execute() -> deleteSession()"];
 SignUp2051936441 -> CustomerMgr840413612[label="execute() -> createCustomerFromFactory()"];
-StaffReportCheckIn2051936441 -> SessionMgr2131091208[label="execute() -> isValidSession()"];
 StaffReportCheckIn2051936441 -> VehicleMgr488172446[label="execute() -> modifyVehicleState()"];
-StaffReportCheckIn2051936441 -> VehicleStateT488172446[label="vehicleState
-[0..1]"];
-StaffReportCheckOut2051936441 -> SessionMgr2131091208[label="execute() -> isValidSession()"];
 StaffReportCheckOut2051936441 -> VehicleMgr488172446[label="execute() -> modifyVehicleState()"];
-StaffReportCheckOut2051936441 -> VehicleStateT488172446[label="vehicleState
-[0..1]"];
-StaffReportOutOfOrder2051936441 -> SessionMgr2131091208[label="execute() -> isValidSession()"];
 StaffReportOutOfOrder2051936441 -> VehicleMgr488172446[label="execute() -> modifyVehicleState()"];
-StaffReportOutOfOrder2051936441 -> VehicleStateT488172446[label="vehicleState
-[0..1]"];
-StaffReportReady2051936441 -> SessionMgr2131091208[label="execute() -> isValidSession()"];
 StaffReportReady2051936441 -> VehicleMgr488172446[label="execute() -> modifyVehicleState()"];
-StaffReportReady2051936441 -> VehicleStateT488172446[label="vehicleState
-[0..1]"];
 UserClass840413612 -> CustomerBaseClass840413612[arrowhead=none, arrowtail=empty, dir=both];
-VehicleBaseClass488172446 -> AbRentalRateBaseClass488172446[label="rentalRate
-[0..1]"];
-VehicleBaseClass488172446 -> MakeT488172446[label="make
-[0..1]"];
-VehicleBaseClass488172446 -> ModelT488172446[label="model
-[0..1]"];
-VehicleBaseClass488172446 -> VehicleColorT488172446[label="color
-[0..1]"];
-VehicleBaseClass488172446 -> VehicleStateT488172446[label="vehicleState
-[0..1]"];
-VehicleMgr488172446 -> VehicleBaseClass488172446[label="vehicleMap
-[0..*]"];
     
 }
 @enduml
