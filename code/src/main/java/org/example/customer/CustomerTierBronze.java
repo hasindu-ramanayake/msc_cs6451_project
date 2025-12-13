@@ -16,3 +16,6 @@ public class CustomerTierBronze extends CustomerTierBase{
         this.discountMultiplier = 0.95f;
     }
 }
+
+
+

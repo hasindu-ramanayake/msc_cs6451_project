@@ -57,7 +57,7 @@ public class CustomerExpr implements Expression {
         switch(searchFor){
             case "all" -> {
                 cmd = new CustomerSearchAll();
-            } case "make" -> {
+            }case "make" -> {
                 if ( !tokenizer.hasMoreTokens() ) return new NoCmd();
                 String make = tokenizer.nextToken();
                 cmd = new CustomerSearchMake(make);
@@ -89,10 +89,10 @@ public class CustomerExpr implements Expression {
         String next = inputTokens.nextToken();
         Command cmd = new NoCmd();
         switch (next) {
-            case "viewall" -> {
+            case "viewall" : {
                 cmd = new CustomerRentViewAll();
-
-            } case "order" -> {
+                break;
+            } case "order" : {
                 if (inputTokens.countTokens() == 2 ) {
                     String vehicleId = inputTokens.nextToken();
                     String dateToken = inputTokens.nextToken();
@@ -108,13 +108,14 @@ public class CustomerExpr implements Expression {
                 }else {
                     System.out.println("Format error> customer rent order [VehicleId] [data{DD/MM/YYYY}] [Discount code (optional)]");
                 }
-            } case "view" -> {
-
-            } case "print" -> {
+                break;
+            } case "print" : {
                 String orderId = inputTokens.nextToken();
                 cmd = new CustomerRentPrint(orderId);
+                break;
             }
-        };
+            default: assert(true);
+        }
         return cmd;
     }
 

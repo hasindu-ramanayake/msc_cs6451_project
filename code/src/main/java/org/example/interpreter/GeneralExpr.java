@@ -55,7 +55,7 @@ public class GeneralExpr implements Expression {
                 System.out.printf("%-40s %-40s%n", "customer search date [DATE]", "Search vehicles by date");
                 System.out.printf("%-40s %-40s%n", "customer rent view all", "View all rental orders");
                 System.out.printf("%-40s %-40s%n", "customer rent view [RentalID]", "View specific rental order");
-                System.out.printf("%-40s %-40s%n", "customer rent order [VehicleID] [Date {DD/MM/YYYY}]", "rental a vehicle on a date");
+                System.out.printf("%-40s %-40s%n", "customer rent order [VehicleID] [Date {DD/MM/YYYY}] [Discount code (optional)]", "Rent a vehicle on a date");
                 System.out.printf("%-40s %-40s%n", "customer rent print [RentalID]", "Print rental order receipt");
                 System.out.printf("%-40s %-40s%n", "customer rent pay [RentalID]", "Pay for a rental order");
                 System.out.println("==============================================");

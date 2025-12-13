@@ -5,7 +5,7 @@ import org.example.vehicle.VehicleStateT;
 
 import java.util.StringTokenizer;
 
-public class StaffExpr implements  Expression {
+public class StaffExpr implements Expression {
     @Override
     public Command interpret(String input){
         StringTokenizer inputTokens = new StringTokenizer(input);

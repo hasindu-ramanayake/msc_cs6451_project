@@ -6,7 +6,6 @@ import org.example.interpreter.*;
 
 import java.util.StringTokenizer;
 
-// this can be a factory as well
 public class CmdParser {
     public static Command parse(String input) {
         Expression expr;
@@ -21,7 +20,6 @@ public class CmdParser {
             expr = new CustomerExpr();
         } else if (inputToken.startsWith("staff")) {
             expr = new StaffExpr();
-        //Added Admin
         }else if(inputToken.startsWith("admin")){
             expr = new AdminExp();
         }
@@ -34,3 +32,5 @@ public class CmdParser {
     }
 
 }
+
+
