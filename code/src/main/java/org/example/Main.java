@@ -1,9 +1,7 @@
 package org.example;
 
 import org.example.cmds.Command;
-import org.example.cmds.CommandDispatcher;
-import org.example.cmds.LogInFormatInterceptor;
-import org.example.core.CmdParser;
+import org.example.interpreter.CmdParser;
 import org.example.core.ISingleton;
 import org.example.core.JCRMain;
 

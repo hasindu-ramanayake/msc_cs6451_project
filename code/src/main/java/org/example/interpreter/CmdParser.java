@@ -1,8 +1,7 @@
-package org.example.core;
+package org.example.interpreter;
 
 import org.example.cmds.Command;
 import org.example.cmds.NoCmd;
-import org.example.interpreter.*;
 
 import java.util.StringTokenizer;
 
