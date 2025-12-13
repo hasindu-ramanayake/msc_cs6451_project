@@ -45,7 +45,7 @@ public class FileDbAdapter implements IDbAdapter, ISingleton {
         readRentalData(ORDER_DATA);
         readCustomerData(CUSTOMER_DATA);
         readDiscountData(DISCOUNT_DATA);
-        printMap();
+        //printMap();
     }
 
     public Map<String, VehicleBaseClass> getVehicleMap() {
