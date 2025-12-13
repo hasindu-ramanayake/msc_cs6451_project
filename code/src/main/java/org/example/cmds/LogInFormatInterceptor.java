@@ -7,9 +7,4 @@ public class LogInFormatInterceptor implements CommandInterceptor{
             System.out.println("Invalid user ID detected!");
         }
     }
-
-    @Override
-    public void postCommand(CommandContext commandContext) {
-        System.out.println("[LOGIN] User ID verified.");
-    }
 }

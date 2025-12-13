@@ -35,9 +35,6 @@ public class Main {
             // call the cmd parser and execute the cmd
             Command cmd = CmdParser.parse(input);
             cmd.execute(userSession);
-//            if ( userSession.session == null ) {
-//                System.out.println("DEBUG: session is null Main.java");
-//            }
         }
         cmdReader.close();
 

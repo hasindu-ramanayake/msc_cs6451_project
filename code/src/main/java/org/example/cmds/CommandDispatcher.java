@@ -18,11 +18,6 @@ public class CommandDispatcher {
         for (CommandInterceptor interceptor : interceptors) {
             interceptor.preCommand(context);
         }
-
-        for (CommandInterceptor interceptor : interceptors) {
-            interceptor.postCommand(context);
-        }
-
         interceptors.clear();
     }
 

@@ -20,6 +20,7 @@ public class CustomerExpr implements Expression {
         // processing the second word
         String action = inputTokens.nextToken();
 
+        // process the second word in the comment
         return switch (action) {
             case "upgrade" -> parseUpgrade(inputTokens);
             case "downgrade" -> parseDowngrade(inputTokens);
@@ -31,6 +32,7 @@ public class CustomerExpr implements Expression {
         };
     }
 
+    // process tier
     public Command parseUpgrade(StringTokenizer inputTokens) {
         String toUpdate = inputTokens.nextToken();
         return switch (toUpdate) {
@@ -39,6 +41,7 @@ public class CustomerExpr implements Expression {
         };
     }
 
+    //process downgrade functions
     public Command parseDowngrade(StringTokenizer inputTokens) {
         String toUpdate = inputTokens.nextToken();
         return switch (toUpdate) {
@@ -47,6 +50,7 @@ public class CustomerExpr implements Expression {
         };
     }
 
+    // process search functions
     public Command parseSearch(StringTokenizer tokenizer) {
         Command cmd = new NoCmd();
         if(!tokenizer.hasMoreTokens()){
@@ -89,10 +93,10 @@ public class CustomerExpr implements Expression {
         String next = inputTokens.nextToken();
         Command cmd = new NoCmd();
         switch (next) {
-            case "viewall" -> {
+            case "viewall" : {
                 cmd = new CustomerRentViewAll();
-
-            } case "order" -> {
+                break;
+            } case "order" : {
                 if (inputTokens.countTokens() == 2 ) {
                     String vehicleId = inputTokens.nextToken();
                     String dateToken = inputTokens.nextToken();
@@ -108,11 +112,15 @@ public class CustomerExpr implements Expression {
                 }else {
                     System.out.println("Format error> customer rent order [VehicleId] [data{DD/MM/YYYY}] [Discount code (optional)]");
                 }
-            } case "view" -> {
+                break;
 
-            } case "print" -> {
+            } case "print" : {
                 String orderId = inputTokens.nextToken();
                 cmd = new CustomerRentPrint(orderId);
+                break;
+
+            } default: {
+                return cmd;
             }
         };
         return cmd;

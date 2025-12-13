@@ -8,10 +8,4 @@ public class SignUpInterceptor implements CommandInterceptor{
             System.out.println("Not a valid email address");
         }
     }
-
-    @Override
-    public void postCommand(CommandContext context){
-        System.out.println("[SIGNUP] Complete");
-
-    }
 }
